@@ -4410,6 +4410,16 @@
       "secondary_tileset": "gTileset_MysteryEventsHouse",
       "border_filepath": "data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin",
       "blockdata_filepath": "data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin"
+    },
+    {
+      "id": "LAYOUT_LITTLEROOT_TOWN_TEST_MAP_CONNECTION",
+      "name": "LittlerootTown_TestMapConnection_Layout",
+      "width": 9,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_BrendansMaysHouse",
+      "border_filepath": "data/layouts/LittlerootTown_TestMapConnection/border.bin",
+      "blockdata_filepath": "data/layouts/LittlerootTown_TestMapConnection/map.bin"
     }
   ]
 }
