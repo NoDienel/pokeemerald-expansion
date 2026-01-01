@@ -1,0 +1,16 @@
+mapscripts LittlerootTown_TestMapConnection_2_MapScripts {}
+
+script TestMapConnection_2_DigSiteTest
+{
+    lockall
+    msgbox("Lets start digging!")
+    waitmessage
+    fadescreen(FADE_TO_BLACK)
+    special(StartMining(0))
+    releaseall
+}
+
+mart TestMapConnection_2_DigSiteTest_DigItems
+{
+
+}

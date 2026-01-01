@@ -6149,11 +6149,11 @@ void AbilityChangeScore(u32 battlerAtk, u32 battlerDef, u32 move, s32 *score, st
         }
 
         // Trigger Plus or Minus in modern gens. This is not in the overarching function because Skill Swap is rarely beneficial here.
-        if (B_PLUS_MINUS_INTERACTION >= GEN_5)
-        {
-            if (((effect == EFFECT_ENTRAINMENT) && (abilityAtk == ABILITY_PLUS || abilityAtk == ABILITY_MINUS)) || ((effect == EFFECT_ROLE_PLAY) && (abilityDef == ABILITY_PLUS || abilityDef == ABILITY_MINUS)))
-                ADJUST_SCORE_PTR(DECENT_EFFECT);
-        }
+        //if (B_PLUS_MINUS_INTERACTION >= GEN_5)
+        //{
+        //    if (((effect == EFFECT_ENTRAINMENT) && (abilityAtk == ABILITY_PLUS || abilityAtk == ABILITY_MINUS)) || ((effect == EFFECT_ROLE_PLAY) && (abilityDef == ABILITY_PLUS || abilityDef == ABILITY_MINUS)))
+        //        ADJUST_SCORE_PTR(DECENT_EFFECT);
+        //}
 
     }
     // Targeting an opponent.

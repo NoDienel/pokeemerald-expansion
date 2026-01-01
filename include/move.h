@@ -91,7 +91,9 @@ struct MoveInfo
     bool32 ignoresKingsRock:1;
     bool32 punchingMove:1;
     bool32 bitingMove:1;
+    bool32 kissingMove:1;
     bool32 pulseMove:1;
+    bool32 pincerMove:1;
     bool32 soundMove:1;
     bool32 ballisticMove:1;
     bool32 powderMove:1;

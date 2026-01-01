@@ -6488,6 +6488,13 @@ BattleScript_ShedSkinActivates::
 	updatestatusicon BS_ATTACKER
 	end2
 
+BattleScript_MarvelScaleActivates::
+	call BattleScript_AbilityPopUp
+	printstring STRINGID_PKMNSXCUREDYPROBLEM
+	waitmessage B_WAIT_TIME_LONG
+	updatestatusicon BS_TARGET
+	return
+
 BattleScript_ActivateWeatherAbilities:
 	saveattacker
 	savetarget

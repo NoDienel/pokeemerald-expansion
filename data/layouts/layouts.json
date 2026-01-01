@@ -4414,12 +4414,22 @@
     {
       "id": "LAYOUT_LITTLEROOT_TOWN_TEST_MAP_CONNECTION",
       "name": "LittlerootTown_TestMapConnection_Layout",
-      "width": 9,
-      "height": 20,
-      "primary_tileset": "gTileset_General",
+      "width": 8,
+      "height": 32,
+      "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_BrendansMaysHouse",
       "border_filepath": "data/layouts/LittlerootTown_TestMapConnection/border.bin",
       "blockdata_filepath": "data/layouts/LittlerootTown_TestMapConnection/map.bin"
+    },
+    {
+      "id": "LAYOUT_LITTLEROOT_TOWN_TEST_MAP_CONNECTION_2",
+      "name": "LittlerootTown_TestMapConnection_2_Layout",
+      "width": 8,
+      "height": 32,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_BrendansMaysHouse",
+      "border_filepath": "data/layouts/LittlerootTown_TestMapConnection_2/border.bin",
+      "blockdata_filepath": "data/layouts/LittlerootTown_TestMapConnection_2/map.bin"
     }
   ]
 }

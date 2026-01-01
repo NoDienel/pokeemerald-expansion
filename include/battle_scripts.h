@@ -169,6 +169,7 @@ extern const u8 BattleScript_TraceActivates[];
 extern const u8 BattleScript_RainDishActivates[];
 extern const u8 BattleScript_SandstreamActivates[];
 extern const u8 BattleScript_ShedSkinActivates[];
+extern const u8 BattleScript_MarvelScaleActivates[];
 extern const u8 BattleScript_IntimidateActivates[];
 extern const u8 BattleScript_IntimidatePrevented[];
 extern const u8 BattleScript_IntimidateInReverse[];

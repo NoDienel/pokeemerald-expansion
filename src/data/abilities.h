@@ -435,7 +435,7 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
     [ABILITY_PLUS] =
     {
         .name = _("Plus"),
-        .description = COMPOUND_STRING("Powers up with Minus."),
+        .description = COMPOUND_STRING("Bulks up with Minus."),
         .aiRating = 0,
     },
 
@@ -2411,5 +2411,155 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .cantBeCopied = TRUE,
         .cantBeSwapped = TRUE,
         .cantBeTraced = TRUE,
+    },
+
+    [ABILITY_PINCH_HITTER] =
+    {
+        .name = _("Pinch Hitter"),
+        .description = COMPOUND_STRING("Transforms if last."),
+        .aiRating = 6,
+        .cantBeCopied = TRUE,
+        .cantBeSwapped = TRUE,
+        .cantBeTraced = TRUE,
+    },
+
+    [ABILITY_QUICK_PROTECTOR] =
+    {
+        .name = _("Quick Protector"),
+        .description = COMPOUND_STRING("Makes walls fast."),
+        .aiRating = 2,
+    },
+
+    [ABILITY_RESONATE] =
+    {
+        .name = _("Resonate"),
+        .description = COMPOUND_STRING("Reflects sound moves."),
+        .aiRating = 4,
+    },
+
+    [ABILITY_AMPLIFIER] =
+    {
+        .name = _("Amplifier"),
+        .description = COMPOUND_STRING("Powers up sound moves."),
+        .aiRating = 5,
+    },
+
+    [ABILITY_SMOOCHER] =
+    {
+        .name = _("Smoocher"),
+        .description = COMPOUND_STRING("Is an amazing kisser."),
+        .aiRating = 3,
+    },
+
+    [ABILITY_DIZZYING_STEP] =
+    {
+        .name = _("Dizzying Step"),
+        .description = COMPOUND_STRING("Powers up when confused."),
+        .aiRating = 4,
+    },
+
+    [ABILITY_MASSIVE_STINGER] =
+    {
+        .name = _("Massive Stinger"),
+        .description = COMPOUND_STRING("Powers up BUG-type moves."),
+        .aiRating = 6,
+    },
+
+    [ABILITY_NIGHT_OPERATIVE] =
+    {
+        .name = _("Night Operative"),
+        .description = COMPOUND_STRING("Always wakes up."),
+        .aiRating = 3,
+    },
+
+    [ABILITY_CRITICAL_PARRY] =
+    {
+        .name = _("Critical Parry"),
+        .description = COMPOUND_STRING("Parrys crits."),
+        .aiRating = 2,
+    },
+
+    [ABILITY_BERRYMADE] =
+    {
+        .name = _("Berrymade"),
+        .description = COMPOUND_STRING("Berries are stronger and eaten early."),
+        .aiRating = 6,
+    },
+
+    [ABILITY_GREAT_HARVEST] =
+    {
+        .name = _("Great Harvest"),
+        .description = COMPOUND_STRING("Offers HARVEST to partner Pokemon."),
+        .aiRating = 4,
+    },
+
+    [ABILITY_JUMP_IN] =
+    {
+        .name = _("Jump In"),
+        .description = COMPOUND_STRING("Does best when replacing FAINTED."),
+        .aiRating = 8,
+    },
+
+    [ABILITY_TOGGLE_MODE] =
+    {
+        .name = _("Toggle Mode"),
+        .description = COMPOUND_STRING("Swaps ATT and SpATT each turn."),
+        .aiRating = 5,
+    },
+
+    [ABILITY_CORRUPTED] =
+    {
+        .name = _("Corrupted"),
+        .description = COMPOUND_STRING("Spreads corruption on contact."),
+        .aiRating = 8,
+    },
+
+    [ABILITY_BLOOM_SPORES] =
+    {
+        .name = _("Bloom Spores"),
+        .description = COMPOUND_STRING("BLOOMING spreads."),
+        .aiRating = 5,
+    },
+    
+    [ABILITY_PETAL_SKATING] =
+    {
+        .name = _("Petal Skating"),
+        .description = COMPOUND_STRING("Speeds up when BLOOMING."),
+        .aiRating = 5,
+    },
+
+    [ABILITY_FLOWER_POWER] =
+    {
+        .name = _("Flower Power"),
+        .description = COMPOUND_STRING("Powers up when BLOOMING."),
+        .aiRating = 5,
+    },
+
+    [ABILITY_SUPERCONDUCT] =
+    {
+        .name = _("Superconduct"),
+        .description = COMPOUND_STRING("Activates PLUS and MINUS."),
+        .aiRating = 4,
+    },
+
+    [ABILITY_QUEENS_ORDERS] =
+    {
+        .name = _("Queen's Orders"),
+        .description = COMPOUND_STRING("Copies ORDER moves."),
+        .aiRating = 6,
+    },
+
+    [ABILITY_SILLY_RASCAL] =
+    {
+        .name = _("Silly Rascal"),
+        .description = COMPOUND_STRING("Can call a siesta."),
+        .aiRating = 1,
+    },
+
+    [ABILITY_MONKEY_KING] =
+    {
+        .name = _("Monkey King"),
+        .description = COMPOUND_STRING("Powers up MONKEY moves."),
+        .aiRating = 6,
     },
 };

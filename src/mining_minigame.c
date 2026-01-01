@@ -38,7 +38,7 @@
 #include "data/mining_minigame.h"
 
 /* >> Specials << */
-void StartMining(void);
+void StartMining(u32 locationID);
 
 /* >> Callbacks << */
 static void Mining_Init(MainCallback callback);
@@ -1516,12 +1516,12 @@ static u32 random(u32 amount)
     return (Random() % amount);
 }
 
-void StartMining(void)
+void StartMining(u32 locationID)
 {
-    Mining_Init(CB2_ReturnToField);
+    Mining_Init(CB2_ReturnToField, locationID);
 }
 
-static void Mining_Init(MainCallback callback)
+static void Mining_Init(MainCallback callback, u32 locationID)
 {
     sMiningUiState = AllocZeroed(sizeof(struct MiningState));
 
@@ -1943,18 +1943,22 @@ static void ClearItemMap(void)
 #define RARITY_COMMON   0
 #define RARITY_UNCOMMON 1
 #define RARITY_RARE     2
+#define RARITY_ULTRA    3
+#define RARITY_OMEGA    4
 
 static const u32 ItemRarityTable_Common[] =
+{
+    MININGID_SKULL_FOSSIL,
+    MININGID_ARMOR_FOSSIL,
+};
+
+static const u32 ItemRarityTable_Uncommon[] =
 {
     MININGID_HEART_SCALE,
     MININGID_RED_SHARD,
     MININGID_BLUE_SHARD,
     MININGID_YELLOW_SHARD,
     MININGID_GREEN_SHARD,
-};
-
-static const u32 ItemRarityTable_Uncommon[] =
-{
     MININGID_IRON_BALL,
     MININGID_HARD_STONE,
     MININGID_REVIVE,
@@ -1963,23 +1967,29 @@ static const u32 ItemRarityTable_Uncommon[] =
 
 static const u32 ItemRarityTable_Rare[] =
 {
-    MININGID_STAR_PIECE,
     MININGID_DAMP_ROCK,
     MININGID_HEAT_ROCK,
-    MININGID_REVIVE_MAX,
     MININGID_OVAL_STONE,
     MININGID_LIGHT_CLAY,
     MININGID_ICY_ROCK,
     MININGID_SMOOTH_ROCK,
+};
+
+static const u32 ItemRarityTable_Ultra[] =
+{
+    MININGID_STAR_PIECE,
     MININGID_LEAF_STONE,
     MININGID_FIRE_STONE,
     MININGID_WATER_STONE,
     MININGID_THUNDER_STONE,
     MININGID_MOON_STONE,
     MININGID_SUN_STONE,
+};
+
+static const u32 ItemRarityTable_Omega[] =
+{
+    MININGID_REVIVE_MAX,
     MININGID_ODD_KEY_STONE,
-    MININGID_SKULL_FOSSIL,
-    MININGID_ARMOR_FOSSIL,
 };
 
 static u8 GetRandomItemId()
@@ -1987,14 +1997,18 @@ static u8 GetRandomItemId()
     u32 rarity;
     u32 index;
     u32 itemId;
-    u32 rnd = random(7);
+    u32 rnd = random(39);
 
-    if (rnd < 4)
+    if (rnd < 18)
         rarity = RARITY_COMMON;
-    else if (rnd < 6)
+    else if (rnd < 28)
         rarity = RARITY_UNCOMMON;
-    else
+    else if (rnd < 34)
         rarity = RARITY_RARE;
+    else if (rnd < 38)
+        rarity = RARITY_ULTRA;
+    else
+        rarity = RARITY_OMEGA;
 
     switch (rarity)
     {
@@ -2009,6 +2023,14 @@ static u8 GetRandomItemId()
         case RARITY_RARE:
             index = random(ARRAY_COUNT(ItemRarityTable_Rare));
             itemId =  ItemRarityTable_Rare[index];
+            break;
+        case RARITY_ULTRA:
+            index = random(ARRAY_COUNT(ItemRarityTable_Ultra));
+            itemId =  ItemRarityTable_Ultra[index];
+            break;
+        case RARITY_OMEGA:
+            index = random(ARRAY_COUNT(ItemRarityTable_Omega));
+            itemId =  ItemRarityTable_Omega[index];
             break;
     }
 

@@ -2004,6 +2004,7 @@ static enum MoveCanceler CancelerAsleepOrFrozen(struct BattleContext *ctx)
 {
     if (gBattleMons[ctx->battlerAtk].status1 & STATUS1_SLEEP)
     {
+        enum BattleMoveEffects moveEffect = GetMoveEffect(ctx->move); //For if snore move effect or sleep talk move effect are selected and ignore move
         if (UproarWakeUpCheck(ctx->battlerAtk))
         {
             TryDeactivateSleepClause(GetBattlerSide(ctx->battlerAtk), gBattlerPartyIndexes[ctx->battlerAtk]);
@@ -2011,6 +2012,16 @@ static enum MoveCanceler CancelerAsleepOrFrozen(struct BattleContext *ctx)
             gBattleMons[ctx->battlerAtk].volatiles.nightmare = FALSE;
             gEffectBattler = ctx->battlerAtk;
             gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_WOKE_UP_UPROAR;
+            BattleScriptCall(BattleScript_MoveUsedWokeUp);
+            return MOVE_STEP_REMOVES_STATUS;
+        }
+        else if (ctx->abilityAtk == ABILITY_NIGHT_OPERATIVE && moveEffect != EFFECT_SNORE && moveEffect != EFFECT_SLEEP_TALK)
+        {
+            TryDeactivateSleepClause(GetBattlerSide(ctx->battlerAtk), gBattlerPartyIndexes[ctx->battlerAtk]);
+            gBattleMons[ctx->battlerAtk].status1 &= ~STATUS1_SLEEP;
+            gBattleMons[ctx->battlerAtk].volatiles.nightmare = FALSE;
+            gEffectBattler = ctx->battlerAtk;
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_WOKE_UP;
             BattleScriptCall(BattleScript_MoveUsedWokeUp);
             return MOVE_STEP_REMOVES_STATUS;
         }
@@ -2025,8 +2036,7 @@ static enum MoveCanceler CancelerAsleepOrFrozen(struct BattleContext *ctx)
                 gBattleMons[ctx->battlerAtk].status1 &= ~STATUS1_SLEEP;
             else
                 gBattleMons[ctx->battlerAtk].status1 -= toSub;
-
-            enum BattleMoveEffects moveEffect = GetMoveEffect(ctx->move);
+            
             if (gBattleMons[ctx->battlerAtk].status1 & STATUS1_SLEEP)
             {
                 if (moveEffect != EFFECT_SNORE && moveEffect != EFFECT_SLEEP_TALK)
@@ -5223,6 +5233,33 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 BattleScriptCall(BattleScript_ToxicDebrisActivates);
                 effect++;
             }
+        case ABILITY_MARVEL_SCALE:
+            if (IsBattlerAlive(gBattlerTarget)
+             && !gBattleStruct->unableToUseMove
+             && IsBattlerTurnDamaged(gBattlerTarget)
+             && (gBattleMons[gBattlerTarget].status1 & STATUS1_ANY))
+            {
+                if (gBattleMons[gBattlerTarget].status1 & (STATUS1_POISON | STATUS1_TOXIC_POISON))
+                    StringCopy(gBattleTextBuff1, gStatusConditionString_PoisonJpn);
+                if (gBattleMons[gBattlerTarget].status1 & STATUS1_SLEEP)
+                {
+                    StringCopy(gBattleTextBuff1, gStatusConditionString_SleepJpn);
+                    TryDeactivateSleepClause(GetBattlerSide(gBattlerTarget), gBattlerPartyIndexes[gBattlerTarget]);
+                }
+                if (gBattleMons[gBattlerTarget].status1 & STATUS1_PARALYSIS)
+                    StringCopy(gBattleTextBuff1, gStatusConditionString_ParalysisJpn);
+                if (gBattleMons[gBattlerTarget].status1 & STATUS1_BURN)
+                    StringCopy(gBattleTextBuff1, gStatusConditionString_BurnJpn);
+                if (gBattleMons[gBattlerTarget].status1 & (STATUS1_FREEZE | STATUS1_FROSTBITE))
+                    StringCopy(gBattleTextBuff1, gStatusConditionString_IceJpn);
+                gBattleMons[gBattlerTarget].status1 = 0;
+                gBattleMons[gBattlerTarget].volatiles.nightmare = FALSE;
+                gBattleScripting.battler = gBattlerTarget;
+                BattleScriptCall(BattleScript_MarvelScaleActivates);
+                BtlController_EmitSetMonData(gBattlerTarget, B_COMM_TO_CONTROLLER, REQUEST_STATUS_BATTLE, 0, 4, &gBattleMons[gBattlerTarget].status1);
+                MarkBattlerForControllerExec(gBattlerTarget);
+                effect++;
+            }
             break;
         default:
             break;
@@ -6666,6 +6703,19 @@ static bool32 IsBattlerGroundedInverseCheck(u32 battler, enum Ability ability, e
         return TRUE;
     if (gBattleMons[battler].volatiles.smackDown)
         return TRUE;
+    
+    //Magnet Pull check
+    for (u32 battlerOther = 0; battlerOther < gBattlersCount; battlerOther++)
+    {
+        if (battler == battlerOther)
+            continue;
+
+        enum Ability otherAbility = GetBattlerAbility(battlerOther);
+
+        if (otherAbility == ABILITY_MAGNET_PULL && IS_BATTLER_OF_TYPE(battler, TYPE_STEEL))
+            return TRUE;
+    }
+
     if (gBattleMons[battler].volatiles.telekinesis)
         return FALSE;
     if (gBattleMons[battler].volatiles.magnetRise)
@@ -6674,6 +6724,21 @@ static bool32 IsBattlerGroundedInverseCheck(u32 battler, enum Ability ability, e
         return FALSE;
     if (ability == ABILITY_LEVITATE)
         return FALSE;
+    if (ability == ABILITY_PLUS && IsBattlerAlive(BATTLE_PARTNER(battler))) {
+        enum Ability partnerAbil = GetBattlerAbility(BATTLE_PARTNER(battler));
+        if (partnerAbil == ABILITY_MINUS || partnerAbil == ABILITY_SUPERCONDUCT)
+            return FALSE;
+    }
+    if (ability == ABILITY_MINUS && IsBattlerAlive(BATTLE_PARTNER(battler))){
+        enum Ability partnerAbil = GetBattlerAbility(BATTLE_PARTNER(battler));
+        if (partnerAbil == ABILITY_PLUS || partnerAbil == ABILITY_SUPERCONDUCT)
+            return FALSE;
+    }
+    if (ability == ABILITY_SUPERCONDUCT && IsBattlerAlive(BATTLE_PARTNER(battler))){
+        enum Ability partnerAbil = GetBattlerAbility(BATTLE_PARTNER(battler));
+        if (partnerAbil == ABILITY_PLUS || partnerAbil == ABILITY_MINUS || partnerAbil == ABILITY_SUPERCONDUCT)
+            return FALSE;
+    }
     if (IS_BATTLER_OF_TYPE(battler, TYPE_FLYING) && (checkInverse != INVERSE_BATTLE || !FlagGet(B_FLAG_INVERSE_BATTLE)))
         return FALSE;
     return TRUE;
@@ -7673,22 +7738,20 @@ static inline u32 CalcAttackStat(struct BattleContext *ctx)
         if (moveType == TYPE_GRASS && gBattleMons[battlerAtk].hp <= (gBattleMons[battlerAtk].maxHP / 3))
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
         break;
-    case ABILITY_PLUS:
-        if (IsBattleMoveSpecial(move) && IsBattlerAlive(BATTLE_PARTNER(battlerAtk)))
+    case ABILITY_MINUS:
+        if (IsBattlerAlive(BATTLE_PARTNER(battlerAtk)))
         {
             enum Ability partnerAbility = GetBattlerAbility(BATTLE_PARTNER(battlerAtk));
-            if (partnerAbility == ABILITY_MINUS
-            || (B_PLUS_MINUS_INTERACTION >= GEN_5 && partnerAbility == ABILITY_PLUS))
-                modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
+            if (partnerAbility == ABILITY_PLUS || partnerAbility == ABILITY_SUPERCONDUCT)
+                modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.3));
         }
         break;
-    case ABILITY_MINUS:
-        if (IsBattleMoveSpecial(move) && IsBattlerAlive(BATTLE_PARTNER(battlerAtk)))
+    case ABILITY_SUPERCONDUCT:
+        if (IsBattlerAlive(BATTLE_PARTNER(battlerAtk)))
         {
             enum Ability partnerAbility = GetBattlerAbility(BATTLE_PARTNER(battlerAtk));
-            if (partnerAbility == ABILITY_PLUS
-            || (B_PLUS_MINUS_INTERACTION >= GEN_5 && partnerAbility == ABILITY_MINUS))
-                modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
+            if (partnerAbility == ABILITY_PLUS || partnerAbility == ABILITY_MINUS || partnerAbility == ABILITY_SUPERCONDUCT)
+                modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.1));
         }
         break;
     case ABILITY_FLOWER_GIFT:
@@ -7924,7 +7987,7 @@ static inline u32 CalcDefenseStat(struct BattleContext *ctx)
     switch (ctx->abilityDef)
     {
     case ABILITY_MARVEL_SCALE:
-        if (gBattleMons[battlerDef].status1 & STATUS1_ANY && usesDefStat)
+        if (gBattleMons[battlerDef].status1 & STATUS1_ANY)
         {
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
             if (ctx->updateFlags)
@@ -7950,6 +8013,22 @@ static inline u32 CalcDefenseStat(struct BattleContext *ctx)
     case ABILITY_FLOWER_GIFT:
         if (gBattleMons[battlerDef].species == SPECIES_CHERRIM_SUNSHINE && IsBattlerWeatherAffected(battlerDef, B_WEATHER_SUN) && !usesDefStat)
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
+        break;
+    case ABILITY_PLUS:
+        if (IsBattlerAlive(BATTLE_PARTNER(battlerDef)))
+        {
+            enum Ability partnerAbility = GetBattlerAbility(BATTLE_PARTNER(battlerDef));
+            if (partnerAbility == ABILITY_PLUS || partnerAbility == ABILITY_SUPERCONDUCT)
+                modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
+        }
+        break;
+    case ABILITY_SUPERCONDUCT:
+        if (IsBattlerAlive(BATTLE_PARTNER(battlerDef)))
+        {
+            enum Ability partnerAbility = GetBattlerAbility(BATTLE_PARTNER(battlerDef));
+            if (partnerAbility == ABILITY_PLUS || partnerAbility == ABILITY_MINUS || partnerAbility == ABILITY_SUPERCONDUCT)
+                modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.1));
+        }
         break;
     default:
         break;
@@ -8909,6 +8988,30 @@ static inline uq4_12_t CalcTypeEffectivenessMultiplierInternal(struct BattleCont
         {
             gBattleStruct->moveResultFlags[ctx->battlerDef] |= (MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE);
             gLastUsedAbility = ABILITY_LEVITATE;
+            gLastLandedMoves[ctx->battlerDef] = 0;
+            gBattleStruct->missStringId[ctx->battlerDef] = B_MSG_GROUND_MISS;
+            RecordAbilityBattle(ctx->battlerDef, ABILITY_LEVITATE);
+        }
+        if (ctx->updateFlags && ctx->abilityDef == ABILITY_PLUS)
+        {
+            gBattleStruct->moveResultFlags[ctx->battlerDef] |= (MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE);
+            gLastUsedAbility = ABILITY_PLUS;
+            gLastLandedMoves[ctx->battlerDef] = 0;
+            gBattleStruct->missStringId[ctx->battlerDef] = B_MSG_GROUND_MISS;
+            RecordAbilityBattle(ctx->battlerDef, ABILITY_PLUS);
+        }
+        if (ctx->updateFlags && ctx->abilityDef == ABILITY_MINUS)
+        {
+            gBattleStruct->moveResultFlags[ctx->battlerDef] |= (MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE);
+            gLastUsedAbility = ABILITY_MINUS;
+            gLastLandedMoves[ctx->battlerDef] = 0;
+            gBattleStruct->missStringId[ctx->battlerDef] = B_MSG_GROUND_MISS;
+            RecordAbilityBattle(ctx->battlerDef, ABILITY_MINUS);
+        }
+        if (ctx->updateFlags && ctx->abilityDef == ABILITY_SUPERCONDUCT)
+        {
+            gBattleStruct->moveResultFlags[ctx->battlerDef] |= (MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE);
+            gLastUsedAbility = ABILITY_SUPERCONDUCT;
             gLastLandedMoves[ctx->battlerDef] = 0;
             gBattleStruct->missStringId[ctx->battlerDef] = B_MSG_GROUND_MISS;
             RecordAbilityBattle(ctx->battlerDef, ABILITY_LEVITATE);
