@@ -299,7 +299,7 @@ Debug_Follower_NPC_Test_Message:
 
 Debug_EventScript_Mining_Minigame::
     fadescreen FADE_TO_BLACK
-    special StartMining 0
+    special StartMining
 	release
 	end
 

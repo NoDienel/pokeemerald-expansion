@@ -61,8 +61,9 @@
 #define MAX_POCKET_ITEMS  ((max(BAG_TMHM_COUNT,              \
                             max(BAG_BERRIES_COUNT,           \
                             max(BAG_ITEMS_COUNT,             \
+                            max(BAG_FOSSILS_COUNT,           \
                             max(BAG_KEYITEMS_COUNT,          \
-                                BAG_POKEBALLS_COUNT))))) + 1)
+                                BAG_POKEBALLS_COUNT)))))) + 1)
 
 // Up to 8 item slots can be visible at a time
 #define MAX_ITEMS_SHOWN 8
@@ -336,6 +337,11 @@ static const u8 sContextMenuItems_TmHmPocket[] = {
 static const u8 sContextMenuItems_BerriesPocket[] = {
     ACTION_CHECK_TAG,   ACTION_DUMMY,
     ACTION_USE,         ACTION_GIVE,
+    ACTION_TOSS,        ACTION_CANCEL
+};
+
+static const u8 sContextMenuItems_FossilsPocket[] = {
+    ACTION_GIVE,        ACTION_DUMMY,
     ACTION_TOSS,        ACTION_CANCEL
 };
 
@@ -1155,6 +1161,7 @@ void UpdatePocketItemList(enum Pocket pocketId)
     switch (pocketId)
     {
     case POCKET_TM_HM:
+    case POCKET_FOSSILS:
     case POCKET_BERRIES:
         SortItemsInBag(pocket, SORT_BY_INDEX);
         break;
@@ -1714,6 +1721,10 @@ static void OpenContextMenu(u8 taskId)
             case POCKET_BERRIES:
                 gBagMenu->contextMenuItemsPtr = sContextMenuItems_BerriesPocket;
                 gBagMenu->contextMenuNumItems = ARRAY_COUNT(sContextMenuItems_BerriesPocket);
+                break;
+            case POCKET_FOSSILS:
+                gBagMenu->contextMenuItemsPtr = sContextMenuItems_FossilsPocket;
+                gBagMenu->contextMenuNumItems = ARRAY_COUNT(sContextMenuItems_FossilsPocket);
                 break;
             }
         }
@@ -2772,6 +2783,7 @@ static void AddBagSortSubMenu(void)
         gBagMenu->contextMenuNumItems = NELEMS(sBagMenuSortPokeBalls);
         break;
     case POCKET_BERRIES:
+    case POCKET_FOSSILS:
     case POCKET_TM_HM:
         gBagMenu->contextMenuItemsPtr = sBagMenuSortBerriesTMsHMs;
         memcpy(&gBagMenu->contextMenuItemsBuffer, &sBagMenuSortBerriesTMsHMs, NELEMS(sBagMenuSortBerriesTMsHMs));

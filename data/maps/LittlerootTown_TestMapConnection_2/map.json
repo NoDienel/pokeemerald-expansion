@@ -39,7 +39,7 @@
       "y": 5,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
-      "script": "NULL"
+      "script": "TestMapConnection_2_DigSiteTest"
     }
   ]
 }

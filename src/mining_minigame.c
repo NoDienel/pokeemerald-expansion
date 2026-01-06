@@ -1,6 +1,4 @@
-// TODO: Rewrite Debug System for Mining Minigame from scratch -> Outdated Debug Mode from PSF
-
-#include "mining_minigame.h"
+#include "mining_minigame.h" // TODO: Rewrite Debug System for Mining Minigame from scratch -> Outdated Debug Mode from PSF
 #include "gba/types.h"
 #include "gba/defines.h"
 #include "global.h"
@@ -11,6 +9,7 @@
 #include "palette.h"
 #include "task.h"
 #include "overworld.h"
+#include "event_data.h"
 #include "malloc.h"
 #include "gba/macro.h"
 #include "gba/m4a_internal.h"
@@ -38,10 +37,10 @@
 #include "data/mining_minigame.h"
 
 /* >> Specials << */
-void StartMining(u32 locationID);
+void StartMining();
 
 /* >> Callbacks << */
-static void Mining_Init(MainCallback callback);
+static void Mining_Init(MainCallback callback, u32 locationId);
 static void Mining_SetupCB(void);
 static bool8 Mining_InitBgs(void);
 static void Mining_MainCB(void);
@@ -83,7 +82,7 @@ static void InitBuriedItems(void);
 static bool32 AreAllItemsFound(void);
 static void SetBuriedItemsId(u32 index, u32 itemId);
 static void SetBuriedItemStatus(u32 index, bool32 status);
-static u32 GetBuriedBagItemId(u32 index);
+static u32 GetBuriedBagItemId(u32 index, u32 locationId);
 static u32 GetBuriedMiningItemId(u32 index);
 static u32 GetNumberOfFoundItems(void);
 static bool32 GetBuriedItemStatus(u32 index);
@@ -132,12 +131,14 @@ struct MiningState
     u8 *sBg2TilemapBuffer;
     u8 *sBg3TilemapBuffer;
 
+    u32 locationId;     //Used to determine which set of fossils should be added to the player's bag when they mine up a fossil
+
     // Items and Stones
     struct BuriedItem buriedItems[MINING_MAX_NUM_BURIED_ITEMS];
     struct BuriedItem buriedStones[MINING_COUNT_MAX_NUMBER_STONES];
 
     // Tools
-    bool32 tool;    // Hammer or Pickaxe
+    bool32 tool;        // Hammer or Pickaxe
     u32 cursorSpriteIndex;
     u32 bRedSpriteIndex;
     u32 bBlueSpriteIndex;
@@ -1448,9 +1449,36 @@ static const struct MiningStone MiningStoneList[] =
     },
 };
 
+struct LocSysFossilData
+{
+    u32 chance;
+    u32 fossilItemId;
+};
+
+struct LocSysLocationData
+{
+    const struct LocSysFossilData *fossils;
+    u32 count;
+};
+
+// Global array mapping Location IDs to their fossil data
+static const struct LocSysLocationData LocationData[] =
+{
+    [LOCATIONID_TEST_001] = 
+    {
+        .fossils = (const struct LocSysFossilData[]) {
+            { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_001 },
+            { .chance = 25, .fossilItemId = ITEM_POKEFOSSIL_002 },
+            { .chance = 70, .fossilItemId = ITEM_POKEFOSSIL_003 },
+        },
+        .count = 2
+    },
+};
+
 static const u8 sText_SomethingPinged[] = _("Something pinged in the wall!\n{STR_VAR_1} confirmed!");
 static const u8 sText_EverythingWas[] = _("Everything was dug up!");
 static const u8 sText_WasObtained[] = _("{STR_VAR_1}\nwas obtained!");
+static const u8 sText_FossilIdentified[] = _("Fossil was identified as {STR_VAR_1}!");
 static const u8 sText_TooBad[] = _("Too bad!\nYour Bag is full!");
 static const u8 sText_TheWall[] = _("The wall collapsed!");
 
@@ -1516,8 +1544,9 @@ static u32 random(u32 amount)
     return (Random() % amount);
 }
 
-void StartMining(u32 locationID)
+void StartMining()
 {
+    u32 locationID = VarGet(VAR_TEMP_1);
     Mining_Init(CB2_ReturnToField, locationID);
 }
 
@@ -1539,6 +1568,7 @@ static void Mining_Init(MainCallback callback, u32 locationID)
     sMiningUiState->loadGameState = 0;
     sMiningUiState->stressLevelCount = 0;
     sMiningUiState->stressLevelPos = 0;
+    sMiningUiState->locationId = locationID;
 
     // Default the values for each item
     sMiningUiState->buriedItems[0].buriedState = 0;
@@ -1997,15 +2027,15 @@ static u8 GetRandomItemId()
     u32 rarity;
     u32 index;
     u32 itemId;
-    u32 rnd = random(39);
+    u32 rnd = random(59);
 
-    if (rnd < 18)
+    if (rnd < 38)
         rarity = RARITY_COMMON;
-    else if (rnd < 28)
+    else if (rnd < 48)
         rarity = RARITY_UNCOMMON;
-    else if (rnd < 34)
+    else if (rnd < 54)
         rarity = RARITY_RARE;
-    else if (rnd < 38)
+    else if (rnd < 58)
         rarity = RARITY_ULTRA;
     else
         rarity = RARITY_OMEGA;
@@ -3116,7 +3146,7 @@ static void Task_WaitButtonPressOpening(u8 taskId)
 static void Task_MiningPrintResult(u8 taskId)
 {
     u32 itemIndex = ConvertLoadGameStateToItemIndex();
-    u32 itemId = GetBuriedBagItemId(itemIndex);
+    u32 itemId = GetBuriedBagItemId(itemIndex, sMiningUiState->locationId);
 
     if (gPaletteFade.active)
         return;
@@ -3270,7 +3300,10 @@ static void HandleGameFinish(u8 taskId)
 static void PrintItemSuccess(u32 itemId)
 {
     CopyItemName(itemId,gStringVar1);
-    StringExpandPlaceholders(gStringVar2,sText_WasObtained);
+    if(itemId < ITEM_POKEFOSSIL_001) //This, uh, this is bad, but it works so long as ALL items above item index ITEM_POKEFOSSIL_001 are pokefossils.
+        StringExpandPlaceholders(gStringVar2,sText_WasObtained);
+    else
+        StringExpandPlaceholders(gStringVar2,sText_FossilIdentified);
     PrintMessage(gStringVar2);
 }
 
@@ -3280,7 +3313,7 @@ static u32 GetTotalNumberOfBuriedItems(void)
     u32 count = 0;
 
     for (itemIndex = 0; itemIndex < MINING_MAX_NUM_BURIED_ITEMS; itemIndex++)
-        if (GetBuriedBagItemId(itemIndex))
+        if (GetBuriedBagItemId(itemIndex, sMiningUiState->locationId))
             count++;
 
     return count;
@@ -3324,9 +3357,30 @@ static void SetBuriedItemStatus(u32 index, bool32 status)
     sMiningUiState->buriedItems[index].isDugUp = status;
 }
 
-static u32 GetBuriedBagItemId(u32 index)
+static u32 GetBuriedBagItemId(u32 index, u32 locationID)
 {
-    return sMiningUiState->buriedItems[index].bagItemId;
+    u32 bagItemId = sMiningUiState->buriedItems[index].bagItemId;
+    u32 trueBagItemId = bagItemId;
+    if(bagItemId == ITEM_ARMOR_FOSSIL || bagItemId == ITEM_SKULL_FOSSIL) //This should replace any vanilla fossils with Pokefossils
+    {
+        u32 randm = random(99);
+        u32 validID = 0;
+        for (u32 i = 0; i < LocationData[locationID].count; i++)
+        {
+            randm -= min(LocationData[locationID].fossils[i].chance, randm);
+            if(randm == 0)
+            {
+                validID = LocationData[locationID].fossils[i].fossilItemId;
+                break;
+            }
+        }
+        if(validID > 0)
+        {
+            trueBagItemId = validID;
+            sMiningUiState->buriedItems[index].bagItemId = validID; //Properly reset bag item so it is never mistaken for anything in the future
+        }
+    }
+    return trueBagItemId;
 }
 
 static u32 GetBuriedMiningItemId(u32 index)

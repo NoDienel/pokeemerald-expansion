@@ -70,6 +70,10 @@ static const u8 sRootFossilDesc[]     = _("A fossil of an\n"
 static const u8 sFossilizedFishDesc[] = _("A fossil of an\n"
                                           "ancient, sea-\n"
                                           "dwelling Pokémon.");
+                                          
+static const u8 sFossilGenericDesc[] = _("A fossil of an\n"
+                                          "ancient, now\n"
+                                          "extinct Pokémon.");
 
 static const u8 sBeadMailDesc[]       = _("Mail featuring a\n"
                                           "sketch of the\n"
@@ -147,7 +151,7 @@ const struct Item gItemsInfo[] =
 {
     [ITEM_NONE] =
     {
-        .name = gQuestionMarksItemName,
+        .name = ITEM_NAME("??INVALID??"),
         .price = 0,
         .description = sQuestionMarksDesc,
         .pocket = POCKET_ITEMS,
@@ -3278,7 +3282,7 @@ const struct Item gItemsInfo[] =
             "A piece of a\n"
             "prehistoric Poké-\n"
             "mon's head."),
-        .pocket = POCKET_ITEMS,
+        .pocket = POCKET_FOSSILS,
         .sortType = ITEM_TYPE_FOSSIL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
@@ -3295,7 +3299,7 @@ const struct Item gItemsInfo[] =
             "A piece of a\n"
             "prehistoric Poké-\n"
             "mon's collar."),
-        .pocket = POCKET_ITEMS,
+        .pocket = POCKET_FOSSILS,
         .sortType = ITEM_TYPE_FOSSIL,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
@@ -15055,6 +15059,49 @@ const struct Item gItemsInfo[] =
         .iconPic = gItemIcon_PokeshiDoll,
         .iconPalette = gItemIconPalette_PokeshiDoll,
     },
+
+    [ITEM_POKEFOSSIL_001] =
+    {
+        .name = ITEM_NAME("Wood Gecko Fossil"), //Treeko
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_002] =
+    {
+        .name = ITEM_NAME("Fire Cat Fossil"), //Litten
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_003] =
+    {
+        .name = ITEM_NAME("Big Jaw Fossil"), //Totodile
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_JawFossil,
+        .iconPalette = gItemIconPalette_JawFossil,
+    },
+
 };
 
 #undef ITEM_NAME

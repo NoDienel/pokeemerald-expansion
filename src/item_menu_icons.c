@@ -72,7 +72,7 @@ static const union AnimCmd sSpriteAnim_Bag_Items[] =
 
 static const union AnimCmd sSpriteAnim_Bag_KeyItems[] =
 {
-    ANIMCMD_FRAME(128, 4),
+    ANIMCMD_FRAME(320, 4),
     ANIMCMD_END
 };
 
@@ -90,7 +90,13 @@ static const union AnimCmd sSpriteAnim_Bag_TMsHMs[] =
 
 static const union AnimCmd sSpriteAnim_Bag_Berries[] =
 {
-    ANIMCMD_FRAME(320, 4),
+    ANIMCMD_FRAME(384, 4),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sSpriteAnim_Bag_Fossils[] =
+{
+    ANIMCMD_FRAME(128, 4),
     ANIMCMD_END
 };
 
@@ -101,7 +107,8 @@ static const union AnimCmd *const sBagSpriteAnimTable[] =
     [POCKET_TM_HM]      = sSpriteAnim_Bag_TMsHMs,
     [POCKET_BERRIES]    = sSpriteAnim_Bag_Berries,
     [POCKET_KEY_ITEMS]  = sSpriteAnim_Bag_KeyItems,
-    [POCKET_DUMMY]       = sSpriteAnim_Bag_Closed,
+    [POCKET_FOSSILS]    = sSpriteAnim_Bag_Fossils,
+    [POCKET_DUMMY]      = sSpriteAnim_Bag_Closed,
 };
 
 static const union AffineAnimCmd sSpriteAffineAnim_BagNormal[] =
@@ -132,7 +139,7 @@ static const union AffineAnimCmd *const sBagAffineAnimCmds[] =
 
 const struct CompressedSpriteSheet gBagMaleSpriteSheet =
 {
-    gBagMaleTiles, 0x3000, TAG_BAG_GFX
+    gBagMaleTiles, 0x3800, TAG_BAG_GFX
 };
 
 const struct CompressedSpriteSheet gBagFemaleSpriteSheet =

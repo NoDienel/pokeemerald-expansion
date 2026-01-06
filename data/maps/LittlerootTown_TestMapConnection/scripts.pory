@@ -13,11 +13,11 @@ script TestMapConnection_EventScript_OldMan
 script TestMapConnection_EventScript_Pokeball1
 {
     lockall
+    playfanfare(MUS_OBTAIN_ITEM)
     showmonpic(SPECIES_SCYTHER, 10, 3)
     msgbox("You recieved Scyther and ...?!")
     givemon(SPECIES_SCYTHER, 15, ITEM_NONE, ITEM_POKE_BALL, NATURE_ADAMANT, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MOVE_EARTHQUAKE)
     givemon(SPECIES_MILOTIC, 15, ITEM_FLAME_ORB, ITEM_POKE_BALL, NATURE_MODEST, 0)
-    playfanfare(MUS_OBTAIN_ITEM)
     setflag(FLAG_BADGE01_GET)
     setflag(FLAG_SYS_POKEMON_GET)
     removeobject(3)

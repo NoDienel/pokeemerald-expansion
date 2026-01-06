@@ -2737,3 +2737,9 @@
 	callnative ScrCmd_istmrelearneractive, requests_effects=1
 	.4byte \destination
 	.endm
+
+@ Mining macro
+	.macro startmininghere location:req
+	setvar VAR_TEMP_1, \location
+	special StartMining
+	.endm

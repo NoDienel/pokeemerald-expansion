@@ -1062,6 +1062,7 @@ struct Bag
     struct ItemSlot pokeBalls[BAG_POKEBALLS_COUNT];
     struct ItemSlot TMsHMs[BAG_TMHM_COUNT];
     struct ItemSlot berries[BAG_BERRIES_COUNT];
+    struct ItemSlot fossils[BAG_FOSSILS_COUNT];
 };
 
 struct SaveBlock1

@@ -6,11 +6,6 @@ script TestMapConnection_2_DigSiteTest
     msgbox("Lets start digging!")
     waitmessage
     fadescreen(FADE_TO_BLACK)
-    special(StartMining(0))
+    startmininghere(0) //Macros do not like constants, for some reason. Ensure this number matches the appropriate location ID within mining_minigame.h
     releaseall
-}
-
-mart TestMapConnection_2_DigSiteTest_DigItems
-{
-
 }
