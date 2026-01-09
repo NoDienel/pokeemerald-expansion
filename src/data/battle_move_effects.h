@@ -962,6 +962,12 @@ const struct BattleMoveEffect gBattleMoveEffects[NUM_BATTLE_MOVE_EFFECTS] =
         .encourageEncore = TRUE,
     },
 
+    [EFFECT_BLOOM] =
+    {
+        .battleScript = BattleScript_EffectBloom,
+        .battleTvScore = 3,
+    },
+
     [EFFECT_MAGIC_COAT] =
     {
         .battleScript = BattleScript_EffectMagicCoat,

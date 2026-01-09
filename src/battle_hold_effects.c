@@ -341,7 +341,7 @@ static enum ItemEffect TryJabocaBerry(u32 battlerDef, u32 battlerAtk, u32 item)
      && !IsAbilityAndRecord(battlerAtk, GetBattlerAbility(battlerAtk), ABILITY_MAGIC_GUARD))
     {
         s32 jabocaDamage = GetNonDynamaxMaxHP(battlerAtk) / 8;
-        if (GetBattlerAbility(battlerDef) == ABILITY_RIPEN)
+        if (GetBattlerAbility(battlerDef) == ABILITY_RIPEN || GetBattlerAbility(battlerDef) == ABILITY_BERRYMADE)
             jabocaDamage *= 2;
         SetPassiveDamageAmount(battlerAtk, jabocaDamage);
         BattleScriptCall(BattleScript_JabocaRowapBerryActivates);
@@ -363,7 +363,7 @@ static enum ItemEffect TryRowapBerry(u32 battlerDef, u32 battlerAtk, u32 item)
      && !IsAbilityAndRecord(battlerAtk, GetBattlerAbility(battlerAtk), ABILITY_MAGIC_GUARD))
     {
         s32 rowapDamage = GetNonDynamaxMaxHP(battlerAtk) / 8;
-        if (GetBattlerAbility(battlerDef) == ABILITY_RIPEN)
+        if (GetBattlerAbility(battlerDef) == ABILITY_RIPEN || GetBattlerAbility(battlerDef) == ABILITY_BERRYMADE)
             rowapDamage *= 2;
         SetPassiveDamageAmount(battlerAtk, rowapDamage);
         BattleScriptCall(BattleScript_JabocaRowapBerryActivates);
@@ -385,7 +385,7 @@ static enum ItemEffect TrySetEnigmaBerry(u32 battlerDef, u32 battlerAtk)
      && !(B_HEAL_BLOCKING >= GEN_5 && gBattleMons[battlerDef].volatiles.healBlock))
     {
         s32 healAmount = gBattleMons[battlerDef].maxHP * 25 / 100;
-        if (GetBattlerAbility(battlerDef) == ABILITY_RIPEN)
+        if (GetBattlerAbility(battlerDef) == ABILITY_RIPEN || GetBattlerAbility(battlerDef) == ABILITY_BERRYMADE)
             healAmount *= 2;
         SetHealAmount(battlerDef, healAmount);
         BattleScriptCall(BattleScript_ItemHealHP_RemoveItem);
@@ -503,7 +503,7 @@ static enum ItemEffect DamagedStatBoostBerryEffect(u32 battlerDef, u32 battlerAt
          && GetBattleMoveCategory(gCurrentMove) == category
          && IsBattlerTurnDamaged(battlerDef)))
     {
-        if (GetBattlerAbility(battlerDef) == ABILITY_RIPEN)
+        if (GetBattlerAbility(battlerDef) == ABILITY_RIPEN || GetBattlerAbility(battlerDef) == ABILITY_BERRYMADE)
             SET_STATCHANGER(statId, 2, FALSE);
         else
             SET_STATCHANGER(statId, 1, FALSE);
@@ -706,6 +706,10 @@ static enum ItemEffect TryCureFreezeOrFrostbite(u32 battler)
     if (gBattleMons[battler].status1 & STATUS1_FREEZE)
     {
         gBattleMons[battler].status1 &= ~STATUS1_FREEZE;
+        /* Also remove Blooming if present */
+        gBattleMons[battler].volatiles.blooming = FALSE;
+        gBattleMons[battler].volatiles.escapePrevention = FALSE;
+        gDisableStructs[battler].bloomingTurns = 0;
         gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_CURED_FREEEZE;
         effect = ITEM_STATUS_CHANGE;
     }
@@ -826,7 +830,7 @@ static u32 ItemHealHp(u32 battler, u32 itemId, enum HealAmount percentHeal)
         else
             healAmount = GetItemHoldEffectParam(itemId);
 
-        if (ability == ABILITY_RIPEN && GetItemPocket(itemId) == POCKET_BERRIES)
+        if ((ability == ABILITY_RIPEN || ability == ABILITY_BERRYMADE) && GetItemPocket(itemId) == POCKET_BERRIES)
             healAmount *= 2;
 
         SetHealAmount(battler, healAmount);
@@ -854,7 +858,7 @@ static u32 ItemRestorePp(u32 battler, u32 itemId)
         {
             u32 ppRestored = GetItemHoldEffectParam(itemId);
 
-            if (ability == ABILITY_RIPEN)
+            if (ability == ABILITY_RIPEN || ability == ABILITY_BERRYMADE)
             {
                 ppRestored *= 2;
                 gBattlerAbility = battler;
@@ -887,7 +891,7 @@ static enum ItemEffect HealConfuseBerry(u32 battler, u32 itemId, u32 flavorId)
      && !(B_HEAL_BLOCKING >= GEN_5 && gBattleMons[battler].volatiles.healBlock))
     {
         s32 healAmount = GetNonDynamaxMaxHP(battler) / GetItemHoldEffectParam(itemId);
-        if (ability == ABILITY_RIPEN)
+        if (ability == ABILITY_RIPEN || ability == ABILITY_BERRYMADE)
             healAmount *= 2;
         SetHealAmount(battler, healAmount);
         if (GetFlavorRelationByPersonality(gBattleMons[battler].personality, flavorId) < 0)
@@ -909,7 +913,7 @@ static enum ItemEffect StatRaiseBerry(u32 battler, u32 itemId, enum Stat statId)
      && HasEnoughHpToEatBerry(battler, ability, GetItemHoldEffectParam(itemId), itemId))
     {
         gEffectBattler = gBattleScripting.battler = battler;
-        SET_STATCHANGER(statId, ability == ABILITY_RIPEN ? 2 : 1, FALSE);
+        SET_STATCHANGER(statId, (ability == ABILITY_RIPEN || ability == ABILITY_BERRYMADE) ? 2 : 1, FALSE);
         gBattleScripting.animArg1 = STAT_ANIM_PLUS1 + statId;
         gBattleScripting.animArg2 = 0;
         BattleScriptCall(BattleScript_ConsumableStatRaiseRet);
@@ -963,7 +967,7 @@ static enum ItemEffect RandomStatRaiseBerry(u32 battler, u32 itemId)
         gBattlerAttacker = savedAttacker;
 
         PREPARE_STAT_BUFFER(gBattleTextBuff1, stat);
-        SET_STATCHANGER(stat, ability == ABILITY_RIPEN ? 4 : 2, FALSE);
+        SET_STATCHANGER(stat, (ability == ABILITY_RIPEN || ability == ABILITY_BERRYMADE) ? 4 : 2, FALSE);
         gBattleScripting.animArg1 = STAT_ANIM_PLUS2 + stat;
         gBattleScripting.animArg2 = 0;
         BattleScriptCall(BattleScript_ConsumableStatRaiseRet);

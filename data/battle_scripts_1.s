@@ -4033,6 +4033,15 @@ BattleScript_EffectIngrain::
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
 
+BattleScript_EffectBloom::
+	attackcanceler
+	trysetvolatile BS_ATTACKER, VOLATILE_BLOOMING, BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printfromtable gWrappedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
 BattleScript_EffectMagicCoat::
 	attackcanceler
 	trysetmagiccoat BattleScript_ButItFailed
@@ -4751,6 +4760,18 @@ BattleScript_IceBodyHeal::
 	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	printstring STRINGID_ICEBODYHPGAIN
+	waitmessage B_WAIT_TIME_LONG
+	end2
+
+BattleScript_ToggleModeFlip::
+	call BattleScript_AbilityPopUp
+	printstring STRINGID_PKMN_CHANGED_MODES
+	waitmessage B_WAIT_TIME_LONG
+	end2
+
+BattleScript_CocoonBreak::
+	call BattleScript_AbilityPopUp
+	printstring STRINGID_PKMN_COCONED_BROKE
 	waitmessage B_WAIT_TIME_LONG
 	end2
 
@@ -5626,6 +5647,14 @@ BattleScript_MagicBounce::
 	setmagiccoattarget
 	return
 
+BattleScript_ResonateReflect::
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUp
+	printstring STRINGID_PKMNMOVEBOUNCEDABILITY
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_HitFromAtkAnimation
+	return
+
 BattleScript_MagicCoat::
 	pause B_WAIT_TIME_SHORT
 	setmagiccoattarget
@@ -6104,6 +6133,11 @@ BattleScript_WrapTurnDmg::
 
 BattleScript_WrapEnds::
 	printstring STRINGID_PKMNFREEDFROM
+	waitmessage B_WAIT_TIME_LONG
+	end2
+
+BattleScript_BloomEnds::
+	printstring STRINGID_PKMNBLOOMFADED
 	waitmessage B_WAIT_TIME_LONG
 	end2
 
@@ -6881,6 +6915,11 @@ BattleScript_SturdyPreventsOHKO::
 	pause B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
 
+BattleScript_CriticalParry::
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUp
+	goto BattleScript_EffectCounter
+
 BattleScript_DampStopsExplosion::
 	pause B_WAIT_TIME_SHORT
 	call BattleScript_AbilityPopUpScripting
@@ -7112,6 +7151,11 @@ BattleScript_BattlerAbilityStatRaiseOnSwitchIn::
 	printstring STRINGID_SCRIPTINGABILITYSTATRAISE
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_BattlerAbilityStatRaiseOnSwitchInRet:
+	return
+
+BattleScript_RivalryMessage::
+	printstring STRINGID_RIVALRY_ACTIVATES
+	waitmessage B_WAIT_TIME_LONG
 	return
 
 BattleScript_ScriptingAbilityStatRaise::
@@ -7491,6 +7535,7 @@ BattleScript_WhiteHerbRet::
 
 BattleScript_ItemHealHP_RemoveItem::
 	jumpifability BS_SCRIPTING, ABILITY_RIPEN, BattleScript_ItemHealHP_RemoveItemRet_AbilityPopUp
+	jumpifability BS_SCRIPTING, ABILITY_BERRYMADE, BattleScript_ItemHealHP_RemoveItemRet_AbilityPopUp
 	goto BattleScript_ItemHealHP_RemoveItemRet_Anim
 BattleScript_ItemHealHP_RemoveItemRet_AbilityPopUp:
 	call BattleScript_AbilityPopUpScripting
@@ -7505,6 +7550,7 @@ BattleScript_ItemHealHP_RemoveItemRet_Anim:
 
 BattleScript_BerryPPHeal::
 	jumpifability BS_SCRIPTING, ABILITY_RIPEN, BattleScript_BerryPPHeal_AbilityPopup
+	jumpifability BS_SCRIPTING, ABILITY_BERRYMADE, BattleScript_BerryPPHeal_AbilityPopup
 	goto BattleScript_BerryPPHeal_Anim
 BattleScript_BerryPPHeal_AbilityPopup:
 	call BattleScript_AbilityPopUpScripting
@@ -7595,6 +7641,7 @@ BattleScript_HangedOnMsgRet:
 
 BattleScript_BerryConfuseHeal::
 	jumpifability BS_SCRIPTING, ABILITY_RIPEN, BattleScript_BerryConfuseHealRet_AbilityPopup
+	jumpifability BS_SCRIPTING, ABILITY_BERRYMADE, BattleScript_BerryConfuseHealRet_AbilityPopup
 	goto BattleScript_BerryConfuseHealRet_Anim
 BattleScript_BerryConfuseHealRet_AbilityPopup:
 	call BattleScript_AbilityPopUp
@@ -7611,6 +7658,7 @@ BattleScript_BerryConfuseHealRet_Anim:
 BattleScript_ConsumableStatRaiseRet::
 	jumpifnotberry BS_SCRIPTING, BattleScript_ConsumableStatRaiseRet_Anim
 	jumpifability BS_SCRIPTING, ABILITY_RIPEN, BattleScript_ConsumableStatRaiseRet_AbilityPopup
+	jumpifability BS_SCRIPTING, ABILITY_BERRYMADE, BattleScript_ConsumableStatRaiseRet_AbilityPopup
 	goto BattleScript_ConsumableStatRaiseRet_Anim
 BattleScript_ConsumableStatRaiseRet_AbilityPopup:
 	call BattleScript_AbilityPopUp
@@ -7887,6 +7935,7 @@ BattleScript_CustapBerryActivation::
 
 BattleScript_MicleBerryActivate::
 	jumpifability BS_SCRIPTING, ABILITY_RIPEN, BattleScript_MicleBerryActivateRet_Ripen
+	jumpifability BS_SCRIPTING, ABILITY_BERRYMADE, BattleScript_MicleBerryActivateRet_Ripen
 	goto BattleScript_MicleBerryActivateRet_Anim
 BattleScript_MicleBerryActivateRet_Ripen:
 	call BattleScript_AbilityPopUpScripting
@@ -7899,6 +7948,7 @@ BattleScript_MicleBerryActivateRet_Anim:
 
 BattleScript_JabocaRowapBerryActivates::
 	jumpifability BS_TARGET, ABILITY_RIPEN, BattleScript_JabocaRowapBerryActivate_Ripen
+	jumpifability BS_TARGET, ABILITY_BERRYMADE, BattleScript_JabocaRowapBerryActivate_Ripen
 	goto BattleScript_JabocaRowapBerryActivate_Anim
 BattleScript_JabocaRowapBerryActivate_Ripen:
 	call BattleScript_AbilityPopUp

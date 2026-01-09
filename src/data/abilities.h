@@ -2252,6 +2252,13 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .aiRating = 7,
     },
 
+    [ABILITY_AMPLIFIER] =
+    {
+        .name = _("Amplifier"),
+        .description = COMPOUND_STRING("Boosts power of damaging sound moves."),
+        .aiRating = 7,
+    },
+
     [ABILITY_SUPREME_OVERLORD] =
     {
         .name = _("Supreme Overlord"),
@@ -2561,5 +2568,12 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .name = _("Monkey King"),
         .description = COMPOUND_STRING("Powers up MONKEY moves."),
         .aiRating = 6,
+    },
+
+    [ABILITY_ARSENAL] =
+    {
+        .name = _("Arsenal"),
+        .description = COMPOUND_STRING("Powers up ballistic moves."),
+        .aiRating = 5,
     },
 };

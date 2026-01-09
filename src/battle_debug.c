@@ -381,6 +381,7 @@ static const struct ListMenuItem sVolatileStatusListItems[] =
     {COMPOUND_STRING("Minimize"),           VOLATILE_MINIMIZE},
     {COMPOUND_STRING("Charge"),             VOLATILE_CHARGE_TIMER},
     {COMPOUND_STRING("Root"),               VOLATILE_ROOT},
+    {COMPOUND_STRING("Blooming"),           VOLATILE_BLOOMING},
     {COMPOUND_STRING("Yawn"),               VOLATILE_YAWN},
     {COMPOUND_STRING("Imprison"),           VOLATILE_IMPRISON},
     {COMPOUND_STRING("Grudge"),             VOLATILE_GRUDGE},

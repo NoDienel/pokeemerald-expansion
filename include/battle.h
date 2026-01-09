@@ -112,6 +112,7 @@ struct DisableStruct
     u16 laserFocusTimer;
     u16 throatChopTimer;
     u8 wrapTurns;
+    u8 bloomingTurns;
     u16 syrupBombTimer;
     u16 tormentTimer; // used for G-Max Meltdown
     u8 usedMoves:4;
@@ -157,6 +158,7 @@ struct ProtectStruct
     u32 touchedProtectLike:1;
     u32 disableEjectPack:1;
     u32 pranksterElevated:1;
+    u32 quickProtectorElevated:1;
     u32 quickDraw:1;
     u32 quash:1;
     u32 shellTrap:1;
@@ -165,6 +167,7 @@ struct ProtectStruct
     u32 usedAllySwitch:1;
     u32 lashOutAffected:1;
     u32 assuranceDoubled:1;
+    u32 criticalParryTriggered:1;
     u32 forcedSwitch:1;
     u32 myceliumMight:1;
     u32 padding1:1;
@@ -570,6 +573,7 @@ struct BattlerState
     u8 targetsDone[MAX_BATTLERS_COUNT];
 
     u32 commandingDondozo:1;
+    u32 rivalryTriggered:1;
     u32 focusPunchBattlers:1;
     u32 multipleSwitchInBattlers:1;
     u32 alreadyStatusedMoveAttempt:1; // For example when using Thunder Wave on an already paralyzed Pokémon.
@@ -600,6 +604,7 @@ struct PartyState
     u32 dauntlessShieldBoost:1;
     u32 ateBerry:1;
     u32 battleBondBoost:1;
+    u32 pinchHitterActivated:1;
     u32 transformZeroToHero:1;
     u32 supersweetSyrup:1;
     u32 timesGotHit:5;

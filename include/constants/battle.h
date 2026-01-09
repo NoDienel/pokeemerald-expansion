@@ -202,6 +202,7 @@ enum VolatileFlags
     F(VOLATILE_MINIMIZE,                    minimize,                      (u32, 1)) \
     F(VOLATILE_CHARGE_TIMER,                chargeTimer,                   (u32, 2)) \
     F(VOLATILE_ROOT,                        root,                          (u32, 1), V_BATON_PASSABLE) \
+    F(VOLATILE_BLOOMING,                    blooming,                      (u32, 5), V_BATON_PASSABLE) \
     F(VOLATILE_YAWN,                        yawn,                          (u32, 2)) \
     F(VOLATILE_IMPRISON,                    imprison,                      (u32, 1)) \
     F(VOLATILE_GRUDGE,                      grudge,                        (u32, 1)) \
@@ -219,7 +220,9 @@ enum VolatileFlags
     F(VOLATILE_VESSEL_OF_RUIN,              vesselOfRuin,                  (u32, 1)) \
     F(VOLATILE_SWORD_OF_RUIN,               swordOfRuin,                   (u32, 1)) \
     F(VOLATILE_TABLETS_OF_RUIN,             tabletsOfRuin,                 (u32, 1)) \
-    F(VOLATILE_BEADS_OF_RUIN,               beadsOfRuin,                   (u32, 1))
+    F(VOLATILE_BEADS_OF_RUIN,               beadsOfRuin,                   (u32, 1)) \
+    F(VOLATILE_TOGGLE_MODE,                  toggleMode,                    (u32, 1)) \
+    F(VOLATILE_COCOONED,                      cocooned,                      (u32, 1))
 
 
 /* Use within a macro to get the maximum allowed value for a volatile. Requires _typeMaxValue as input. */
@@ -462,6 +465,7 @@ enum __attribute__((packed)) MoveEffect
     MOVE_EFFECT_ION_DELUGE,
     MOVE_EFFECT_HAZE,
     MOVE_EFFECT_LEECH_SEED,
+    MOVE_EFFECT_BLOOM,
     MOVE_EFFECT_REFLECT,
     MOVE_EFFECT_LIGHT_SCREEN,
     MOVE_EFFECT_SALT_CURE,

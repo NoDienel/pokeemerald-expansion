@@ -1588,7 +1588,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     [SPECIES_BEEDRILL] =
     {
         .baseHP        = 65,
-        .baseAttack    = BEEDRILL_ATTACK,
+        .baseAttack    = 90,
         .baseDefense   = 40,
         .baseSpeed     = 75,
         .baseSpAttack  = 45,

@@ -30,7 +30,7 @@ script TestMapConnection_EventScript_Pokeball1
 
 script TestMapConnection_EventScript_Trigger_NoPokemonWalkSouth
 {
-    if(!(getpartysize() > 0))
+    if((getpartysize() == 0))
     {
         lockall
         applymovement(LOCALID_PLAYER, moves(walk_down))
@@ -48,6 +48,61 @@ script TestMapConnection_EventScript_Trainer_Test1
     end
 }
 
+// Pokeball script: gives the player a Ledian for testing Pinch Hitter
+script TestMapConnection_EventScript_PinchHitter_Pokeball
+{
+    lockall
+    msgbox("You found a special Poké Ball!\nIt contains a Ledian to test Pinch Hitter.")
+    waitmessage
+    showmonpic(SPECIES_LEDIAN, 10, 3)
+    givemon(SPECIES_LEDIAN, 50, ITEM_NONE, ITEM_POKE_BALL, NATURE_ADAMANT, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MOVE_BUG_BUZZ)
+    setflag(FLAG_SYS_POKEMON_GET)
+    setflag(FLAG_BADGE01_GET)
+    setflag(FLAG_BADGE02_GET)
+    setflag(FLAG_BADGE03_GET)
+    setflag(FLAG_BADGE04_GET)
+    setflag(FLAG_BADGE05_GET)
+    setflag(FLAG_BADGE06_GET)
+    setflag(FLAG_BADGE07_GET)
+    setflag(FLAG_BADGE08_GET)
+    hidemonpic()
+    releaseall
+    end
+}
+
+// Pokeball script: gives the player a level 5 Weedle for partner-effect testing
+script TestMapConnection_EventScript_Weedle_Pokeball
+{
+    lockall
+    msgbox("A tiny partner appears!\nThis gives a level 5 Weedle for partner-effect tests.")
+    waitmessage
+    showmonpic(SPECIES_WEEDLE, 10, 3)
+    givemon(SPECIES_WEEDLE, 5, ITEM_NONE, ITEM_POKE_BALL, NATURE_DOCILE, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MOVE_POISON_STING)
+    setflag(FLAG_SYS_POKEMON_GET)
+    hidemonpic()
+    releaseall
+    end
+}
+
+// Trainer script: starts a battle so you can perform actions and observe Pinch Hitter
+script TestMapConnection_EventScript_PinchHitter_Trainer
+{
+    trainerbattle_single(TRAINER_WYATT, TestMapConnection_Text_PinchHitter_TrainerIntro, TestMapConnection_Text_PinchHitter_TrainerLose)
+    msgbox("Battle complete. Check if Ledian transformed when it became the last Pokémon.")
+    waitmessage
+    end
+}
+
+text TestMapConnection_Text_PinchHitter_TrainerIntro
+{
+    "This battle is for testing Pinch Hitter.\nMake a move to let Ledian's ability activate."
+}
+
+text TestMapConnection_Text_PinchHitter_TrainerLose
+{
+    "Nice work testing Pinch Hitter!\nObserve whether Ledian transformed."
+}
+
 text TestMapConnection_Text_Trainer_Test1_Intro
 {
     "Testing again? Okay, lets go!"
@@ -56,4 +111,46 @@ text TestMapConnection_Text_Trainer_Test1_Intro
 text TestMapConnection_Text_Trainer_Test1_Lose
 {
     "Woohoo! Well done!"
+}
+
+// Manual Resonate testing notes:
+// - To test Resonate in-game, create or use a Pokémon with ABILITY_RESONATE
+//   (e.g., add the ability to a trainer party or create a custom givemon entry),
+//   then use a partner or opposing Pokémon to use a status sound move (Sing)
+//   and a damaging sound move (Sonic Boom) against it.
+// - Expected: status sound moves are bounced back (status transferred), and
+//   damaging sound moves are prevented and 25% of the predicted damage is
+//   returned to the original user as typeless sound damage.
+
+// Pokeball script: gives the player a Chimecho for testing Resonate
+script TestMapConnection_EventScript_Chimecho_Pokeball
+{
+    lockall
+    msgbox("You found a special Poké Ball!\nIt contains a Chimecho to test Resonate.")
+    waitmessage
+    showmonpic(SPECIES_CHIMECHO, 10, 3)
+    givemon(SPECIES_CHIMECHO, 50, ITEM_NONE, ITEM_POKE_BALL, NATURE_CALM, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MOVE_SING)
+    setflag(FLAG_SYS_POKEMON_GET)
+    hidemonpic()
+    releaseall
+    end
+}
+
+// Trainer script: starts a battle against WYATT (now has a Loudred) for Resonate testing
+script TestMapConnection_EventScript_Resonate_Trainer
+{
+    trainerbattle_single(TRAINER_WYATT, TestMapConnection_Text_Resonate_TrainerIntro, TestMapConnection_Text_Resonate_TrainerLose)
+    msgbox("Battle complete. Check Resonate interactions: status bounce and damaging reflect.")
+    waitmessage
+    end
+}
+
+text TestMapConnection_Text_Resonate_TrainerIntro
+{
+    "This battle tests Resonate. Watch how sound moves are handled."
+}
+
+text TestMapConnection_Text_Resonate_TrainerLose
+{
+    "Resonate test complete. Verify messages and HP changes."
 }

@@ -216,9 +216,21 @@ static inline u32 GetMovePower(u32 moveId)
     return gMovesInfo[SanitizeMoveId(moveId)].power;
 }
 
+static inline bool32 IsKissMove(u32 moveId)
+{
+    moveId = SanitizeMoveId(moveId);
+    return (moveId == MOVE_LOVELY_KISS
+         || moveId == MOVE_SWEET_KISS
+         || moveId == MOVE_DRAINING_KISS
+         || moveId == MOVE_WET_KISS);
+}
+
 static inline u32 GetMoveAccuracy(u32 moveId)
 {
-    return gMovesInfo[SanitizeMoveId(moveId)].accuracy;
+    u32 m = SanitizeMoveId(moveId);
+    if (IsKissMove(m) && GetMoveCategory(m) == DAMAGE_CATEGORY_STATUS)
+        return 100;
+    return gMovesInfo[m].accuracy;
 }
 
 static inline u32 GetMoveTarget(u32 moveId)
@@ -319,6 +331,11 @@ static inline bool32 IsSoundMove(u32 moveId)
 static inline bool32 IsBallisticMove(u32 moveId)
 {
     return gMovesInfo[SanitizeMoveId(moveId)].ballisticMove;
+}
+
+static inline bool32 IsPincerMove(u32 moveId)
+{
+    return gMovesInfo[SanitizeMoveId(moveId)].pincerMove;
 }
 
 static inline bool32 IsPowderMove(u32 moveId)

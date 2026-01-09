@@ -13,6 +13,7 @@
 #include "overworld.h"
 #include "pokeblock.h"
 #include "pokemon.h"
+#include "pokedex.h"
 #include "random.h"
 #include "roamer.h"
 #include "safari_zone.h"
@@ -57,6 +58,7 @@ static bool8 TryGetAbilityInfluencedWildMonIndex(const struct WildPokemon *wildM
 static bool8 TryGetAbilityInfluencedWildMonIndex(const struct WildPokemon *wildMon, enum Type type, enum Ability ability, u8 *monIndex);
 #endif
 static bool8 IsAbilityAllowingEncounter(u8 level);
+static bool8 IsSpeciesFamilyRevived(u16 species);
 
 EWRAM_DATA static u8 sWildEncountersDisabled = 0;
 EWRAM_DATA static u32 sFeebasRngValue = 0;
@@ -565,6 +567,9 @@ static bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, enum 
     case WILD_AREA_HIDDEN:
         break;
     }
+
+    if (IsSpeciesFamilyRevived(wildMonInfo->wildPokemon[wildMonIndex].species))
+        return FALSE;
 
     level = ChooseWildMonLevel(wildMonInfo->wildPokemon, wildMonIndex, area);
     if (flags & WILD_CHECK_REPEL && !IsWildLevelAllowedByRepel(level))
@@ -1120,6 +1125,12 @@ static bool8 IsAbilityAllowingEncounter(u8 level)
     }
 
     return TRUE;
+}
+
+static bool8 IsSpeciesFamilyRevived(u16 species)
+{
+    enum NationalDexOrder nationalNum = SpeciesToNationalPokedexNum(SpeciesToFamily(species));
+    return GetSetPokedexFlag(nationalNum, FLAG_GET_CAUGHT);
 }
 
 static bool8 TryGetRandomWildMonIndexByType(const struct WildPokemon *wildMon, enum Type type, u8 numMon, u8 *monIndex)

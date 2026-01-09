@@ -1665,7 +1665,10 @@
 #define SPECIES_DRAMPA_MEGA                             1548
 #define SPECIES_FALINKS_MEGA                            1549
 
-#define SPECIES_EGG                                     (SPECIES_FALINKS_MEGA + 1)
+// Extra forms / custom species
+#define SPECIES_TOKU_LEDIAN                             1550
+
+#define SPECIES_EGG                                     (SPECIES_TOKU_LEDIAN + 1)
 
 #define NUM_SPECIES SPECIES_EGG
 

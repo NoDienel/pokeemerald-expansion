@@ -283,6 +283,12 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShardTradeBoard::
 	msgbox Route124_DivingTreasureHuntersHouse_Text_ShardTradeBoard, MSGBOX_SIGN
 	end
 
+
+Route124_DivingTreasureHuntersHouse_EventScript_LittleGirl::
+	msgbox Route124_DivingTreasureHuntersHouse_Text_LittleGirl, MSGBOX_DEFAULT
+	release
+	end
+
 Route124_DivingTreasureHuntersHouse_Text_Greeting:
 	.string "I'm the DIVING TREASURE HUNTER!\p"
 	.string "I'm the awesome dude who makes\n"
@@ -336,3 +342,9 @@ Route124_DivingTreasureHuntersHouse_Text_ShardTradeBoard:
 	.string "{CLEAR_TO 0x0c}BLUE SHARD{CLEAR_TO 0x59}{LEFT_ARROW}{RIGHT_ARROW}{CLEAR_TO 0x79}WATER STONE{CLEAR_TO 0xc8}\p"
 	.string "{CLEAR_TO 0x0a}Wanted item{CLEAR_TO 0x7c}Trade item\n"
 	.string "{CLEAR_TO 0x08}GREEN SHARD{CLEAR_TO 0x59}{LEFT_ARROW}{RIGHT_ARROW}{CLEAR_TO 0x7b}LEAF STONE$"
+
+Route124_DivingTreasureHuntersHouse_Text_LittleGirl:
+	.string "Daddy says our family has been\n"
+	.string "treasure hunting here since forever!\p"
+	.string "But, I still dont't get how we buy\n"
+	.string "anything with SHARDS...$"

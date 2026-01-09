@@ -1260,7 +1260,7 @@ static void Cmd_attackcanceler(void)
         gBattleStruct->bouncedMoveIsUsed = TRUE;
         // Edge case for bouncing a powder move against a grass type pokemon.
         gEffectBattler = gBattlerTarget;
-        if (BlocksPrankster(gCurrentMove, gBattlerTarget, gBattlerAttacker, TRUE))
+        if (BlocksPrankster(gCurrentMove, gBattlerTarget, gBattlerAttacker, TRUE) || BlocksQuickProtector(gCurrentMove, gBattlerTarget, gBattlerAttacker, TRUE))
         {
             // Opponent used a prankster'd magic coat -> reflected status move should fail against a dark-type attacker
             gBattlerTarget = gBattlerAttacker;
@@ -1750,6 +1750,16 @@ static void Cmd_adjustdamage(void)
             RecordAbilityBattle(battlerDef, ABILITY_STURDY);
             gLastUsedAbility = ABILITY_STURDY;
             gBattleStruct->moveResultFlags[battlerDef] |= MOVE_RESULT_STURDIED;
+        }
+        else if (GetBattlerAbility(battlerDef) == ABILITY_CRITICAL_PARRY && gSpecialStatuses[battlerDef].criticalHit && gBattleStruct->moveDamage[battlerDef] > 0)
+        {
+            enduredHit |= 1u << battlerDef;
+            RecordAbilityBattle(battlerDef, ABILITY_CRITICAL_PARRY);
+            gLastUsedAbility = ABILITY_CRITICAL_PARRY;
+            gBattleStruct->moveResultFlags[battlerDef] |= MOVE_RESULT_FOE_HUNG_ON;
+            gBattleStruct->moveDamage[battlerDef] = gBattleMons[battlerDef].hp - 1;
+            gProtectStructs[battlerDef].criticalParryTriggered = TRUE;
+            gBattleStruct->calculatedDamageDone = TRUE; // Interrupt additional hits
         }
         else if (holdEffect == HOLD_EFFECT_FOCUS_SASH && IsBattlerAtMaxHp(battlerDef))
         {
@@ -2265,6 +2275,21 @@ static void MoveDamageDataHpUpdate(u32 battler, u32 scriptBattler, const u8 *nex
         // Send updated HP
         BtlController_EmitSetMonData(battler, B_COMM_TO_CONTROLLER, REQUEST_HP_BATTLE, 0, sizeof(gBattleMons[battler].hp), &gBattleMons[battler].hp);
         MarkBattlerForControllerExec(battler);
+
+        if (gProtectStructs[battler].criticalParryTriggered)
+        {
+            gProtectStructs[battler].criticalParryTriggered = FALSE;
+            RecordAbilityBattle(battler, ABILITY_CRITICAL_PARRY);
+            gLastUsedAbility = ABILITY_CRITICAL_PARRY;
+            BattleScriptPush(nextInstr);
+            gBattlerAbility = battler;
+            u8 oldAttacker = gBattlerAttacker;
+            gBattlerAttacker = battler;
+            gBattlerTarget = oldAttacker;
+            gBattlescriptCurrInstr = BattleScript_CriticalParry;
+            return;
+        }
+
         gBattlescriptCurrInstr = nextInstr;
     }
 
@@ -3035,6 +3060,25 @@ void SetMoveEffect(u32 battler, u32 effectBattler, enum MoveEffect moveEffect, c
             gBattleMons[gEffectBattler].volatiles.wrappedBy = gBattlerAttacker;
             BattleScriptPush(battleScript);
             gBattlescriptCurrInstr = BattleScript_MoveEffectWrap;
+        }
+        break;
+    case MOVE_EFFECT_BLOOM:
+        if (gBattleMons[gEffectBattler].volatiles.blooming)
+        {
+            gBattlescriptCurrInstr = battleScript;
+        }
+        else
+        {
+            /* Duration 3-5 turns */
+            gDisableStructs[gEffectBattler].bloomingTurns = RandomUniform(RNG_WRAP, 3, 5);
+            gBattleMons[gEffectBattler].volatiles.blooming = TRUE;
+            /* Non-Grass types are trapped and slowed */
+            enum Type bt0 = GetBattlerType(gEffectBattler, 0, FALSE);
+            enum Type bt1 = GetBattlerType(gEffectBattler, 1, FALSE);
+            if (bt0 != TYPE_GRASS && bt1 != TYPE_GRASS)
+                gBattleMons[gEffectBattler].volatiles.escapePrevention = TRUE;
+            BattleScriptPush(battleScript);
+            gBattlescriptCurrInstr = BattleScript_MoveEffectWrap; /* reuse wrap script for message */
         }
         break;
     case MOVE_EFFECT_ATK_PLUS_1:
@@ -5587,6 +5631,37 @@ static bool32 HandleMoveEndAbilityBlock(u32 battlerAtk, u32 battlerDef, u32 move
             }
         }
         break;
+    case ABILITY_PINCH_HITTER:
+        {
+            if (!IsBattlerAlive(battlerAtk)
+             || NoAliveMonsForEitherParty())
+                break;
+
+            // Trigger when there are no other usable party mons left
+            if (CountUsablePartyMons(battlerAtk) == 0 && !GetBattlerPartyState(battlerAtk)->pinchHitterActivated)
+            {
+                // Only transform Ledian into Toku Ledian
+                if (gBattleMons[battlerAtk].species == SPECIES_LEDIAN)
+                {
+                    struct Pokemon *party = GetBattlerParty(battlerAtk);
+                    u32 monId = gBattlerPartyIndexes[battlerAtk];
+                    u32 targetSpecies = SPECIES_TOKU_LEDIAN;
+
+                    gLastUsedAbility = abilityAtk;
+                    GetBattlerPartyState(battlerAtk)->pinchHitterActivated = TRUE;
+                    if (GetBattlerPartyState(battlerAtk)->changedSpecies == SPECIES_NONE)
+                        GetBattlerPartyState(battlerAtk)->changedSpecies = gBattleMons[battlerAtk].species;
+
+                    SetMonData(&party[monId], MON_DATA_SPECIES, &targetSpecies);
+                    gBattleMons[battlerAtk].species = targetSpecies;
+                    RecalcBattlerStats(battlerAtk, &party[monId], FALSE);
+
+                    BattleScriptCall(BattleScript_TargetFormChangeWithString);
+                    effect = TRUE;
+                }
+            }
+        }
+        break;
     default:
         break;
     }
@@ -6314,6 +6389,10 @@ static void Cmd_moveend(void)
                 && !(gBattleStruct->moveResultFlags[gBattlerTarget] & MOVE_RESULT_NO_EFFECT))
             {
                 gBattleMons[gBattlerTarget].status1 &= ~STATUS1_FREEZE;
+                /* Also remove Blooming if present */
+                gBattleMons[gBattlerTarget].volatiles.blooming = FALSE;
+                gBattleMons[gBattlerTarget].volatiles.escapePrevention = FALSE;
+                gDisableStructs[gBattlerTarget].bloomingTurns = 0;
                 BtlController_EmitSetMonData(gBattlerTarget, B_COMM_TO_CONTROLLER, REQUEST_STATUS_BATTLE, 0, sizeof(gBattleMons[gBattlerTarget].status1), &gBattleMons[gBattlerTarget].status1);
                 MarkBattlerForControllerExec(gBattlerTarget);
                 BattleScriptCall(BattleScript_DefrostedViaFireMove);
@@ -9045,7 +9124,7 @@ static bool32 IsRototillerAffected(u32 battler)
         return FALSE;   // Only grass types affected
     if (IsSemiInvulnerable(battler, CHECK_ALL))
         return FALSE;   // Rototiller doesn't affected semi-invulnerable battlers
-    if (BlocksPrankster(MOVE_ROTOTILLER, gBattlerAttacker, battler, FALSE))
+    if (BlocksPrankster(MOVE_ROTOTILLER, gBattlerAttacker, battler, FALSE) || BlocksQuickProtector(MOVE_ROTOTILLER, gBattlerAttacker, battler, FALSE))
         return FALSE;
     return TRUE;
 }
@@ -11495,7 +11574,7 @@ static void Cmd_trysetperishsong(void)
     {
         if (gBattleMons[i].volatiles.perishSong
             || GetBattlerAbility(i) == ABILITY_SOUNDPROOF
-            || BlocksPrankster(gCurrentMove, gBattlerAttacker, i, TRUE)
+            || BlocksPrankster(gCurrentMove, gBattlerAttacker, i, TRUE) || BlocksQuickProtector(gCurrentMove, gBattlerAttacker, i, TRUE)
             || gBattleMons[i].volatiles.semiInvulnerable == STATE_COMMANDER)
         {
             notAffectedCount++;
@@ -11795,6 +11874,31 @@ static void Cmd_rapidspinfree(void)
     {
         gBattleMons[gBattlerAttacker].volatiles.leechSeed = 0;
         BattleScriptCall(BattleScript_LeechSeedFree);
+    }
+    else if (gBattleMons[gBattlerAttacker].volatiles.blooming)
+    {
+        /* Rapid Spin removes Blooming for non-Grass types */
+        enum Type bt0 = GetBattlerType(gBattlerAttacker, 0, FALSE);
+        enum Type bt1 = GetBattlerType(gBattlerAttacker, 1, FALSE);
+        if (bt0 != TYPE_GRASS && bt1 != TYPE_GRASS)
+        {
+            gBattleMons[gBattlerAttacker].volatiles.blooming = FALSE;
+            gDisableStructs[gBattlerAttacker].bloomingTurns = 0;
+            gBattleMons[gBattlerAttacker].volatiles.escapePrevention = FALSE;
+            BattleScriptCall(BattleScript_WrapFree);
+            return;
+        }
+    }
+    else if (gBattleMons[gBattlerAttacker].volatiles.cocooned && !IsBattleMoveStatus(gCurrentMove))
+    {
+        // Using an attacking move breaks Cocooned
+        gBattleMons[gBattlerAttacker].volatiles.cocooned = FALSE;
+        // Show simple message for cocoon break
+        gLastUsedAbility = ABILITY_COCOONED;
+        gBattleScripting.battler = gBattlerAbility = gBattlerAttacker;
+        RecordAbilityBattle(gBattlerAttacker, ABILITY_COCOONED);
+        BattleScriptCall(BattleScript_CocoonBreak);
+        return;
     }
     else if (AreAnyHazardsOnSide(atkSide))
     {
@@ -12643,6 +12747,9 @@ static void Cmd_switchoutabilities(void)
     CMD_ARGS(u8 battler);
 
     u32 battler = GetBattlerForBattleScript(cmd->battler);
+     /* Clear Rivalry trigger for this battler so it can re-activate when
+         sent out again later. Rivalry is tracked per-battler now. */
+     gBattleStruct->battlerState[battler].rivalryTriggered = FALSE;
     if (gDisableStructs[battler].neutralizingGas)
     {
         gDisableStructs[battler].neutralizingGas = FALSE;
@@ -15268,12 +15375,57 @@ void BS_JumpIfBlockedBySoundproof(void)
 {
     NATIVE_ARGS(u8 battler, const u8 *jumpInstr);
     u32 battler = GetBattlerForBattleScript(cmd->battler);
-    if (IsSoundMove(gCurrentMove) && GetBattlerAbility(battler) == ABILITY_SOUNDPROOF)
+    if (IsSoundMove(gCurrentMove))
     {
-        gLastUsedAbility = ABILITY_SOUNDPROOF;
-        gBattlescriptCurrInstr = cmd->jumpInstr;
-        RecordAbilityBattle(battler, gLastUsedAbility);
-        gBattlerAbility = battler;
+        enum Ability ab = GetBattlerAbility(battler);
+        if (ab == ABILITY_SOUNDPROOF)
+        {
+            gLastUsedAbility = ABILITY_SOUNDPROOF;
+            gBattlescriptCurrInstr = cmd->jumpInstr;
+            RecordAbilityBattle(battler, gLastUsedAbility);
+            gBattlerAbility = battler;
+        }
+        else if (ab == ABILITY_RESONATE && gBattlerAttacker != battler)
+        {
+            // Resonate: status sound moves behave like Magic Bounce; damaging sound moves are cancelled
+            // and reflect 25% of predicted damage back to the attacker.
+            if (IsBattleMoveStatus(gCurrentMove))
+            {
+                gLastUsedAbility = ABILITY_RESONATE;
+                gBattlescriptCurrInstr = cmd->jumpInstr;
+                RecordAbilityBattle(battler, gLastUsedAbility);
+                gBattlerAbility = battler;
+            }
+            else
+            {
+                struct BattleContext dmgCtx = {0};
+                s32 predicted = 0;
+
+                dmgCtx.battlerAtk = gBattlerAttacker;
+                dmgCtx.battlerDef = battler;
+                dmgCtx.move = dmgCtx.chosenMove = gCurrentMove;
+                dmgCtx.moveType = GetBattleMoveType(gCurrentMove);
+                dmgCtx.updateFlags = FALSE;
+
+                predicted = CalculateMoveDamage(&dmgCtx);
+                if (predicted < 0)
+                    predicted = 0;
+
+                s32 reflect = predicted * 25 / 100;
+
+                // Make the resonate holder 'attack' the original attacker for the reflect damage
+                u32 originalAttacker = gBattlerAttacker;
+                gBattlerAttacker = battler;
+                gBattlerTarget = originalAttacker;
+                gBattleStruct->moveDamage[gBattlerTarget] = reflect;
+
+                gLastUsedAbility = ABILITY_RESONATE;
+                RecordAbilityBattle(battler, gLastUsedAbility);
+                gBattlerAbility = battler;
+
+                gBattlescriptCurrInstr = BattleScript_ResonateReflect;
+            }
+        }
     }
     else
     {
@@ -17298,7 +17450,7 @@ void BS_SkyDropYawn(void)
 void BS_JumpIfPranksterBlocked(void)
 {
     NATIVE_ARGS(const u8 *jumpInstr);
-    if (BlocksPrankster(gCurrentMove, gBattlerAttacker, gBattlerTarget, TRUE))
+    if (BlocksPrankster(gCurrentMove, gBattlerAttacker, gBattlerTarget, TRUE) || BlocksQuickProtector(gCurrentMove, gBattlerAttacker, gBattlerTarget, TRUE))
         gBattlescriptCurrInstr = cmd->jumpInstr;
     else
         gBattlescriptCurrInstr = cmd->nextInstr;

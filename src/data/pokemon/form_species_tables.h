@@ -1923,6 +1923,14 @@ static const u16 sMiniorFormSpeciesIdTable[] = {
 };
 #endif //P_FAMILY_MINIOR
 
+#if P_FAMILY_LEDYBA
+static const u16 sLedianFormSpeciesIdTable[] = {
+    SPECIES_LEDIAN,
+    SPECIES_TOKU_LEDIAN,
+    FORM_SPECIES_END,
+};
+#endif //P_FAMILY_LEDYBA
+
 #if P_FAMILY_TOGEDEMARU
 static const u16 sTogedemaruFormSpeciesIdTable[] = {
     SPECIES_TOGEDEMARU,

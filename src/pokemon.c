@@ -718,6 +718,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
 #include "data/object_events/object_event_pic_tables_followers.h"
 
 #include "data/pokemon/species_info.h"
+#include "data/pokemon/g_species_family.h"
 
 #define PP_UP_SHIFTS(val)           val,        (val) << 2,        (val) << 4,        (val) << 6
 #define PP_UP_SHIFTS_INV(val) (u8)~(val), (u8)~((val) << 2), (u8)~((val) << 4), (u8)~((val) << 6)
@@ -4219,6 +4220,13 @@ bool8 HealStatusConditions(struct Pokemon *mon, u32 healMask, u8 battler)
         if (gMain.inBattle && battler != MAX_BATTLERS_COUNT)
         {
             gBattleMons[battler].status1 &= ~healMask;
+            if (healMask & STATUS1_FREEZE)
+            {
+                /* Remove Blooming as well when Freeze is cured */
+                gBattleMons[battler].volatiles.blooming = FALSE;
+                gBattleMons[battler].volatiles.escapePrevention = FALSE;
+                gDisableStructs[battler].bloomingTurns = 0;
+            }
             if((healMask & STATUS1_SLEEP))
             {
                 u32 i = 0;
@@ -5063,6 +5071,15 @@ enum NationalDexOrder HoennToNationalOrder(enum HoennDexOrder hoennNum)
         return 0;
 
     return sHoennToNationalOrder[hoennNum - 1];
+}
+
+u16 SpeciesToFamily(u16 species)
+{
+    species = SanitizeSpeciesId(species);
+    if (!species)
+        return SPECIES_NONE;
+
+    return gSpeciesFamily[species];
 }
 
 // Spots can be drawn on Spinda's color indexes 1, 2, or 3

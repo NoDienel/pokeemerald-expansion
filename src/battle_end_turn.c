@@ -163,6 +163,7 @@ static bool32 HandleEndTurnWeatherDamage(u32 battler)
         {
             if (ability != ABILITY_SNOW_CLOAK
              && ability != ABILITY_OVERCOAT
+             && ability != ABILITY_MAGMA_ARMOR
              && !IS_BATTLER_OF_TYPE(battler, TYPE_ICE)
              && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERGROUND
              && gBattleMons[battler].volatiles.semiInvulnerable != STATE_UNDERWATER
@@ -433,6 +434,44 @@ static bool32 HandleEndTurnIngrain(u32 battler)
 
     return effect;
 }
+
+static bool32 HandleEndTurnBloom(u32 battler)
+{
+    bool32 effect = FALSE;
+
+    gBattleStruct->eventState.endTurnBattler++;
+
+    if (gBattleMons[battler].volatiles.blooming && IsBattlerAlive(battler))
+    {
+        if (gDisableStructs[battler].bloomingTurns != 0)
+        {
+            gDisableStructs[battler].bloomingTurns--;
+            // Grass-types heal like Ingrain
+            if (!gBattleMons[battler].volatiles.healBlock)
+            {
+                enum Type t0 = GetBattlerType(battler, 0, FALSE);
+                enum Type t1 = GetBattlerType(battler, 1, FALSE);
+                if ((t0 == TYPE_GRASS || t1 == TYPE_GRASS) && !IsBattlerAtMaxHp(battler))
+                {
+                    SetHealAmount(battler, GetDrainedBigRootHp(battler, GetNonDynamaxMaxHP(battler) / 16));
+                    BattleScriptExecute(BattleScript_IngrainTurnHeal);
+                    effect = TRUE;
+                }
+            }
+        }
+        else
+        {
+            // effect ends
+            gBattleMons[battler].volatiles.blooming = FALSE;
+            gBattleMons[battler].volatiles.escapePrevention = FALSE;
+            gDisableStructs[battler].bloomingTurns = 0;
+            BattleScriptExecute(BattleScript_WrapEnds);
+            effect = TRUE;
+        }
+    }
+
+    return effect;
+} 
 
 static bool32 HandleEndTurnLeechSeed(u32 battler)
 {
@@ -1388,6 +1427,7 @@ static bool32 (*const sEndTurnEffectHandlers[])(u32 battler) =
     [ENDTURN_EMERGENCY_EXIT_2] = HandleEndTurnEmergencyExit,
     [ENDTURN_AQUA_RING] = HandleEndTurnAquaRing,
     [ENDTURN_INGRAIN] = HandleEndTurnIngrain,
+    [ENDTURN_BLOOM] = HandleEndTurnBloom,
     [ENDTURN_LEECH_SEED] = HandleEndTurnLeechSeed,
     [ENDTURN_POISON] = HandleEndTurnPoison,
     [ENDTURN_BURN] = HandleEndTurnBurn,

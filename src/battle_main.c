@@ -3330,6 +3330,7 @@ const u8* FaintClearSetData(u32 battler)
     gProtectStructs[battler].fleeType = 0;
     gProtectStructs[battler].statRaised = FALSE;
     gProtectStructs[battler].pranksterElevated = FALSE;
+    gProtectStructs[battler].quickProtectorElevated = FALSE;
 
     gDisableStructs[battler].isFirstTurn = 2;
 
@@ -4724,6 +4725,15 @@ u32 GetBattlerTotalSpeedStat(u32 battler, enum Ability ability, enum HoldEffect 
     if (gSideStatuses[GetBattlerSide(battler)] & SIDE_STATUS_SWAMP)
         speed /= 4;
 
+    // Blooming speed halving (non-Grass types)
+    if (gBattleMons[battler].volatiles.blooming)
+    {
+        enum Type t0 = GetBattlerType(battler, 0, FALSE);
+        enum Type t1 = GetBattlerType(battler, 1, FALSE);
+        if (t0 != TYPE_GRASS && t1 != TYPE_GRASS)
+            speed /= 2;
+    }
+
     return speed;
 }
 
@@ -4732,6 +4742,7 @@ s32 GetChosenMovePriority(u32 battler, enum Ability ability)
     u16 move;
 
     gProtectStructs[battler].pranksterElevated = FALSE;
+    gProtectStructs[battler].quickProtectorElevated = FALSE;
     if (gProtectStructs[battler].noValidMoves)
         move = MOVE_STRUGGLE;
     else
@@ -4767,6 +4778,11 @@ s32 GetBattleMovePriority(u32 battler, enum Ability ability, u32 move)
     {
         gProtectStructs[battler].pranksterElevated = 1;
         priority++;
+    }
+    else if (ability == ABILITY_QUICK_PROTECTOR && (move == MOVE_REFLECT || move == MOVE_LIGHT_SCREEN || move == MOVE_AURORA_VEIL || move == MOVE_SAFEGUARD || move == MOVE_LUCKY_CHANT))
+    {
+        gProtectStructs[battler].quickProtectorElevated = 1;
+        priority += 5;
     }
     else if (GetMoveEffect(move) == EFFECT_GRASSY_GLIDE && IsBattlerTerrainAffected(battler, ability, GetBattlerHoldEffect(battler), STATUS_FIELD_GRASSY_TERRAIN) && GetActiveGimmick(gBattlerAttacker) != GIMMICK_DYNAMAX && !IsGimmickSelected(battler, GIMMICK_DYNAMAX))
     {
