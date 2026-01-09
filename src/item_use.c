@@ -1493,10 +1493,9 @@ static void ItemUseOnFieldCB_Honey(u8 taskId)
 
 void ItemUseOutOfBattle_Honey(u8 taskId)
 {
-    sItemUseOnFieldCB = ItemUseOnFieldCB_Honey;
-    gFieldCallback = FieldCB_UseItemOnField;
-    gBagMenu->newScreenCallback = CB2_ReturnToField;
-    Task_FadeAndCloseBagMenu(taskId);
+    // Honey can be used from the bag as a 25% HP-recovery item (not a berry)
+    gItemUseCB = ItemUseCB_Medicine;
+    SetUpItemUseCallback(taskId);
 }
 
 void ItemUseOutOfBattle_CannotUse(u8 taskId)

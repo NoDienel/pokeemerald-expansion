@@ -834,7 +834,10 @@ static u32 ItemHealHp(u32 battler, u32 itemId, enum HealAmount percentHeal)
             healAmount *= 2;
 
         SetHealAmount(battler, healAmount);
-        BattleScriptCall(BattleScript_ItemHealHP_RemoveItem);
+        if (GetItemPocket(itemId) == POCKET_BERRIES)
+            BattleScriptCall(BattleScript_ItemHealHP_RemoveItem);
+        else
+            BattleScriptCall(BattleScript_ItemHoneyRemoveItem);
         effect = ITEM_HP_CHANGE;
     }
 
@@ -990,7 +993,35 @@ static enum ItemEffect TrySetMicleBerry(u32 battler, u32 itemId)
     return effect;
 }
 
-enum ItemEffect ItemBattleEffects(u32 itemBattler, u32 battler, enum HoldEffect holdEffect, ActivationTiming timing)
+static enum ItemEffect TryHoney(u32 itemBattler)
+{
+    enum ItemEffect effect = ITEM_NO_EFFECT;
+
+    if (!IsDoubleBattle())
+        return effect;
+
+    u32 partner = GetPartnerBattler(itemBattler);
+    if (!IsBattlerAlive(partner))
+        return effect;
+
+    if (gBattleMons[partner].volatiles.healBlock)
+        return effect;
+
+    if (gBattleMons[partner].hp >= gBattleMons[partner].maxHP)
+        return effect;
+
+    if (gBattleMons[partner].hp * 2 > gBattleMons[partner].maxHP) // Partner above 50%
+        return effect;
+
+    gEffectBattler = partner;
+    SetHealAmount(partner, GetNonDynamaxMaxHP(partner) / 4);
+    BattleScriptCall(BattleScript_ItemHoneyRemoveItem);
+    effect = ITEM_EFFECT_OTHER;
+
+    return effect;
+}
+
+enum ItemEffect ItemBattleEffects(u32 itemBattler, u32 battler, enum HoldEffect holdEffect, ActivationTiming timing) 
 {
     enum ItemEffect effect = ITEM_NO_EFFECT;
     u32 item;
@@ -1063,6 +1094,9 @@ enum ItemEffect ItemBattleEffects(u32 itemBattler, u32 battler, enum HoldEffect 
         break;
     case HOLD_EFFECT_ROWAP_BERRY:
         effect = TryRowapBerry(itemBattler, battler, item);
+        break;
+    case HOLD_EFFECT_HONEY:
+        effect = TryHoney(itemBattler);
         break;
     case HOLD_EFFECT_ENIGMA_BERRY: // consume and heal if hit by super effective move
         effect = TrySetEnigmaBerry(itemBattler, battler);

@@ -221,6 +221,12 @@ const struct HoldEffectInfo gHoldEffectsInfo[HOLD_EFFECT_COUNT] =
         .leftovers = TRUE,
     },
 
+    [HOLD_EFFECT_HONEY] =
+    {
+        .onSwitchIn = TRUE,
+        .onHpThreshold = TRUE,
+    },
+
     [HOLD_EFFECT_LIGHT_BALL] =
     {
     },

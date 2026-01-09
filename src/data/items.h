@@ -2964,12 +2964,15 @@ const struct Item gItemsInfo[] =
         .pluralName = ITEM_PLURAL_NAME("Honey"),
         .price = (I_PRICE < GEN_5) ? 100 : ((I_PRICE < GEN_8) ? 300 : 900),
         .description = COMPOUND_STRING(
-            "Sweet honey that\n"
-            "attracts wild\n"
-            "Pokémon when used."),
+            "Sweet honey.\n"
+            "Heals a partner by\n"
+            "25% when at half HP."),
+        .holdEffect = HOLD_EFFECT_HONEY,
+        .holdEffectParam = 25,
+        .effect = gItemEffect_Honey,
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_STATUS_RECOVERY,
-        .type = ITEM_USE_FIELD,
+        .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_Honey,
         .flingPower = 30,
         .iconPic = gItemIcon_Honey,

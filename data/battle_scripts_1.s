@@ -7548,6 +7548,15 @@ BattleScript_ItemHealHP_RemoveItemRet_Anim:
 	removeitem BS_SCRIPTING
 	return
 
+BattleScript_ItemHoneyRemoveItem:
+	playanimation BS_SCRIPTING, B_ANIM_HELD_ITEM_EFFECT
+	printstring STRINGID_PKMNSITEMRESTOREDHEALTH
+	waitmessage B_WAIT_TIME_LONG
+	healthbarupdate BS_SCRIPTING, PASSIVE_HP_UPDATE
+	datahpupdate BS_SCRIPTING, PASSIVE_HP_UPDATE
+	removeitem BS_SCRIPTING
+	return
+
 BattleScript_BerryPPHeal::
 	jumpifability BS_SCRIPTING, ABILITY_RIPEN, BattleScript_BerryPPHeal_AbilityPopup
 	jumpifability BS_SCRIPTING, ABILITY_BERRYMADE, BattleScript_BerryPPHeal_AbilityPopup
