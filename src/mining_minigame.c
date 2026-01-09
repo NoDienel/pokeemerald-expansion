@@ -1478,7 +1478,7 @@ static const struct LocSysLocationData LocationData[] =
 static const u8 sText_SomethingPinged[] = _("Something pinged in the wall!\n{STR_VAR_1} confirmed!");
 static const u8 sText_EverythingWas[] = _("Everything was dug up!");
 static const u8 sText_WasObtained[] = _("{STR_VAR_1}\nwas obtained!");
-static const u8 sText_FossilIdentified[] = _("Fossil was identified as {STR_VAR_1}!");
+static const u8 sText_FossilIdentified[] = _("Fossil was identified as a\n{STR_VAR_1}!");
 static const u8 sText_TooBad[] = _("Too bad!\nYour Bag is full!");
 static const u8 sText_TheWall[] = _("The wall collapsed!");
 
