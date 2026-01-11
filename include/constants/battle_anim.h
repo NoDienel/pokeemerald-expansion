@@ -545,6 +545,9 @@
 #define B_ANIM_ITEM_KNOCKOFF            4
 #define B_ANIM_TURN_TRAP                5
 #define B_ANIM_HELD_ITEM_EFFECT         6
+#ifndef B_ANIM_ITEM_EFFECT
+#define B_ANIM_ITEM_EFFECT B_ANIM_HELD_ITEM_EFFECT
+#endif
 #define B_ANIM_SMOKEBALL_ESCAPE         7
 #define B_ANIM_HANGED_ON                8
 #define B_ANIM_RAIN_CONTINUES           9

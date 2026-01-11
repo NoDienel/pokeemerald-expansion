@@ -1,7 +1,7 @@
 #include "global.h"
 #include "test/battle.h"
 
-SINGLE_BATTLE_TEST("Toggle Mode swaps Attack and Sp. Attack each end of turn and resets on switch")
+DOUBLE_BATTLE_TEST("Toggle Mode swaps Attack and Sp. Attack each end of turn and resets on switch")
 {
     s16 dmg1;
     s16 dmg2;

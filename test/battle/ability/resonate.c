@@ -25,7 +25,7 @@ SINGLE_BATTLE_TEST("Resonate bounces back status sound moves like Magic Bounce")
     }
 }
 
-SINGLE_BATTLE_TEST("Resonate returns 25% of damaging sound moves as typeless sound damage")
+SINGLE_BATTLE_TEST("Resonate returns 25% of damaging sound moves as typeless sound damage", s16 damage)
 {
     GIVEN {
         PLAYER(SPECIES_WOBBUFFET) { MaxHP(100); HP(100); }

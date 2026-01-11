@@ -2120,6 +2120,7 @@ void SpAttackIV_(u32 sourceLine, u32 spAttackIV)
     SetMonData(DATA.currentMon, MON_DATA_SPATK_IV, &spAttackIV);
 }
 
+
 void SpDefenseIV_(u32 sourceLine, u32 spDefenseIV)
 {
     INVALID_IF(!DATA.currentMon, "SpDefense IV outside of PLAYER/OPPONENT");

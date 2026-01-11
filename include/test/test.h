@@ -267,4 +267,9 @@ static inline struct Benchmark BenchmarkStop(void)
         Test_ExitWithResult(TEST_RESULT_TODO, __LINE__, ":L%s:%d: EXPECT_TO_DO", gTestRunnerState.test->filename, __LINE__); \
     } while (0)
 
+// Common assertion aliases expected by some tests
+#define ASSERT_TRUE(c) EXPECT(c)
+#define ASSERT_FALSE(c) EXPECT(!(c))
+#define EXPECT_FALSE(c) EXPECT(!(c))
+
 #endif

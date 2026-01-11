@@ -4736,7 +4736,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 /* Toggle Mode: swap Attack and Sp. Attack base stats by toggling a per-battler volatile every end of turn */
                 gBattleMons[battler].volatiles.toggleMode ^= 1;
                 gBattlerAttacker = battler;
-                gBattleCommunication[MULTISTRING_CHOOSER] = STRINGID_PKMN_CHANGED_MODES;
+                gBattleCommunication[MULTISTRING_CHOOSER] = (u8)STRINGID_PKMN_CHANGED_MODES;
                 BattleScriptExecute(BattleScript_ToggleModeFlip);
                 effect++;
                 break;

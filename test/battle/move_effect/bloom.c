@@ -6,7 +6,7 @@ ASSUMPTIONS
     ASSUME(GetMoveEffect(MOVE_BLOOM) == EFFECT_BLOOM);
 }
 
-SINGLE_BATTLE_TEST("Bloom sets Blooming volatile and heals Grass user at end of turn")
+SINGLE_BATTLE_TEST("Bloom sets Blooming volatile and heals Grass user at end of turn", s16 heal)
 {
     GIVEN {
         PLAYER(SPECIES_ODDISH) { HP(150); }

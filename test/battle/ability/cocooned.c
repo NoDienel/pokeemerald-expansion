@@ -22,7 +22,7 @@ SINGLE_BATTLE_TEST("Using an attacking move clears Cocooned")
         PLAYER(SPECIES_WYNAUT) { Ability(ABILITY_NONE); } // partner to allow switching
         OPPONENT(SPECIES_WYNAUT) { Ability(ABILITY_NONE); } // target
     } WHEN {
-        TURN { MOVE(playerLeft, MOVE_TACKLE, target: opponentLeft); }
+        TURN { MOVE(player, MOVE_TACKLE, target: opponent); }
     } SCENE {
         // After using an attacking move, cocooned should be removed
         ASSERT_FALSE(gBattleMons[PLAYER_ALIVE_BATTLER].volatiles.cocooned);

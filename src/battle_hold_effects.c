@@ -834,10 +834,7 @@ static u32 ItemHealHp(u32 battler, u32 itemId, enum HealAmount percentHeal)
             healAmount *= 2;
 
         SetHealAmount(battler, healAmount);
-        if (GetItemPocket(itemId) == POCKET_BERRIES)
-            BattleScriptCall(BattleScript_ItemHealHP_RemoveItem);
-        else
-            BattleScriptCall(BattleScript_ItemHoneyRemoveItem);
+        BattleScriptCall(BattleScript_ItemHealHP_RemoveItem);
         effect = ITEM_HP_CHANGE;
     }
 
@@ -993,14 +990,14 @@ static enum ItemEffect TrySetMicleBerry(u32 battler, u32 itemId)
     return effect;
 }
 
-static enum ItemEffect TryHoney(u32 itemBattler)
+static enum ItemEffect TryHoney(u32 battler)
 {
     enum ItemEffect effect = ITEM_NO_EFFECT;
 
     if (!IsDoubleBattle())
         return effect;
 
-    u32 partner = GetPartnerBattler(itemBattler);
+    u32 partner = GetPartnerBattler(battler);
     if (!IsBattlerAlive(partner))
         return effect;
 

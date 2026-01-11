@@ -7548,7 +7548,7 @@ BattleScript_ItemHealHP_RemoveItemRet_Anim:
 	removeitem BS_SCRIPTING
 	return
 
-BattleScript_ItemHoneyRemoveItem:
+BattleScript_ItemHoneyRemoveItem::
 	playanimation BS_SCRIPTING, B_ANIM_HELD_ITEM_EFFECT
 	printstring STRINGID_PKMNSITEMRESTOREDHEALTH
 	waitmessage B_WAIT_TIME_LONG

@@ -2255,7 +2255,7 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
     [ABILITY_AMPLIFIER] =
     {
         .name = _("Amplifier"),
-        .description = COMPOUND_STRING("Boosts power of damaging sound moves."),
+        .description = COMPOUND_STRING("Boosts power of sound moves."),
         .aiRating = 7,
     },
 
@@ -2444,12 +2444,7 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .aiRating = 4,
     },
 
-    [ABILITY_AMPLIFIER] =
-    {
-        .name = _("Amplifier"),
-        .description = COMPOUND_STRING("Powers up sound moves."),
-        .aiRating = 5,
-    },
+
 
     [ABILITY_SMOOCHER] =
     {

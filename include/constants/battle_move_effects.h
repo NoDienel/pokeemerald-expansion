@@ -150,6 +150,7 @@ enum __attribute__((packed)) BattleMoveEffects
     EFFECT_WISH,
     EFFECT_ASSIST,
     EFFECT_INGRAIN,
+    EFFECT_BLOOM,
     EFFECT_MAGIC_COAT,
     EFFECT_RECYCLE,
     EFFECT_REVENGE,

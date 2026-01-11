@@ -907,9 +907,7 @@
 #define MOVE_PSYCHIC_NOISE 845
 #define MOVE_UPPER_HAND 846
 #define MOVE_MALIGNANT_CHAIN 847
-#define MOVE_BLOOM 848
-
-#define MOVES_COUNT_GEN9 848
+#define MOVES_COUNT_GEN9 849
 
 #define MOVES_COUNT         MOVES_COUNT_GEN9
 
@@ -953,7 +951,7 @@
 #define MOVE_LIGHT_THAT_BURNS_THE_SKY (MOVES_COUNT + 33)
 #define MOVE_SOUL_STEALING_7_STAR_STRIKE (MOVES_COUNT + 34)
 
-#define MOVE_WET_KISS (MOVES_COUNT + 35)
+// MOVE_WET_KISS will be defined in the CUSTOM section below
 #define FIRST_Z_MOVE        MOVE_BREAKNECK_BLITZ
 #define LAST_Z_MOVE         MOVE_SOUL_STEALING_7_STAR_STRIKE
 
@@ -1019,7 +1017,13 @@
 
 #define MOVES_COUNT_DYNAMAX       (LAST_MAX_MOVE + 1)
 
-#define MOVES_COUNT_ALL         MOVES_COUNT_DYNAMAX
+// Custom moves section (project-specific additions)
+#define FIRST_CUSTOM_MOVE        MOVES_COUNT_DYNAMAX
+#define MOVE_BLOOM               (FIRST_CUSTOM_MOVE + 0)
+#define MOVE_WET_KISS            (FIRST_CUSTOM_MOVE + 1)
+#define MOVES_COUNT_CUSTOM       2
+
+#define MOVES_COUNT_ALL         (MOVES_COUNT_DYNAMAX + MOVES_COUNT_CUSTOM)
 
 // Used for checks for moves affected by Disable, Mimic, etc.
 #define MOVE_UNAVAILABLE 0xFFFF

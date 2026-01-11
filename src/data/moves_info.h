@@ -7454,28 +7454,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .validApprenticeMove = TRUE,
     },
 
-    [MOVE_BLOOM] =
-    {
-        .name = COMPOUND_STRING("Bloom"),
-        .description = COMPOUND_STRING(
-            "The user blooms, causing\n"
-            "petals to heal Grass-types\n"
-            "and hinder other Pokémon."),
-        .effect = EFFECT_BLOOM,
-        .power = 0,
-        .type = TYPE_GRASS,
-        .accuracy = 0,
-        .pp = 15,
-        .target = MOVE_TARGET_USER,
-        .priority = 0,
-        .category = DAMAGE_CATEGORY_STATUS,
-        .snatchAffected = TRUE,
-        .mirrorMoveBanned = TRUE,
-        .contestEffect = C_UPDATED_MOVE_EFFECTS >= GEN_6 ? CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS : CONTEST_EFFECT_AVOID_STARTLE,
-        .contestCategory = CONTEST_CATEGORY_BEAUTY,
-        .battleAnimScript = gBattleAnimMove_Ingrain,
-        .validApprenticeMove = TRUE,
-    },
+
 
     [MOVE_SUPERPOWER] =
     {
@@ -14946,27 +14925,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_DrainingKiss,
     },
 
-    [MOVE_WET_KISS] =
-    {
-        .name = COMPOUND_STRING("Wet Kiss"),
-        .description = sWetKissDescription,
-        .effect = EFFECT_ABSORB,
-        .power = 50,
-        .type = TYPE_WATER,
-        .accuracy = 100,
-        .pp = 10,
-        .target = MOVE_TARGET_SELECTED,
-        .priority = 0,
-        .category = DAMAGE_CATEGORY_SPECIAL,
-        .argument = { .absorbPercentage = 75 },
-        .makesContact = TRUE,
-        .healingMove = B_HEAL_BLOCKING >= GEN_6,
-        .contestEffect = CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES,
-        .contestCategory = CONTEST_CATEGORY_BEAUTY,
-        .contestComboStarterId = 0,
-        .contestComboMoves = {0},
-        .battleAnimScript = gBattleAnimMove_DrainingKiss,
-    },
+
 
     [MOVE_CRAFTY_SHIELD] =
     {
@@ -22986,5 +22945,51 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .category = DAMAGE_CATEGORY_PHYSICAL,
         .ignoresProtect = TRUE,
         .battleAnimScript = gBattleAnimMove_GMaxRapidFlow,
+    },
+
+    // Custom moves (appended to avoid overlap with generated sections)
+    [MOVE_BLOOM] =
+    {
+        .name = COMPOUND_STRING("Bloom"),
+        .description = COMPOUND_STRING(
+            "The user blooms, causing\n"
+            "petals to heal Grass-types\n"
+            "and hinder other Pokémon."),
+        .effect = EFFECT_BLOOM,
+        .power = 0,
+        .type = TYPE_GRASS,
+        .accuracy = 0,
+        .pp = 15,
+        .target = MOVE_TARGET_USER,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_STATUS,
+        .snatchAffected = TRUE,
+        .mirrorMoveBanned = TRUE,
+        .contestEffect = C_UPDATED_MOVE_EFFECTS >= GEN_6 ? CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS : CONTEST_EFFECT_AVOID_STARTLE,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .battleAnimScript = gBattleAnimMove_Ingrain,
+        .validApprenticeMove = TRUE,
+    },
+
+    [MOVE_WET_KISS] =
+    {
+        .name = COMPOUND_STRING("Wet Kiss"),
+        .description = sWetKissDescription,
+        .effect = EFFECT_ABSORB,
+        .power = 50,
+        .type = TYPE_WATER,
+        .accuracy = 100,
+        .pp = 10,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .argument = { .absorbPercentage = 75 },
+        .makesContact = TRUE,
+        .healingMove = B_HEAL_BLOCKING >= GEN_6,
+        .contestEffect = CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+        .battleAnimScript = gBattleAnimMove_DrainingKiss,
     },
 };

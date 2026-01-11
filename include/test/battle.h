@@ -567,6 +567,11 @@
 #define MAX_QUEUED_EVENTS 30
 #define MAX_EXPECTED_ACTIONS 10
 
+// Default helper for tests that need to index the player's battler
+#ifndef PLAYER_ALIVE_BATTLER
+#define PLAYER_ALIVE_BATTLER B_POSITION_PLAYER_LEFT
+#endif
+
 enum {
     BATTLE_TEST_SINGLES,
     BATTLE_TEST_DOUBLES,
@@ -1014,6 +1019,7 @@ struct moveWithPP {
 #define SpDefenseIV(spDefenseIV) SpDefenseIV_(__LINE__, spDefenseIV)
 #define SpeedIV(speedIV) SpeedIV_(__LINE__, speedIV)
 #define Item(item) Item_(__LINE__, item)
+// EV helpers intentionally omitted; tests should use existing IV/EV setup mechanisms
 #define Moves(move1, ...) do { u16 moves_[MAX_MON_MOVES] = {move1, __VA_ARGS__}; Moves_(__LINE__, moves_); } while(0)
 #define MovesWithPP(movewithpp1, ...) MovesWithPP_(__LINE__, (struct moveWithPP[MAX_MON_MOVES]) {movewithpp1, __VA_ARGS__})
 #define Friendship(friendship) Friendship_(__LINE__, friendship)

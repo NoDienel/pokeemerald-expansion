@@ -2966,14 +2966,15 @@ const struct Item gItemsInfo[] =
         .description = COMPOUND_STRING(
             "Sweet honey.\n"
             "Heals a partner by\n"
-            "25% when at half HP."),
-        .holdEffect = HOLD_EFFECT_HONEY,
+            "1/4th when at half HP."),
+        .holdEffect = HOLD_EFFECT_RESTORE_PCT_HP,
         .holdEffectParam = 25,
-        .effect = gItemEffect_Honey,
         .pocket = POCKET_ITEMS,
         .sortType = ITEM_TYPE_STATUS_RECOVERY,
         .type = ITEM_USE_BAG_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_Honey,
+        .fieldUseFunc = ItemUseOutOfBattle_Medicine,
+        .battleUsage = EFFECT_ITEM_RESTORE_HP,
+        .effect = gItemEffect_Honey,
         .flingPower = 30,
         .iconPic = gItemIcon_Honey,
         .iconPalette = gItemIconPalette_Honey,

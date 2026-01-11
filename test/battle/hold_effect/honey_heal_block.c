@@ -16,7 +16,6 @@ DOUBLE_BATTLE_TEST("Honey held item is blocked by Heal Block")
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_HEAL_BLOCK, opponentLeft);
         NONE_OF {
-                MESSAGE(gText_PkmnSItemRestoredHealth);
                 ABILITY_POPUP(playerLeft, ABILITY_NONE);
                 HP_BAR(playerRight, damage: -25);
             }

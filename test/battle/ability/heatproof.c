@@ -34,10 +34,10 @@ SINGLE_BATTLE_TEST("Heatproof prevents burn from Will-O-Wisp")
         PLAYER(SPECIES_WOBBUFFET) { Ability(ABILITY_NONE); Moves(MOVE_WILL_O_WISP); }
         OPPONENT(SPECIES_WYNAUT) { Ability(ABILITY_HEATPROOF); }
     } WHEN {
-        TURN { MOVE(playerLeft, MOVE_WILL_O_WISP, target: opponentLeft); }
+        TURN { MOVE(player, MOVE_WILL_O_WISP, target: opponent); }
     } SCENE {
     } THEN {
         // Will-O-Wisp should not burn a Heatproof target
-        EXPECT_FALSE(gBattleMons[opponentLeft].status1 & STATUS1_BURN);
+        EXPECT_FALSE(gBattleMons[B_POSITION_OPPONENT_LEFT].status1 & STATUS1_BURN);
     }
 }

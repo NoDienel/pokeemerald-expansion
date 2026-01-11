@@ -144,7 +144,7 @@
     {
       "id": "LAYOUT_VERDANTURF_TOWN",
       "name": "VerdanturfTown_Layout",
-      "width": 20,
+      "width": 22,
       "height": 20,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Mauville",
@@ -314,7 +314,7 @@
     {
       "id": "LAYOUT_ROUTE116",
       "name": "Route116_Layout",
-      "width": 100,
+      "width": 102,
       "height": 20,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Rustboro",
@@ -437,7 +437,7 @@
       "width": 120,
       "height": 40,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Mossdeep",
+      "secondary_tileset": "gTileset_Mauville",
       "border_filepath": "data/layouts/Route128/border.bin",
       "blockdata_filepath": "data/layouts/Route128/map.bin"
     },
@@ -4430,6 +4430,16 @@
       "secondary_tileset": "gTileset_BrendansMaysHouse",
       "border_filepath": "data/layouts/LittlerootTown_TestMapConnection_2/border.bin",
       "blockdata_filepath": "data/layouts/LittlerootTown_TestMapConnection_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_SANDY_CAVES_1F",
+      "name": "SandyCaves_1F_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/SandyCaves_1F/border.bin",
+      "blockdata_filepath": "data/layouts/SandyCaves_1F/map.bin"
     }
   ]
 }

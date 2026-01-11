@@ -5,15 +5,10 @@ Route116_MapScripts::
 	.byte 0
 
 Route116_OnTransition:
-	call_if_set FLAG_RECOVERED_DEVON_GOODS, Route116_EventScript_SetWandasBoyfriendPos
 	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_HideMapNamePopup
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_116_NORTH, AbnormalWeather_StartGroudonWeather
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_116_SOUTH, AbnormalWeather_StartGroudonWeather
 	end
-
-Route116_EventScript_SetWandasBoyfriendPos::
-	setobjectxyperm LOCALID_ROUTE116_WANDAS_BF, 38, 10
-	return
 
 Route116_OnLoad:
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_116_NORTH, AbnormalWeather_EventScript_PlaceTilesRoute116North
@@ -137,16 +132,6 @@ Route116_EventScript_Briney::
 	msgbox Route116_Text_ScoundrelMadeOffWithPeeko, MSGBOX_DEFAULT
 	setvar VAR_ROUTE116_STATE, 2
 	release
-	end
-
-Route116_EventScript_BrineyTrigger::
-	lockall
-	applymovement LOCALID_ROUTE116_BRINEY, Common_Movement_WalkInPlaceFasterRight
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
-	waitmovement 0
-	msgbox Route116_Text_ScoundrelMadeOffWithPeeko, MSGBOX_DEFAULT
-	setvar VAR_ROUTE116_STATE, 2
-	releaseall
 	end
 
 Route116_EventScript_GlassesMan::
