@@ -5631,14 +5631,16 @@ static bool32 HandleMoveEndAbilityBlock(u32 battlerAtk, u32 battlerDef, u32 move
             }
         }
         break;
-    case ABILITY_PINCH_HITTER:
+    case ABILITY_PINCH_HITTER: //Only useful if the attacking pokemon has pinch hitter, which means they just attacked their ally pokemon
         {
             if (!IsBattlerAlive(battlerAtk)
              || NoAliveMonsForEitherParty())
                 break;
 
             // Trigger when there are no other usable party mons left
-            if (CountUsablePartyMons(battlerAtk) == 0 && !GetBattlerPartyState(battlerAtk)->pinchHitterActivated)
+            if (CountUsablePartyMons(battlerAtk) == 0
+                && (!IsDoubleBattle() || !IsBattlerAlive(GetPartnerBattler(battlerAtk)))
+                && !GetBattlerPartyState(battlerAtk)->pinchHitterActivated)
             {
                 // Only transform Ledian into Toku Ledian
                 if (gBattleMons[battlerAtk].species == SPECIES_LEDIAN)
@@ -5646,8 +5648,10 @@ static bool32 HandleMoveEndAbilityBlock(u32 battlerAtk, u32 battlerDef, u32 move
                     struct Pokemon *party = GetBattlerParty(battlerAtk);
                     u32 monId = gBattlerPartyIndexes[battlerAtk];
                     u32 targetSpecies = SPECIES_TOKU_LEDIAN;
-
-                    gLastUsedAbility = abilityAtk;
+                    
+                    gBattleScripting.abilityPopupOverwrite = gLastUsedAbility = ABILITY_PINCH_HITTER;
+                    gBattleScripting.battler = battlerAtk;
+                    gBattlerTarget = battlerAtk;
                     GetBattlerPartyState(battlerAtk)->pinchHitterActivated = TRUE;
                     if (GetBattlerPartyState(battlerAtk)->changedSpecies == SPECIES_NONE)
                         GetBattlerPartyState(battlerAtk)->changedSpecies = gBattleMons[battlerAtk].species;
@@ -5666,6 +5670,43 @@ static bool32 HandleMoveEndAbilityBlock(u32 battlerAtk, u32 battlerDef, u32 move
         break;
     }
 
+    if(IsDoubleBattle())
+    {
+        u32 battlerDefPartner = GetPartnerBattler(battlerDef);
+        if(!IsBattlerAlive(battlerDef) && IsBattlerAlive(battlerDefPartner))
+        {
+            enum Ability abilityDefPartner = GetBattlerAbility(battlerDefPartner);
+            if (abilityDefPartner == ABILITY_PINCH_HITTER)
+            {
+                if (CountUsablePartyMons(battlerDefPartner) == 0
+                    && !GetBattlerPartyState(battlerDefPartner)->pinchHitterActivated)
+                {
+                    // Only transform Ledian into Toku Ledian
+                    if (gBattleMons[battlerDefPartner].species == SPECIES_LEDIAN)
+                    {
+                        struct Pokemon *party = GetBattlerParty(battlerDefPartner);
+                        u32 monId = gBattlerPartyIndexes[battlerDefPartner];
+                        u32 targetSpecies = SPECIES_TOKU_LEDIAN;
+                        
+                        gBattleScripting.abilityPopupOverwrite = gLastUsedAbility = ABILITY_PINCH_HITTER;
+                        gBattleScripting.battler = battlerDefPartner;
+                        gBattlerTarget = battlerDefPartner;
+                        GetBattlerPartyState(battlerDefPartner)->pinchHitterActivated = TRUE;
+                        if (GetBattlerPartyState(battlerDefPartner)->changedSpecies == SPECIES_NONE)
+                            GetBattlerPartyState(battlerDefPartner)->changedSpecies = gBattleMons[battlerDefPartner].species;
+
+                        SetMonData(&party[monId], MON_DATA_SPECIES, &targetSpecies);
+                        gBattleMons[battlerDefPartner].species = targetSpecies;
+                        RecalcBattlerStats(battlerDefPartner, &party[monId], FALSE);
+
+                        BattleScriptCall(BattleScript_TargetFormChangeWithString);
+                        effect = TRUE;
+                    }
+                }
+            }
+        }
+    }   
+    
     return effect;
 }
 

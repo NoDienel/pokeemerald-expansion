@@ -90,6 +90,13 @@
       "elevation": 0,
       "dest_map": "MAP_SANDY_CAVES_1F",
       "dest_warp_id": "2"
+    },
+    {
+      "x": 42,
+      "y": 6,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE129_BEACH_HOUSE",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [],

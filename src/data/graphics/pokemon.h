@@ -6866,6 +6866,11 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #endif //OW_PKMN_OBJECTS_SHARE_PALETTES
 #endif //OW_POKEMON_OBJECT_EVENTS
 
+const u32 gMonFrontPic_LedianToku[] = INCBIN_U32("graphics/pokemon/ledianToku/anim_front.4bpp.smol");
+const u16 gMonPalette_LedianToku[] = INCBIN_U16("graphics/pokemon/ledianToku/normal.gbapal");
+const u32 gMonBackPic_LedianToku[] = INCBIN_U32("graphics/pokemon/ledianToku/back.4bpp.smol");
+const u16 gMonShinyPalette_LedianToku[] = INCBIN_U16("graphics/pokemon/ledianToku/shiny.gbapal");
+
 #if P_GENDER_DIFFERENCES
     const u32 gMonFrontPic_LedianF[] = INCBIN_U32("graphics/pokemon/ledian/anim_frontf.4bpp.smol");
     const u32 gMonBackPic_LedianF[] = INCBIN_U32("graphics/pokemon/ledian/backf.4bpp.smol");

@@ -82,7 +82,7 @@ TestMapConnection_EventScript_PinchHitter_Pokeball::
 # 57 "data/maps/LittlerootTown_TestMapConnection/scripts.pory"
 	showmonpic SPECIES_LEDIAN, 10, 3
 # 58 "data/maps/LittlerootTown_TestMapConnection/scripts.pory"
-	givemon SPECIES_LEDIAN, 50, ITEM_NONE, ITEM_POKE_BALL, NATURE_ADAMANT
+	givemon SPECIES_LEDIAN, 50, ITEM_NONE, ITEM_POKE_BALL, NATURE_ADAMANT, 2
 # 59 "data/maps/LittlerootTown_TestMapConnection/scripts.pory"
 	givemon SPECIES_WEEDLE, 5
 # 60 "data/maps/LittlerootTown_TestMapConnection/scripts.pory"

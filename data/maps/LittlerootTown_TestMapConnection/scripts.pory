@@ -55,7 +55,7 @@ script TestMapConnection_EventScript_PinchHitter_Pokeball
     playfanfare(MUS_OBTAIN_ITEM)
     msgbox("You found a special Poké Ball!\nIt contains a Ledian to test Pinch Hitter.")
     showmonpic(SPECIES_LEDIAN, 10, 3)
-    givemon(SPECIES_LEDIAN, 50, ITEM_NONE, ITEM_POKE_BALL, NATURE_ADAMANT)
+    givemon(SPECIES_LEDIAN, 50, ITEM_NONE, ITEM_POKE_BALL, NATURE_ADAMANT, 2)
     givemon(SPECIES_WEEDLE, 5)
     setflag(FLAG_SYS_POKEMON_GET)
     setflag(FLAG_BADGE01_GET)

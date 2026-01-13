@@ -1169,3 +1169,7 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/LittlerootTown_TestMapConnection_2/scripts.inc"
 
 	.include "data/maps/SandyCaves_1F/scripts.inc"
+
+	.include "data/maps/Route127_RestHouse/scripts.inc"
+
+	.include "data/maps/Route129_BeachHouse/scripts.inc"

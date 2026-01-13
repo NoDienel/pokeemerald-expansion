@@ -50,7 +50,7 @@
     },
     {
       "id": "MAPSEC_PACIFIDLOG_TOWN",
-      "name": "PACIFIDLOG TOWN",
+      "name": "PACIFIDLOG EAST",
       "x": 17,
       "y": 10,
       "width": 1,
@@ -386,7 +386,7 @@
     },
     {
       "id": "MAPSEC_ROUTE_133",
-      "name": "ROUTE 133",
+      "name": "PACIFIDLOG WEST",
       "x": 12,
       "y": 10,
       "width": 3,

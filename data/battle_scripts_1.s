@@ -5859,6 +5859,7 @@ BattleScript_TargetFormChangeWithString::
 	pause 5
 	call BattleScript_AbilityPopUpTarget
 	call BattleScript_TargetFormChangeNoPopup
+	copybyte sBATTLER, gBattlerTarget
 	printstring STRINGID_PKMNTRANSFORMED
 	waitmessage B_WAIT_TIME_LONG
 	return

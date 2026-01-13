@@ -4440,6 +4440,26 @@
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/SandyCaves_1F/border.bin",
       "blockdata_filepath": "data/layouts/SandyCaves_1F/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE127_REST_HOUSE",
+      "name": "Route127_RestHouse_Layout",
+      "width": 17,
+      "height": 12,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/Route127_RestHouse/border.bin",
+      "blockdata_filepath": "data/layouts/Route127_RestHouse/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE129_BEACH_HOUSE",
+      "name": "Route129_BeachHouse_Layout",
+      "width": 14,
+      "height": 8,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/Route129_BeachHouse/border.bin",
+      "blockdata_filepath": "data/layouts/Route129_BeachHouse/map.bin"
     }
   ]
 }
