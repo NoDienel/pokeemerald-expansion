@@ -15064,6 +15064,8 @@ const struct Item gItemsInfo[] =
         .iconPalette = gItemIconPalette_PokeshiDoll,
     },
 
+    // ... (Previous content of items.h) ...
+
     [ITEM_POKEFOSSIL_001] =
     {
         .name = ITEM_NAME("Wood Gecko Fossil"), //Treeko
@@ -15104,6 +15106,2036 @@ const struct Item gItemsInfo[] =
         .flingPower = 100,
         .iconPic = gItemIcon_JawFossil,
         .iconPalette = gItemIconPalette_JawFossil,
+    },
+
+    [ITEM_POKEFOSSIL_004] =
+    {
+        .name = ITEM_NAME("Ladybug Fossil"), //Ledyba
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_DomeFossil,
+        .iconPalette = gItemIconPalette_KantoFossil,
+    },
+
+    [ITEM_POKEFOSSIL_005] =
+    {
+        .name = ITEM_NAME("Bee Fly Fossil"), //Cutiefly
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_PlumeFossil,
+        .iconPalette = gItemIconPalette_PlumeFossil,
+    },
+
+    [ITEM_POKEFOSSIL_006] =
+    {
+        .name = ITEM_NAME("Firefly (Male) Fossil"), //Volbeat
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_OldAmber,
+        .iconPalette = gItemIconPalette_OldAmber,
+    },
+
+    [ITEM_POKEFOSSIL_007] =
+    {
+        .name = ITEM_NAME("Firefly (Female) Fossil"), //Illumise
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_OldAmber,
+        .iconPalette = gItemIconPalette_OldAmber,
+    },
+
+    [ITEM_POKEFOSSIL_008] =
+    {
+        .name = ITEM_NAME("Mantis Fossil"), //Scyther
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_009] =
+    {
+        .name = ITEM_NAME("String Ball Fossil"), //Tarountula
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_010] =
+    {
+        .name = ITEM_NAME("Grasshopper Fossil"), //Nymble
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_011] =
+    {
+        .name = ITEM_NAME("Bagworm Fossil"), //Burmy
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_012] =
+    {
+        .name = ITEM_NAME("Tiny Bee Fossil"), //Combee
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_OldAmber,
+        .iconPalette = gItemIconPalette_OldAmber,
+    },
+
+    [ITEM_POKEFOSSIL_013] =
+    {
+        .name = ITEM_NAME("Larva Fossil"), //Blipbug
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_DomeFossil,
+        .iconPalette = gItemIconPalette_KantoFossil,
+    },
+
+    [ITEM_POKEFOSSIL_014] =
+    {
+        .name = ITEM_NAME("Attached Fossil"), //Joltik
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_015] =
+    {
+        .name = ITEM_NAME("Bug Shroom Fossil"), //Paras
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_016] =
+    {
+        .name = ITEM_NAME("Radiator Fossil"), //Sizzlipede
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_CoverFossil,
+        .iconPalette = gItemIconPalette_CoverFossil,
+    },
+
+    [ITEM_POKEFOSSIL_017] =
+    {
+        .name = ITEM_NAME("Hairy Bug Fossil"), //Weedle
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_018] =
+    {
+        .name = ITEM_NAME("Wild Duck Fossil"), //Farfechd
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedBird,
+        .iconPalette = gItemIconPalette_FossilizedBird,
+    },
+
+    [ITEM_POKEFOSSIL_019] =
+    {
+        .name = ITEM_NAME("Tiny Raccoon Fossil"), //Zigzagoon
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_020] =
+    {
+        .name = ITEM_NAME("Scout Tail Fossil"), //Sentret
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_021] =
+    {
+        .name = ITEM_NAME("Lookout Rat Fossil"), //Patrat
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_022] =
+    {
+        .name = ITEM_NAME("Loiter Weasel Fossil"), //Yugoos
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_JawFossil,
+        .iconPalette = gItemIconPalette_JawFossil,
+    },
+
+    [ITEM_POKEFOSSIL_023] =
+    {
+        .name = ITEM_NAME("Scratch Cat Fossil"), //Meowth
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_024] =
+    {
+        .name = ITEM_NAME("Coupled Fossil"), //Tandemaus
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_025] =
+    {
+        .name = ITEM_NAME("Whispering Fossil"), //Whismur
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_026] =
+    {
+        .name = ITEM_NAME("Spot Panda Fossil"), //Spinda
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_027] =
+    {
+        .name = ITEM_NAME("Cat Ferret Fossil"), //Zangoose
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_028] =
+    {
+        .name = ITEM_NAME("Fang Snake Fossil"), //Seviper
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_JawFossil,
+        .iconPalette = gItemIconPalette_JawFossil,
+    },
+
+    [ITEM_POKEFOSSIL_029] =
+    {
+        .name = ITEM_NAME("Bat Fang Fossil"), //Zubat
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_JawFossil,
+        .iconPalette = gItemIconPalette_JawFossil,
+    },
+
+    [ITEM_POKEFOSSIL_030] =
+    {
+        .name = ITEM_NAME("Poison Pin Fossil"), //Nidoran F
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_031] =
+    {
+        .name = ITEM_NAME("Poison Pin Fossil"), //Nidoran M
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_032] =
+    {
+        .name = ITEM_NAME("Stomach Fossil"), //Gulpin
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_033] =
+    {
+        .name = ITEM_NAME("Toxic Lizard Fossil"), //Salandit
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDrake,
+        .iconPalette = gItemIconPalette_FossilizedDrake,
+    },
+
+    [ITEM_POKEFOSSIL_034] =
+    {
+        .name = ITEM_NAME("Scorpion Fossil"), //Skorupi
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_035] =
+    {
+        .name = ITEM_NAME("Toxic Mouth Fossil"), //Croagunk
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_JawFossil,
+        .iconPalette = gItemIconPalette_JawFossil,
+    },
+
+    [ITEM_POKEFOSSIL_036] =
+    {
+        .name = ITEM_NAME("Pig Monkey Fossil"), //Mankey
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_037] =
+    {
+        .name = ITEM_NAME("Thrusting Arm Fossil"), //Makuhita
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_038] =
+    {
+        .name = ITEM_NAME("Lone Warrior Fossil"), //Falink
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ArmorFossil,
+        .iconPalette = gItemIconPalette_ArmorFossil,
+    },
+
+    [ITEM_POKEFOSSIL_039] =
+    {
+        .name = ITEM_NAME("Emanating Fossil"), //Riolu
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_040] =
+    {
+        .name = ITEM_NAME("Smirking Panda Fossil"), //Pancham
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_041] =
+    {
+        .name = ITEM_NAME("Mushroom Fossil"), //Shroomish
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_042] =
+    {
+        .name = ITEM_NAME("Seed Fossil"), //Sunkern
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_043] =
+    {
+        .name = ITEM_NAME("Cottonweed Fossil"), //Hoppip
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_PlumeFossil,
+        .iconPalette = gItemIconPalette_PlumeFossil,
+    },
+
+    [ITEM_POKEFOSSIL_044] =
+    {
+        .name = ITEM_NAME("Rubber Fruit Fossil"), //Bounsweet
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_045] =
+    {
+        .name = ITEM_NAME("Glowing Spore Fossil"), //Morelull
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_046] =
+    {
+        .name = ITEM_NAME("Spicy Pepper Fossil"), //Capsakid
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_047] =
+    {
+        .name = ITEM_NAME("Matcha Fossil"), //Poltchageist
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_048] =
+    {
+        .name = ITEM_NAME("Olive Fossil"), //Smoliv
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_049] =
+    {
+        .name = ITEM_NAME("Cactus Fossil"), //Cacnea
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_050] =
+    {
+        .name = ITEM_NAME("Acorn Fossil"), //Seedot
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_051] =
+    {
+        .name = ITEM_NAME("Disasterous Fossil"), //Absol
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_052] =
+    {
+        .name = ITEM_NAME("Strong Bite Fossil"), //Poochyena
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_JawFossil,
+        .iconPalette = gItemIconPalette_JawFossil,
+    },
+
+    [ITEM_POKEFOSSIL_053] =
+    {
+        .name = ITEM_NAME("Bonsai Fossil"), //Bonsly
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_054] =
+    {
+        .name = ITEM_NAME("Shellfish Fossil"), //Kabuto
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_DomeFossil,
+        .iconPalette = gItemIconPalette_KantoFossil,
+    },
+
+    [ITEM_POKEFOSSIL_055] =
+    {
+        .name = ITEM_NAME("Spiral Fossil"), //Omanyte
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_HelixFossil,
+        .iconPalette = gItemIconPalette_KantoFossil,
+    },
+
+    [ITEM_POKEFOSSIL_056] =
+    {
+        .name = ITEM_NAME("Amber Fossil"), //Aerodactyl
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_OldAmber,
+        .iconPalette = gItemIconPalette_OldAmber,
+    },
+
+    [ITEM_POKEFOSSIL_057] =
+    {
+        .name = ITEM_NAME("Sea Lily Fossil"), //Lileep
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_058] =
+    {
+        .name = ITEM_NAME("Old Shrimp Fossil"), //Anorith
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_059] =
+    {
+        .name = ITEM_NAME("Hard Head Fossil"), //Cranidos
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_SkullFossil,
+        .iconPalette = gItemIconPalette_SkullFossil,
+    },
+
+    [ITEM_POKEFOSSIL_060] =
+    {
+        .name = ITEM_NAME("Shield Fossil"), //Shieldon
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ArmorFossil,
+        .iconPalette = gItemIconPalette_ArmorFossil,
+    },
+
+    [ITEM_POKEFOSSIL_061] =
+    {
+        .name = ITEM_NAME("Prototurtle Fossil"), //Tirtouga
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_CoverFossil,
+        .iconPalette = gItemIconPalette_CoverFossil,
+    },
+
+    [ITEM_POKEFOSSIL_062] =
+    {
+        .name = ITEM_NAME("First Bird Fossil"), //Archen
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_PlumeFossil,
+        .iconPalette = gItemIconPalette_PlumeFossil,
+    },
+
+    [ITEM_POKEFOSSIL_063] =
+    {
+        .name = ITEM_NAME("Royal Dino Fossil"), //Tyrunt
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_JawFossil,
+        .iconPalette = gItemIconPalette_JawFossil,
+    },
+
+    [ITEM_POKEFOSSIL_064] =
+    {
+        .name = ITEM_NAME("Ice Sail Fossil"), //Amaura
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_SailFossil,
+        .iconPalette = gItemIconPalette_SailFossil,
+    },
+
+    [ITEM_POKEFOSSIL_065] =
+    {
+        .name = ITEM_NAME("Paleozoic Fossil"), //Genesect
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ArmorFossil,
+        .iconPalette = gItemIconPalette_ArmorFossil,
+    },
+
+    [ITEM_POKEFOSSIL_066] =
+    {
+        .name = ITEM_NAME("Big Leaf Fossil"), //Chikorita
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_067] =
+    {
+        .name = ITEM_NAME("Fire Pig Fossil"), //Tepig
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_068] =
+    {
+        .name = ITEM_NAME("Penguin Fossil"), //Piplup
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedBird,
+        .iconPalette = gItemIconPalette_FossilizedBird,
+    },
+
+    [ITEM_POKEFOSSIL_069] =
+    {
+        .name = ITEM_NAME("Cheering + Fossil"), //Plusle
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_070] =
+    {
+        .name = ITEM_NAME("Cheering - Fossil"), //Minun
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_071] =
+    {
+        .name = ITEM_NAME("Toxic Baby Fossil"), //Toxel
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_072] =
+    {
+        .name = ITEM_NAME("Lightning Fossil"), //Electrike
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_073] =
+    {
+        .name = ITEM_NAME("Thunderbolt Fossil"), //Blitzle
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_074] =
+    {
+        .name = ITEM_NAME("Plasma Fossil"), //Rotom
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_OldAmber,
+        .iconPalette = gItemIconPalette_OldAmber,
+    },
+
+    [ITEM_POKEFOSSIL_075] =
+    {
+        .name = ITEM_NAME("Tiny Metal Bird Fossil"), //Rookidee
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedBird,
+        .iconPalette = gItemIconPalette_FossilizedBird,
+    },
+
+    [ITEM_POKEFOSSIL_076] =
+    {
+        .name = ITEM_NAME("Gear Fossil"), //Klink
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ArmorFossil,
+        .iconPalette = gItemIconPalette_ArmorFossil,
+    },
+
+    [ITEM_POKEFOSSIL_077] =
+    {
+        .name = ITEM_NAME("Key Ring Fossil"), //Klefki
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ArmorFossil,
+        .iconPalette = gItemIconPalette_ArmorFossil,
+    },
+
+    [ITEM_POKEFOSSIL_078] =
+    {
+        .name = ITEM_NAME("Deceptive Fossil"), //Mawile
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_JawFossil,
+        .iconPalette = gItemIconPalette_JawFossil,
+    },
+
+    [ITEM_POKEFOSSIL_079] =
+    {
+        .name = ITEM_NAME("Bronze Plate Fossil"), //Bronzor
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ArmorFossil,
+        .iconPalette = gItemIconPalette_ArmorFossil,
+    },
+
+    [ITEM_POKEFOSSIL_080] =
+    {
+        .name = ITEM_NAME("Iron Ball Fossil"), //Beldum
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ArmorFossil,
+        .iconPalette = gItemIconPalette_ArmorFossil,
+    },
+
+    [ITEM_POKEFOSSIL_081] =
+    {
+        .name = ITEM_NAME("Sword Fossil"), //Honedge
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_082] =
+    {
+        .name = ITEM_NAME("Puppet Fossil"), //Shuppet
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_OldAmber,
+        .iconPalette = gItemIconPalette_OldAmber,
+    },
+
+    [ITEM_POKEFOSSIL_083] =
+    {
+        .name = ITEM_NAME("Gem Fossil"), //Sableye
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_084] =
+    {
+        .name = ITEM_NAME("Stump Fossil"), //Phantump
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_085] =
+    {
+        .name = ITEM_NAME("Skull Fossil"), //Duskull
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_SkullFossil,
+        .iconPalette = gItemIconPalette_SkullFossil,
+    },
+
+    [ITEM_POKEFOSSIL_086] =
+    {
+        .name = ITEM_NAME("Vocal Cord Fossil"), //Misdreavus
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_OldAmber,
+        .iconPalette = gItemIconPalette_OldAmber,
+    },
+
+    [ITEM_POKEFOSSIL_087] =
+    {
+        .name = ITEM_NAME("Tiny Birdbrain Fossil"), //Natu
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedBird,
+        .iconPalette = gItemIconPalette_FossilizedBird,
+    },
+
+    [ITEM_POKEFOSSIL_088] =
+    {
+        .name = ITEM_NAME("Bell Fossil"), //Chingling
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ArmorFossil,
+        .iconPalette = gItemIconPalette_ArmorFossil,
+    },
+
+    [ITEM_POKEFOSSIL_089] =
+    {
+        .name = ITEM_NAME("Spike Ball Fossil"), //Togepi
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_090] =
+    {
+        .name = ITEM_NAME("Tiny Monkey Fossil"), //Pitheook
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_091] =
+    {
+        .name = ITEM_NAME("Heart Fossil"), //Luvdisk
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedFish,
+        .iconPalette = gItemIconPalette_FossilizedFish,
+    },
+
+    [ITEM_POKEFOSSIL_092] =
+    {
+        .name = ITEM_NAME("Common Fish Fossil"), //Basculin
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedFish,
+        .iconPalette = gItemIconPalette_FossilizedFish,
+    },
+
+    [ITEM_POKEFOSSIL_093] =
+    {
+        .name = ITEM_NAME("Bullet Jet Fossil"), //Remoraid
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedFish,
+        .iconPalette = gItemIconPalette_FossilizedFish,
+    },
+
+    [ITEM_POKEFOSSIL_094] =
+    {
+        .name = ITEM_NAME("Octopus Fossil"), //Clobbopus
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedFish,
+        .iconPalette = gItemIconPalette_FossilizedFish,
+    },
+
+    [ITEM_POKEFOSSIL_095] =
+    {
+        .name = ITEM_NAME("River Crab Fossil"), //Krabby
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_096] =
+    {
+        .name = ITEM_NAME("Barnacle Fossil"), //Binacle
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_097] =
+    {
+        .name = ITEM_NAME("Sea Slug Fossil"), //Shellos
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedFish,
+        .iconPalette = gItemIconPalette_FossilizedFish,
+    },
+
+    [ITEM_POKEFOSSIL_098] =
+    {
+        .name = ITEM_NAME("Ugly Fish Fossil"), //Feebas
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedFish,
+        .iconPalette = gItemIconPalette_FossilizedFish,
+    },
+
+    [ITEM_POKEFOSSIL_099] =
+    {
+        .name = ITEM_NAME("Big Catfish Fossil"), //Dondozo
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedFish,
+        .iconPalette = gItemIconPalette_FossilizedFish,
+    },
+
+    [ITEM_POKEFOSSIL_100] =
+    {
+        .name = ITEM_NAME("Nigiri Sushi Fossil"), //Tatsugiri
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedFish,
+        .iconPalette = gItemIconPalette_FossilizedFish,
+    },
+
+    [ITEM_POKEFOSSIL_101] =
+    {
+        .name = ITEM_NAME("Kelp Fossil"), //Skrelp
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_RootFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_102] =
+    {
+        .name = ITEM_NAME("Elefish Fossil"), //Tynamo
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedFish,
+        .iconPalette = gItemIconPalette_FossilizedFish,
+    },
+
+    [ITEM_POKEFOSSIL_103] =
+    {
+        .name = ITEM_NAME("Anteater Fossil"), //Heatmor
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_104] =
+    {
+        .name = ITEM_NAME("Iron Ant Fossil"), //Durant
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ArmorFossil,
+        .iconPalette = gItemIconPalette_ArmorFossil,
+    },
+
+    [ITEM_POKEFOSSIL_105] =
+    {
+        .name = ITEM_NAME("Sand Snake Fossil"), //Silicobra
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDrake,
+        .iconPalette = gItemIconPalette_FossilizedDrake,
+    },
+
+    [ITEM_POKEFOSSIL_106] =
+    {
+        .name = ITEM_NAME("Painter Fossil"), //Smeargle
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_107] =
+    {
+        .name = ITEM_NAME("Disguised Fossil"), //Mimikyu
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_OldAmber,
+        .iconPalette = gItemIconPalette_OldAmber,
+    },
+
+    [ITEM_POKEFOSSIL_108] =
+    {
+        .name = ITEM_NAME("Mime Fossil"), //Mime Jr.
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_109] =
+    {
+        .name = ITEM_NAME("Drowsing Fossil"), //Komala
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_110] =
+    {
+        .name = ITEM_NAME("Cerebral Fossil"), //Elgyem
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_111] =
+    {
+        .name = ITEM_NAME("Fly Scorpion Fossil"), //Gligar
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_112] =
+    {
+        .name = ITEM_NAME("Mud Trap Fossil"), //Stunfisk
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedFish,
+        .iconPalette = gItemIconPalette_FossilizedFish,
+    },
+
+    [ITEM_POKEFOSSIL_113] =
+    {
+        .name = ITEM_NAME("Rolling Fossil"), //Rellor
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_DomeFossil,
+        .iconPalette = gItemIconPalette_KantoFossil,
+    },
+
+    [ITEM_POKEFOSSIL_114] =
+    {
+        .name = ITEM_NAME("Sand Heap Fossil"), //Sandygast
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_115] =
+    {
+        .name = ITEM_NAME("Desert Croc Fossil"), //Sandile
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_JawFossil,
+        .iconPalette = gItemIconPalette_JawFossil,
+    },
+
+    [ITEM_POKEFOSSIL_116] =
+    {
+        .name = ITEM_NAME("Automaton Fossil"), //Golett
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ArmorFossil,
+        .iconPalette = gItemIconPalette_ArmorFossil,
+    },
+
+    [ITEM_POKEFOSSIL_117] =
+    {
+        .name = ITEM_NAME("Magma Geode Fossil"), //Numel
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_118] =
+    {
+        .name = ITEM_NAME("Lava Fossil"), //Slugma
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_119] =
+    {
+        .name = ITEM_NAME("Candle Fossil"), //Litwick
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_OldAmber,
+        .iconPalette = gItemIconPalette_OldAmber,
+    },
+
+    [ITEM_POKEFOSSIL_120] =
+    {
+        .name = ITEM_NAME("Fire Child Fossil"), //Charcadet
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ArmorFossil,
+        .iconPalette = gItemIconPalette_ArmorFossil,
+    },
+
+    [ITEM_POKEFOSSIL_121] =
+    {
+        .name = ITEM_NAME("Virtual Fossil"), //Porygon
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_122] =
+    {
+        .name = ITEM_NAME("Weather Fossil"), //Castform
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_OldAmber,
+        .iconPalette = gItemIconPalette_OldAmber,
+    },
+
+    [ITEM_POKEFOSSIL_123] =
+    {
+        .name = ITEM_NAME("Snow Hat Fossil"), //Snorunt
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_DomeFossil,
+        .iconPalette = gItemIconPalette_KantoFossil,
+    },
+
+    [ITEM_POKEFOSSIL_124] =
+    {
+        .name = ITEM_NAME("Cold Pig Fossil"), //Swinub
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_125] =
+    {
+        .name = ITEM_NAME("Sharp Claw Fossil"), //Sneasel
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ClawFossil,
+        .iconPalette = gItemIconPalette_HoennFossil,
+    },
+
+    [ITEM_POKEFOSSIL_126] =
+    {
+        .name = ITEM_NAME("Tundra Whale Fossil"), //Cetoddle
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedFish,
+        .iconPalette = gItemIconPalette_FossilizedFish,
+    },
+
+    [ITEM_POKEFOSSIL_127] =
+    {
+        .name = ITEM_NAME("Ice Chunk Fossil"), //Bergmite
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_128] =
+    {
+        .name = ITEM_NAME("Ice Fin Fossil"), //Frigibax
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_SailFossil,
+        .iconPalette = gItemIconPalette_SailFossil,
+    },
+
+    [ITEM_POKEFOSSIL_129] =
+    {
+        .name = ITEM_NAME("Bat Ear Fossil"), //Noibat
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedBird,
+        .iconPalette = gItemIconPalette_FossilizedBird,
+    },
+
+    [ITEM_POKEFOSSIL_130] =
+    {
+        .name = ITEM_NAME("Tusk Fossil"), //Axew
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_JawFossil,
+        .iconPalette = gItemIconPalette_JawFossil,
+    },
+
+    [ITEM_POKEFOSSIL_131] =
+    {
+        .name = ITEM_NAME("Scaly Fossil"), //Jangmo-o
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDrake,
+        .iconPalette = gItemIconPalette_FossilizedDrake,
+    },
+
+    [ITEM_POKEFOSSIL_132] =
+    {
+        .name = ITEM_NAME("Martial Arts Fossil"), //Kubfu
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_133] =
+    {
+        .name = ITEM_NAME("Wishing Eye Fossil"), //Jirachi
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_OldAmber,
+        .iconPalette = gItemIconPalette_OldAmber,
+    },
+
+    [ITEM_POKEFOSSIL_134] =
+    {
+        .name = ITEM_NAME("DNA Fossil"), //Deoxys
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_OldAmber,
+        .iconPalette = gItemIconPalette_OldAmber,
+    },
+
+    [ITEM_POKEFOSSIL_135] =
+    {
+        .name = ITEM_NAME("Basin Whale Fossil"), //Kyogre
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedFish,
+        .iconPalette = gItemIconPalette_FossilizedFish,
+    },
+
+    [ITEM_POKEFOSSIL_136] =
+    {
+        .name = ITEM_NAME("Continent Dino Fossil"), //Groudon
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_137] =
+    {
+        .name = ITEM_NAME("Sky Dragon Fossil"), //Rayquaza
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDrake,
+        .iconPalette = gItemIconPalette_FossilizedDrake,
+    },
+
+    [ITEM_POKEFOSSIL_138] =
+    {
+        .name = ITEM_NAME("Eon Drake (Male) Fossil"), //Latios
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDrake,
+        .iconPalette = gItemIconPalette_FossilizedDrake,
+    },
+
+    [ITEM_POKEFOSSIL_139] =
+    {
+        .name = ITEM_NAME("Eon Drake (Female) Fossil"), //Latias
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDrake,
+        .iconPalette = gItemIconPalette_FossilizedDrake,
+    },
+
+    [ITEM_POKEFOSSIL_140] =
+    {
+        .name = ITEM_NAME("Rock Peak Fossil"), //Regirock
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_141] =
+    {
+        .name = ITEM_NAME("Iceberg Fossil"), //Regice
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_142] =
+    {
+        .name = ITEM_NAME("Pure Iron Fossil"), //Registeel
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_ArmorFossil,
+        .iconPalette = gItemIconPalette_ArmorFossil,
+    },
+
+    [ITEM_POKEFOSSIL_143] =
+    {
+        .name = ITEM_NAME("Electron Fossil"), //Regieleki
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_144] =
+    {
+        .name = ITEM_NAME("Dragon Orb Fossil"), //Regidrago
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDrake,
+        .iconPalette = gItemIconPalette_FossilizedDrake,
+    },
+
+    [ITEM_POKEFOSSIL_145] =
+    {
+        .name = ITEM_NAME("Colossal Fossil"), //Regigigas
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedDino,
+        .iconPalette = gItemIconPalette_FossilizedDino,
+    },
+
+    [ITEM_POKEFOSSIL_146] =
+    {
+        .name = ITEM_NAME("Cyclone Fossil"), //Tornadus
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedBird,
+        .iconPalette = gItemIconPalette_FossilizedBird,
+    },
+
+    [ITEM_POKEFOSSIL_147] =
+    {
+        .name = ITEM_NAME("Quake Fossil"), //Landorus
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedBird,
+        .iconPalette = gItemIconPalette_FossilizedBird,
+    },
+
+    [ITEM_POKEFOSSIL_148] =
+    {
+        .name = ITEM_NAME("Bolt Strike Fossil"), //Thundurus
+        .price = 25000,
+        .description = sFossilGenericDesc,
+        .pocket = POCKET_FOSSILS,
+        .sortType = ITEM_TYPE_FOSSIL,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 100,
+        .iconPic = gItemIcon_FossilizedBird,
+        .iconPalette = gItemIconPalette_FossilizedBird,
     },
 
 };

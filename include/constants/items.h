@@ -1022,57 +1022,156 @@
 #define ITEM_FALINKSITE 854
 
 // Pokefossils (Each Pokemon species family gets one fossil)
-#define ITEM_POKEFOSSIL_001 855 //Treeko fossil
-#define ITEM_POKEFOSSIL_002 856 //Litten fossil
-#define ITEM_POKEFOSSIL_003 857 //Totodile fossil
-// #define ITEM_POKEFOSSIL_004 858
-// #define ITEM_POKEFOSSIL_005 859
-// #define ITEM_POKEFOSSIL_006 860
-// #define ITEM_POKEFOSSIL_007 861
-// #define ITEM_POKEFOSSIL_008 862
-// #define ITEM_POKEFOSSIL_009 863
-// #define ITEM_POKEFOSSIL_010 864
-// #define ITEM_POKEFOSSIL_011 865
-// #define ITEM_POKEFOSSIL_012 866
-// #define ITEM_POKEFOSSIL_013 867
-// #define ITEM_POKEFOSSIL_014 868
-// #define ITEM_POKEFOSSIL_015 869
-// #define ITEM_POKEFOSSIL_016 870
-// #define ITEM_POKEFOSSIL_017 871
-// #define ITEM_POKEFOSSIL_018 872
-// #define ITEM_POKEFOSSIL_019 873
-// #define ITEM_POKEFOSSIL_020 874
-// #define ITEM_POKEFOSSIL_021 875
-// #define ITEM_POKEFOSSIL_022 876
-// #define ITEM_POKEFOSSIL_023 877
-// #define ITEM_POKEFOSSIL_024 878
-// #define ITEM_POKEFOSSIL_025 879
-// #define ITEM_POKEFOSSIL_026 880
-// #define ITEM_POKEFOSSIL_027 881
-// #define ITEM_POKEFOSSIL_028 882
-// #define ITEM_POKEFOSSIL_029 883
-// #define ITEM_POKEFOSSIL_020 884
-// #define ITEM_POKEFOSSIL_031 885
-// #define ITEM_POKEFOSSIL_032 886
-// #define ITEM_POKEFOSSIL_033 887
-// #define ITEM_POKEFOSSIL_034 888
-// #define ITEM_POKEFOSSIL_035 889
-// #define ITEM_POKEFOSSIL_036 890
-// #define ITEM_POKEFOSSIL_037 891
-// #define ITEM_POKEFOSSIL_038 892
-// #define ITEM_POKEFOSSIL_039 893
-// #define ITEM_POKEFOSSIL_040 894
-// #define ITEM_POKEFOSSIL_041 895
-// #define ITEM_POKEFOSSIL_042 896
-// #define ITEM_POKEFOSSIL_043 897
-// #define ITEM_POKEFOSSIL_044 898
-// #define ITEM_POKEFOSSIL_045 899
-// #define ITEM_POKEFOSSIL_046 900
-// #define ITEM_POKEFOSSIL_047 901
-// #define ITEM_POKEFOSSIL_048 902
-// #define ITEM_POKEFOSSIL_049 903
+#define ITEM_POKEFOSSIL_001 855 //Wood Gecko
+#define ITEM_POKEFOSSIL_002 856 //Fire Cat
+#define ITEM_POKEFOSSIL_003 857 //Big Jaw
+#define ITEM_POKEFOSSIL_004 858 //Ladybug
+#define ITEM_POKEFOSSIL_005 859 //Bee Fly
+#define ITEM_POKEFOSSIL_006 860 //Firefly (Male)
+#define ITEM_POKEFOSSIL_007 861 //Firefly (Female)
+#define ITEM_POKEFOSSIL_008 862 //Mantis
+#define ITEM_POKEFOSSIL_009 863 //String Ball
+#define ITEM_POKEFOSSIL_010 864 //Grasshopper
+#define ITEM_POKEFOSSIL_011 865 //Bagworm
+#define ITEM_POKEFOSSIL_012 866 //Tiny Bee
+#define ITEM_POKEFOSSIL_013 867 //Larva
+#define ITEM_POKEFOSSIL_014 868 //Attached
+#define ITEM_POKEFOSSIL_015 869 //Bug Shroom
+#define ITEM_POKEFOSSIL_016 870 //Radiator
+#define ITEM_POKEFOSSIL_017 871 //Hairy Bug
+#define ITEM_POKEFOSSIL_018 872 //Wild Duck
+#define ITEM_POKEFOSSIL_019 873 //Tiny Raccoon
+#define ITEM_POKEFOSSIL_020 874 //Scout Tail
+#define ITEM_POKEFOSSIL_021 875 //Lookout Rat
+#define ITEM_POKEFOSSIL_022 876 //Loiter Weasel
+#define ITEM_POKEFOSSIL_023 877 //Scratch Cat
+#define ITEM_POKEFOSSIL_024 878 //Coupled
+#define ITEM_POKEFOSSIL_025 879 //Whispering
+#define ITEM_POKEFOSSIL_026 880 //Spot Panda
+#define ITEM_POKEFOSSIL_027 881 //Cat Ferret
+#define ITEM_POKEFOSSIL_028 882 //Fang Snake
+#define ITEM_POKEFOSSIL_029 883 //Bat Fang
+#define ITEM_POKEFOSSIL_030 884 //Poison Pin (Female)
+#define ITEM_POKEFOSSIL_031 885 //Poison Pin (Male)
+#define ITEM_POKEFOSSIL_032 886 //Stomach
+#define ITEM_POKEFOSSIL_033 887 //Toxic Lizard
+#define ITEM_POKEFOSSIL_034 888 //Scorpion
+#define ITEM_POKEFOSSIL_035 889 //Toxic Mouth
+#define ITEM_POKEFOSSIL_036 890 //Pig Monkey
+#define ITEM_POKEFOSSIL_037 891 //Thrusting Arm
+#define ITEM_POKEFOSSIL_038 892 //Lone Warrior
+#define ITEM_POKEFOSSIL_039 893 //Emanating
+#define ITEM_POKEFOSSIL_040 894 //Smirking Panda
+#define ITEM_POKEFOSSIL_041 895 //Mushroom
+#define ITEM_POKEFOSSIL_042 896 //Seed
+#define ITEM_POKEFOSSIL_043 897 //Cottonweed
+#define ITEM_POKEFOSSIL_044 898 //Rubber Fruit
+#define ITEM_POKEFOSSIL_045 899 //Glowing Spore
+#define ITEM_POKEFOSSIL_046 900 //Spicy Pepper
+#define ITEM_POKEFOSSIL_047 901 //Matcha
+#define ITEM_POKEFOSSIL_048 902 //Olive
+#define ITEM_POKEFOSSIL_049 903 //Cactus
+#define ITEM_POKEFOSSIL_050 904 //Acorn
+#define ITEM_POKEFOSSIL_051 905 //Disasterous
+#define ITEM_POKEFOSSIL_052 906 //Strong Bite
+#define ITEM_POKEFOSSIL_053 907 //Bonsai
+#define ITEM_POKEFOSSIL_054 908 //Shellfish
+#define ITEM_POKEFOSSIL_055 909 //Spiral
+#define ITEM_POKEFOSSIL_056 910 //Amber
+#define ITEM_POKEFOSSIL_057 911 //Sea Lily
+#define ITEM_POKEFOSSIL_058 912 //Old Shrimp
+#define ITEM_POKEFOSSIL_059 913 //Hard Head
+#define ITEM_POKEFOSSIL_060 914 //Shield
+#define ITEM_POKEFOSSIL_061 915 //Prototurtle
+#define ITEM_POKEFOSSIL_062 916 //First Bird
+#define ITEM_POKEFOSSIL_063 917 //Royal Dino
+#define ITEM_POKEFOSSIL_064 918 //Ice Sail
+#define ITEM_POKEFOSSIL_065 919 //Paleozoic
+#define ITEM_POKEFOSSIL_066 920 //Big Leaf
+#define ITEM_POKEFOSSIL_067 921 //Fire Pig
+#define ITEM_POKEFOSSIL_068 922 //Penguin
+#define ITEM_POKEFOSSIL_069 923 //Cheering +
+#define ITEM_POKEFOSSIL_070 924 //Cheering -
+#define ITEM_POKEFOSSIL_071 925 //Toxic Baby
+#define ITEM_POKEFOSSIL_072 926 //Lightning
+#define ITEM_POKEFOSSIL_073 927 //Thunderbolt
+#define ITEM_POKEFOSSIL_074 928 //Plasma
+#define ITEM_POKEFOSSIL_075 929 //Tiny Metal Bird
+#define ITEM_POKEFOSSIL_076 930 //Gear
+#define ITEM_POKEFOSSIL_077 931 //Key Ring
+#define ITEM_POKEFOSSIL_078 932 //Deceptive
+#define ITEM_POKEFOSSIL_079 933 //Bronze Plate
+#define ITEM_POKEFOSSIL_080 934 //Iron Ball
+#define ITEM_POKEFOSSIL_081 935 //Sword
+#define ITEM_POKEFOSSIL_082 936 //Puppet
+#define ITEM_POKEFOSSIL_083 937 //Gem
+#define ITEM_POKEFOSSIL_084 938 //Stump
+#define ITEM_POKEFOSSIL_085 939 //Skull
+#define ITEM_POKEFOSSIL_086 940 //Vocal Cord
+#define ITEM_POKEFOSSIL_087 941 //Tiny Birdbrain
+#define ITEM_POKEFOSSIL_088 942 //Bell
+#define ITEM_POKEFOSSIL_089 943 //Spike Ball
+#define ITEM_POKEFOSSIL_090 944 //Tiny Monkey
+#define ITEM_POKEFOSSIL_091 945 //Heart
+#define ITEM_POKEFOSSIL_092 946 //Common Fish
+#define ITEM_POKEFOSSIL_093 947 //Bullet Jet
+#define ITEM_POKEFOSSIL_094 948 //Octopus 
+#define ITEM_POKEFOSSIL_095 949 //River Crab
+#define ITEM_POKEFOSSIL_096 950 //Barnacle
+#define ITEM_POKEFOSSIL_097 951 //Sea Slug
+#define ITEM_POKEFOSSIL_098 952 //Ugly Fish
+#define ITEM_POKEFOSSIL_099 953 //Big Catfish
+#define ITEM_POKEFOSSIL_100 954 //Nigiri Sushi
+#define ITEM_POKEFOSSIL_101 955 //Kelp
+#define ITEM_POKEFOSSIL_102 956 //Elefish
+#define ITEM_POKEFOSSIL_103 957 //Anteater
+#define ITEM_POKEFOSSIL_104 958 //Iron Ant
+#define ITEM_POKEFOSSIL_105 959 //Sand Snake
+#define ITEM_POKEFOSSIL_106 960 //Painter
+#define ITEM_POKEFOSSIL_107 961 //Disguised
+#define ITEM_POKEFOSSIL_108 962 //Mime
+#define ITEM_POKEFOSSIL_109 963 //Drowsing
+#define ITEM_POKEFOSSIL_110 964 //Cerebral
+#define ITEM_POKEFOSSIL_111 965 //Fly Scorpion
+#define ITEM_POKEFOSSIL_112 966 //Mud Trap
+#define ITEM_POKEFOSSIL_113 967 //Rolling
+#define ITEM_POKEFOSSIL_114 968 //Sand Heap
+#define ITEM_POKEFOSSIL_115 969 //Desert Croc
+#define ITEM_POKEFOSSIL_116 970 //Automaton
+#define ITEM_POKEFOSSIL_117 971 //Magma Geode
+#define ITEM_POKEFOSSIL_118 972 //Lava
+#define ITEM_POKEFOSSIL_119 973 //Candle
+#define ITEM_POKEFOSSIL_120 974 //Fire Child
+#define ITEM_POKEFOSSIL_121 975 //Virtual
+#define ITEM_POKEFOSSIL_122 976 //Weather
+#define ITEM_POKEFOSSIL_123 977 //Snow Hat
+#define ITEM_POKEFOSSIL_124 978 //Cold Pig
+#define ITEM_POKEFOSSIL_125 979 //Sharp Claw
+#define ITEM_POKEFOSSIL_126 980 //Tundra Whale
+#define ITEM_POKEFOSSIL_127 981 //Ice Chunk
+#define ITEM_POKEFOSSIL_128 982 //Ice Fin
+#define ITEM_POKEFOSSIL_129 983 //Bat Ear
+#define ITEM_POKEFOSSIL_130 984 //Tusk
+#define ITEM_POKEFOSSIL_131 985 //Scaly
+#define ITEM_POKEFOSSIL_132 986 //Martial Arts
+#define ITEM_POKEFOSSIL_133 987 //Wishing Eye
+#define ITEM_POKEFOSSIL_134 988 //DNA
+#define ITEM_POKEFOSSIL_135 989 //Basin Whale
+#define ITEM_POKEFOSSIL_136 990 //Continent Dino
+#define ITEM_POKEFOSSIL_137 991 //Sky Dragon
+#define ITEM_POKEFOSSIL_138 992 //Eon Drake (Male)
+#define ITEM_POKEFOSSIL_139 993 //Eon Drake (Female)
+#define ITEM_POKEFOSSIL_140 994 //Rock Peak
+#define ITEM_POKEFOSSIL_141 995 //Iceberg
+#define ITEM_POKEFOSSIL_142 996 //Pure Iron
+#define ITEM_POKEFOSSIL_143 997 //Electron
+#define ITEM_POKEFOSSIL_144 998 //Dragon Orb
+#define ITEM_POKEFOSSIL_145 999 //Colossal
+#define ITEM_POKEFOSSIL_146 1000 //Cyclone
+#define ITEM_POKEFOSSIL_147 1001 //Quake
+#define ITEM_POKEFOSSIL_148 1002 //Bolt Strike
 
-#define ITEMS_COUNT 858
+#define ITEMS_COUNT 1003
 #define ITEM_FIELD_ARROW ITEMS_COUNT
 
 // A special item id associated with "Cancel"/"Exit" etc. in a list of items or decorations

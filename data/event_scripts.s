@@ -1173,3 +1173,9 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/Route127_RestHouse/scripts.inc"
 
 	.include "data/maps/Route129_BeachHouse/scripts.inc"
+
+	.include "data/maps/SandyCaves_2F/scripts.inc"
+
+	.include "data/maps/SandyCaves_3F/scripts.inc"
+
+	.include "data/maps/Route129_BeachHouse_2F/scripts.inc"

@@ -434,7 +434,9 @@
     "TerraCave_End",
     "AlteringCave",
     "MeteorFalls_StevensCave",
-    "SandyCaves_1F"
+    "SandyCaves_1F",
+    "SandyCaves_2F",
+    "SandyCaves_3F"
   ],
   "gMapGroup_IndoorDynamic": [
     "SecretBase_RedCave1",
@@ -630,6 +632,7 @@
     "Route127_RestHouse"
   ],
   "gMapGroup_IndoorRoute129": [
-    "Route129_BeachHouse"
+    "Route129_BeachHouse",
+    "Route129_BeachHouse_2F"
   ]
 }

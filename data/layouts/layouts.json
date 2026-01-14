@@ -335,7 +335,7 @@
       "id": "LAYOUT_ROUTE118",
       "name": "Route118_Layout",
       "width": 80,
-      "height": 20,
+      "height": 21,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Mauville",
       "border_filepath": "data/layouts/Route118/border.bin",
@@ -2914,8 +2914,8 @@
     {
       "id": "LAYOUT_JAGGED_PASS",
       "name": "JaggedPass_Layout",
-      "width": 30,
-      "height": 46,
+      "width": 31,
+      "height": 52,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Lavaridge",
       "border_filepath": "data/layouts/JaggedPass/border.bin",
@@ -4460,6 +4460,36 @@
       "secondary_tileset": "gTileset_GenericBuilding",
       "border_filepath": "data/layouts/Route129_BeachHouse/border.bin",
       "blockdata_filepath": "data/layouts/Route129_BeachHouse/map.bin"
+    },
+    {
+      "id": "LAYOUT_SANDY_CAVES_2F",
+      "name": "SandyCaves_2F_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/SandyCaves_2F/border.bin",
+      "blockdata_filepath": "data/layouts/SandyCaves_2F/map.bin"
+    },
+    {
+      "id": "LAYOUT_SANDY_CAVES_3F",
+      "name": "SandyCaves_3F_Layout",
+      "width": 40,
+      "height": 30,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/SandyCaves_3F/border.bin",
+      "blockdata_filepath": "data/layouts/SandyCaves_3F/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE129_BEACH_HOUSE_2F",
+      "name": "Route129_BeachHouse_2F_Layout",
+      "width": 7,
+      "height": 6,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_BrendansMaysHouse",
+      "border_filepath": "data/layouts/Route129_BeachHouse_2F/border.bin",
+      "blockdata_filepath": "data/layouts/Route129_BeachHouse_2F/map.bin"
     }
   ]
 }

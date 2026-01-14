@@ -346,7 +346,7 @@
     },
     {
       "id": "MAPSEC_ROUTE_128",
-      "name": "ROUTE 128",
+      "name": "SANDY CAVES 3F",
       "x": 23,
       "y": 9,
       "width": 4,
@@ -354,7 +354,6 @@
     },
     {
       "id": "MAPSEC_ROUTE_129",
-      "name": "ROUTE 129",
       "x": 24,
       "y": 10,
       "width": 2,
@@ -610,7 +609,7 @@
     },
     {
       "id": "MAPSEC_JAGGED_PASS",
-      "name": "JAGGED PASS",
+      "name": "JAGGED LAKE",
       "x": 6,
       "y": 3,
       "width": 1,

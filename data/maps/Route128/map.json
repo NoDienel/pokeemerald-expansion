@@ -32,11 +32,11 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F",
-      "x": 78,
+      "x": 71,
       "y": 24,
       "elevation": 1,
       "movement_type": "MOVEMENT_TYPE_WALK_RIGHT_AND_LEFT",
-      "movement_range_x": 5,
+      "movement_range_x": 8,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "7",
@@ -110,7 +110,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_FOSSIL",
-      "x": 49,
+      "x": 50,
       "y": 38,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
@@ -123,8 +123,47 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_FOSSIL",
-      "x": 50,
-      "y": 38,
+      "x": 64,
+      "y": 29,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_FOSSIL",
+      "x": 80,
+      "y": 21,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_FOSSIL",
+      "x": 71,
+      "y": 9,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_FOSSIL",
+      "x": 37,
+      "y": 18,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -151,11 +190,39 @@
       "dest_warp_id": "1"
     },
     {
-      "x": 54,
+      "x": 50,
       "y": 34,
       "elevation": 0,
       "dest_map": "MAP_SANDY_CAVES_1F",
       "dest_warp_id": "3"
+    },
+    {
+      "x": 69,
+      "y": 17,
+      "elevation": 0,
+      "dest_map": "MAP_SANDY_CAVES_2F",
+      "dest_warp_id": "3"
+    },
+    {
+      "x": 60,
+      "y": 11,
+      "elevation": 0,
+      "dest_map": "MAP_SANDY_CAVES_2F",
+      "dest_warp_id": "5"
+    },
+    {
+      "x": 68,
+      "y": 10,
+      "elevation": 0,
+      "dest_map": "MAP_SANDY_CAVES_2F",
+      "dest_warp_id": "6"
+    },
+    {
+      "x": 59,
+      "y": 25,
+      "elevation": 0,
+      "dest_map": "MAP_SANDY_CAVES_2F",
+      "dest_warp_id": "4"
     }
   ],
   "coord_events": [],

@@ -47,22 +47,22 @@
       "x": 17,
       "y": 35,
       "elevation": 0,
-      "dest_map": "MAP_SANDY_CAVES_1F",
+      "dest_map": "MAP_SANDY_CAVES_2F",
       "dest_warp_id": "0"
     },
     {
       "x": 21,
       "y": 21,
       "elevation": 0,
-      "dest_map": "MAP_SANDY_CAVES_1F",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_SANDY_CAVES_2F",
+      "dest_warp_id": "1"
     },
     {
       "x": 29,
       "y": 3,
       "elevation": 0,
-      "dest_map": "MAP_SANDY_CAVES_1F",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_SANDY_CAVES_2F",
+      "dest_warp_id": "2"
     }
   ],
   "coord_events": [],
