@@ -1743,6 +1743,10 @@ extern const u16 gItemIconPalette_TwiceSpicedRadish[];
 extern const u32 gItemIcon_ReturnToFieldArrow[];
 extern const u16 gItemIconPalette_ReturnToFieldArrow[];
 
+//Extra Graphics
+extern const u32 gItemIcon_MiningDynamite[];
+extern const u16 gItemIconPalette_MiningDynamite[];
+
 //menu graphics
 extern const u16 gMenuInfoElements1_Pal[16];
 extern const u16 gMenuInfoElements2_Pal[16];

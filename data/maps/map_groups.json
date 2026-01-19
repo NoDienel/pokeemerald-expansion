@@ -436,7 +436,9 @@
     "MeteorFalls_StevensCave",
     "SandyCaves_1F",
     "SandyCaves_2F",
-    "SandyCaves_3F"
+    "SandyCaves_3F",
+    "DesertPass",
+    "JungleLake"
   ],
   "gMapGroup_IndoorDynamic": [
     "SecretBase_RedCave1",

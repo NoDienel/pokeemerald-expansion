@@ -35,6 +35,7 @@
 #include "constants/items.h"
 #include "item.h"
 #include "data/mining_minigame.h"
+#include "data/mining_location_data.h"
 
 /* >> Specials << */
 void StartMining();
@@ -60,7 +61,7 @@ static bool8 Mining_LoadBgGraphics(void);
 static void Mining_LoadSpriteGraphics(void);
 static void Mining_FreeResources(void);
 static void Mining_UpdateStressLevel(void);
-static void Mining_UpdateTerrain(void);
+static void Mining_UpdateTerrain(u8 taskId);
 static void Mining_DrawRandomTerrain(void);
 static void DoDrawRandomItem(u8 itemStateId, u8 itemId);
 static void DoDrawRandomStone(u8 itemId);
@@ -88,6 +89,7 @@ static u32 GetNumberOfFoundItems(void);
 static bool32 GetBuriedItemStatus(u32 index);
 static void ExitMiningUI(u8 taskId);
 static void WallCollapseAnimation();
+static void UpdateToolInfoText(void);
 
 /* >> Debug << */
 static u32 Debug_SetNumberOfBuriedItems(u32 rnd);
@@ -118,31 +120,19 @@ struct BuriedItem
     u32 spriteId;
 };
 
+enum 
+{
+    MINING_TOOL_PICKAXE = 0,
+    MINING_TOOL_HAMMER,
+    MINING_TOOL_AIR,
+    MINING_TOOL_DYNAMITE,
+    MINING_TOOL_COUNT
+};
+
 struct MiningState
 {
     MainCallback leavingCallback; // Callback to leave the Ui
-    u32 loadGameState;
-    u32 layerMap[96];             // Array representing the screen. Determines virtual layers
-    u32 itemMap[96];              // Determines where items are on the screen
-    u32 cursorX;
-    u32 cursorY;
-
-    u8 *sBg1TilemapBuffer;
-    u8 *sBg2TilemapBuffer;
-    u8 *sBg3TilemapBuffer;
-
-    u32 locationId;     //Used to determine which set of fossils should be added to the player's bag when they mine up a fossil
-
-    // Items and Stones
-    struct BuriedItem buriedItems[MINING_MAX_NUM_BURIED_ITEMS];
-    struct BuriedItem buriedStones[MINING_COUNT_MAX_NUMBER_STONES];
-
-    // Tools
-    bool32 tool;        // Hammer or Pickaxe
-    u32 cursorSpriteIndex;
-    u32 bRedSpriteIndex;
-    u32 bBlueSpriteIndex;
-
+    
     // Shake
     bool32 shouldShake; // If set to true, shake gets executed every VBlank
     u32 shakeState;     // State of shaking steps
@@ -158,10 +148,35 @@ struct MiningState
     // Collapse Animation
     u32 delayCounter;
     bool32 isCollapseAnimActive;
+    
+    u32 loadGameState;
+    u32 layerMap[96];             // Array representing the screen. Determines virtual layers
+    u32 itemMap[96];              // Determines where items are on the screen
+    u32 cursorX;
+    u32 cursorY;
+
+    u32 locationId;     //Used to determine which set of fossils should be added to the player's bag when they mine up a fossil
+
+    u32 cursorSpriteIndex;
+    u32 bActiveSpriteIndex;
+
+    // Items and Stones
+    struct BuriedItem buriedItems[MINING_MAX_NUM_BURIED_ITEMS];
+    struct BuriedItem buriedStones[MINING_COUNT_MAX_NUMBER_STONES];
+
+    u8 *sBg1TilemapBuffer;
+    u8 *sBg2TilemapBuffer;
+    u8 *sBg3TilemapBuffer;
+    
+    // Tools
+    u8 tool;
+    u8 toolLevels[8]; //Put in the tool to get the level of that tool
+
 };
 
 // Win IDs
 #define WIN_MSG         0
+#define WIN_TOOL_INFO   1
 
 // Other Sprite Tags
 #define TAG_DUMMY               0
@@ -176,8 +191,10 @@ struct MiningState
 #define TAG_PAL_HIT_EFFECTS     7
 #define TAG_HIT_EFFECT_HAMMER   8
 #define TAG_HIT_EFFECT_PICKAXE  9
-#define TAG_HIT_HAMMER          10
-#define TAG_HIT_PICKAXE         11
+#define TAG_HIT_EFFECT_AIR      10
+#define TAG_HIT_HAMMER          11
+#define TAG_HIT_PICKAXE         12
+#define TAG_HIT_AIR             13
 
 enum
 {
@@ -223,7 +240,7 @@ enum
     STRESS_LEVEL_POS_MAX,
 };
 
-enum
+enum //Background layers
 {
     BG_TEXT_BOX = 0,
     BG_COLLAPSE_SCREEN,
@@ -248,6 +265,16 @@ static const struct WindowTemplate sWindowTemplates[] =
         .height = 4,
         .paletteNum = 14,
         .baseBlock = 256,
+    },
+    [WIN_TOOL_INFO] =
+    {
+        .bg = 2,
+        .tilemapLeft = 25,
+        .tilemapTop = 13,
+        .width = 6,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 370,
     },
     DUMMY_WIN_TEMPLATE
 };
@@ -305,8 +332,10 @@ const u16 gButtonPal[] = INCBIN_U16("graphics/mining_minigame/buttons.gbapal");
 
 const u32 gHitEffectHammerGfx[] = INCBIN_U32("graphics/mining_minigame/hit_effect_hammer.4bpp.smol");
 const u32 gHitEffectPickaxeGfx[] = INCBIN_U32("graphics/mining_minigame/hit_effect_pickaxe.4bpp.smol");
+const u32 gHitEffectAirGfx[] = INCBIN_U32("graphics/mining_minigame/hit_effect_air.4bpp.smol");
 const u32 gHitHammerGfx[] = INCBIN_U32("graphics/mining_minigame/hit_hammer.4bpp.smol");
 const u32 gHitPickaxeGfx[] = INCBIN_U32("graphics/mining_minigame/hit_pickaxe.4bpp.smol");
+const u32 gHitAirGfx[] = INCBIN_U32("graphics/mining_minigame/hit_air.4bpp.smol");
 const u16 gHitEffectPal[] = INCBIN_U16("graphics/mining_minigame/hit_effects.gbapal");
 
 static const struct CompressedSpriteSheet sSpriteSheet_Cursor[] =
@@ -345,6 +374,12 @@ static const struct CompressedSpriteSheet sSpriteSheet_HitEffectPickaxe[] =
     {NULL},
 };
 
+static const struct CompressedSpriteSheet sSpriteSheet_HitEffectAir[] =
+{
+    {gHitEffectAirGfx, 64 * 64 / 2 , TAG_HIT_EFFECT_AIR},
+    {NULL},
+};
+
 static const struct CompressedSpriteSheet sSpriteSheet_HitHammer[] =
 {
     {gHitHammerGfx, 32 * 64 / 2 , TAG_HIT_HAMMER},
@@ -354,6 +389,11 @@ static const struct CompressedSpriteSheet sSpriteSheet_HitHammer[] =
 static const struct CompressedSpriteSheet sSpriteSheet_HitPickaxe[] =
 {
     {gHitPickaxeGfx, 32 * 64 / 2 , TAG_HIT_PICKAXE},
+    {NULL},
+};
+static const struct CompressedSpriteSheet sSpriteSheet_HitAir[] =
+{
+    {gHitAirGfx, 32 * 64 / 2 , TAG_HIT_AIR},
     {NULL},
 };
 
@@ -452,40 +492,37 @@ static const union AnimCmd *const gCursorAnim[] =
     gAnimCmdCursor,
 };
 
-static const union AnimCmd gAnimCmdButton_RedNotPressed[] =
+static const union AnimCmd gAnimCmdButton_Pickaxe[] =
 {
     ANIMCMD_FRAME(0, 30),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd gAnimCmdButton_RedPressed[] =
+static const union AnimCmd gAnimCmdButton_Air[] =
 {
     ANIMCMD_FRAME(32, 30),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd gAnimCmdButton_BlueNotPressed[] =
+static const union AnimCmd gAnimCmdButton_Hammer[] =
 {
     ANIMCMD_FRAME(64, 30),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd gAnimCmdButton_BluePressed[] =
+static const union AnimCmd gAnimCmdButton_Dynamite[] =
 {
     ANIMCMD_FRAME(96, 30),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const gButtonRedAnim[] =
+// Must match Tool enums
+static const union AnimCmd *const gToolSpriteAnims[] =
 {
-    gAnimCmdButton_RedNotPressed,
-    gAnimCmdButton_RedPressed,
-};
-
-static const union AnimCmd *const gButtonBlueAnim[] =
-{
-    gAnimCmdButton_BluePressed,
-    gAnimCmdButton_BlueNotPressed,
+    gAnimCmdButton_Hammer,
+    gAnimCmdButton_Pickaxe,
+    gAnimCmdButton_Air,
+    gAnimCmdButton_Dynamite,
 };
 
 static const union AnimCmd gAnimCmd_EffectHammerHit[] =
@@ -512,6 +549,18 @@ static const union AnimCmd gAnimCmd_EffectPickaxeNotHit[] =
     ANIMCMD_JUMP(0),
 };
 
+static const union AnimCmd gAnimCmd_EffectAirHit[] =
+{
+    ANIMCMD_FRAME(0, 30),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd gAnimCmd_EffectAirNotHit[] =
+{
+    ANIMCMD_FRAME(16, 30),
+    ANIMCMD_JUMP(0),
+};
+
 static const union AnimCmd *const gHitHammerAnim[] =
 {
     gAnimCmd_EffectHammerHit,
@@ -522,6 +571,12 @@ static const union AnimCmd *const gHitPickaxeAnim[] =
 {
     gAnimCmd_EffectPickaxeHit,
     gAnimCmd_EffectPickaxeNotHit,
+};
+
+static const union AnimCmd *const gHitAirAnim[] =
+{
+    gAnimCmd_EffectAirHit,
+    gAnimCmd_EffectAirNotHit,
 };
 
 static const struct SpriteTemplate gSpriteCursor =
@@ -535,23 +590,12 @@ static const struct SpriteTemplate gSpriteCursor =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct SpriteTemplate gSpriteButtonRed =
+static const struct SpriteTemplate gSpriteToolDisplay =
 {
     .tileTag = TAG_BUTTONS,
     .paletteTag = TAG_BUTTONS,
     .oam = &gOamButton,
-    .anims = gButtonRedAnim,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
-};
-
-static const struct SpriteTemplate gSpriteButtonBlue =
-{
-    .tileTag = TAG_BUTTONS,
-    .paletteTag = TAG_BUTTONS,
-    .oam = &gOamButton,
-    .anims = gButtonBlueAnim,
+    .anims = gToolSpriteAnims,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
@@ -579,6 +623,17 @@ static const struct SpriteTemplate gSpriteHitEffectPickaxe =
     .callback = SpriteCallbackDummy,
 };
 
+static const struct SpriteTemplate gSpriteHitEffectAir =
+{
+    .tileTag = TAG_HIT_EFFECT_AIR,
+    .paletteTag = TAG_PAL_HIT_EFFECTS,
+    .oam = &gOamHitEffect,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
 static const struct SpriteTemplate gSpriteHitHammer =
 {
     .tileTag = TAG_HIT_HAMMER,
@@ -596,6 +651,17 @@ static const struct SpriteTemplate gSpriteHitPickaxe =
     .paletteTag = TAG_PAL_HIT_EFFECTS,
     .oam = &gOamHitTools,
     .anims = gHitPickaxeAnim,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct SpriteTemplate gSpriteHitAir =
+{
+    .tileTag = TAG_HIT_AIR,
+    .paletteTag = TAG_PAL_HIT_EFFECTS,
+    .oam = &gOamHitTools,
+    .anims = gHitAirAnim,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
@@ -1449,38 +1515,19 @@ static const struct MiningStone MiningStoneList[] =
     },
 };
 
-struct LocSysFossilData
-{
-    u32 chance;
-    u32 fossilItemId;
-};
-
-struct LocSysLocationData
-{
-    const struct LocSysFossilData *fossils;
-    u32 count;
-};
-
-// Global array mapping Location IDs to their fossil data
-static const struct LocSysLocationData LocationData[] =
-{
-    [LOCATIONID_TEST_001] = 
-    {
-        .fossils = (const struct LocSysFossilData[]) {
-            { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_001 },
-            { .chance = 25, .fossilItemId = ITEM_POKEFOSSIL_002 },
-            { .chance = 70, .fossilItemId = ITEM_POKEFOSSIL_003 },
-        },
-        .count = 2
-    },
-};
-
 static const u8 sText_SomethingPinged[] = _("Something pinged in the wall!\n{STR_VAR_1} confirmed!");
 static const u8 sText_EverythingWas[] = _("Everything was dug up!");
 static const u8 sText_WasObtained[] = _("{STR_VAR_1}\nwas obtained!");
 static const u8 sText_FossilIdentified[] = _("Fossil was identified as {STR_VAR_1}!");
 static const u8 sText_TooBad[] = _("Too bad!\nYour Bag is full!");
 static const u8 sText_TheWall[] = _("The wall collapsed!");
+static const u8 sText_NoDynamite[] = _("You have no dynamite!");
+
+//Tool descriptions
+static const u8 sText_Hammer[] = _("Hammer\n{STR_VAR_1}");
+static const u8 sText_Pickaxe[] = _("Pickaxe\n{STR_VAR_1}");
+static const u8 sText_Air[] = _("Air\n{STR_VAR_1}");
+static const u8 sText_DynamiteNumber[] = _("Dynamite\n{STR_VAR_1} left\nS:x");
 
 static u32 MiningUtil_GetTotalTileAmount(u32 itemId)
 {
@@ -1580,6 +1627,12 @@ static void Mining_Init(MainCallback callback, u32 locationID)
     sMiningUiState->buriedStones[0].isSelected = TRUE;
     sMiningUiState->buriedStones[1].isSelected = TRUE;
 
+    // Set Default tool levels
+    sMiningUiState->toolLevels[MINING_TOOL_HAMMER] = 0;
+    sMiningUiState->toolLevels[MINING_TOOL_PICKAXE] = 0;
+    sMiningUiState->toolLevels[MINING_TOOL_AIR] = 0;
+    sMiningUiState->toolLevels[MINING_TOOL_DYNAMITE] = 0;
+
     // Generate Items
     u32 amountItemsToSelect = Debug_SetNumberOfBuriedItems(random(3) + 2); // The `+ 2` says that the min. amount of items to be generated are 2.
 
@@ -1652,6 +1705,7 @@ static void Mining_SetupCB(void)
             FreeAllSpritePalettes();
             ResetPaletteFade();
             ResetSpriteData();
+            FreeAllWindowBuffers();
             ResetTasks();
             BuildOamBuffer();
             LoadOam();
@@ -2082,6 +2136,12 @@ static void InitItemsIfSelected(u32 item, u32 itemId) {
     }
 }
 
+static void UpdateToolVisuals(void)
+{
+    // Simply start the animation corresponding to the current tool index
+    StartSpriteAnim(&gSprites[sMiningUiState->bActiveSpriteIndex], sMiningUiState->tool);
+}
+
 static void Mining_LoadSpriteGraphics(void)
 {
     u32 i;
@@ -2119,14 +2179,18 @@ static void Mining_LoadSpriteGraphics(void)
     sMiningUiState->cursorSpriteIndex = CreateSprite(&gSpriteCursor, 8, 40, 0);
     sMiningUiState->cursorX = 0;
     sMiningUiState->cursorY = 2;
-    sMiningUiState->bRedSpriteIndex = CreateSprite(&gSpriteButtonRed, 217, 78, 0);
-    sMiningUiState->bBlueSpriteIndex = CreateSprite(&gSpriteButtonBlue, 217, 138, 1);
-    sMiningUiState->tool = 0;
+    sMiningUiState->bActiveSpriteIndex = CreateSprite(&gSpriteToolDisplay, 217, 78, 0);
+    //sMiningUiState->bToolInfo = CreateSprite(&gS[SpriteToolInfo], 217, 138, 1);
+    sMiningUiState->tool = MINING_TOOL_PICKAXE;
+    UpdateToolVisuals();
+    
     LoadSpritePalette(sSpritePal_HitEffect);
     LoadCompressedSpriteSheet(sSpriteSheet_HitEffectHammer);
     LoadCompressedSpriteSheet(sSpriteSheet_HitEffectPickaxe);
+    LoadCompressedSpriteSheet(sSpriteSheet_HitEffectAir);
     LoadCompressedSpriteSheet(sSpriteSheet_HitHammer);
     LoadCompressedSpriteSheet(sSpriteSheet_HitPickaxe);
+    LoadCompressedSpriteSheet(sSpriteSheet_HitAir);
 }
 
 static void Task_MiningWaitFadeIn(u8 taskId)
@@ -2140,58 +2204,82 @@ static void Task_MiningWaitFadeIn(u8 taskId)
     }
 }
 
-#define BLUE_BUTTON 0
-#define RED_BUTTON  1
-
 static void Task_MiningMainInput(u8 taskId)
 {
-    if (gMain.newKeys & A_BUTTON && !sMiningUiState->shouldShake)
+    if (gMain.newKeys & A_BUTTON && !sMiningUiState->shouldShake) //Activating Tools
     {
         u32 cursorPos = sMiningUiState->cursorX + (sMiningUiState->cursorY-2) * 12;
-        Mining_UpdateTerrain();
+        Mining_UpdateTerrain(taskId);
         Mining_UpdateStressLevel();
         ScheduleBgCopyTilemapToVram(2);
         DoScheduledBgTilemapCopiesToVram();
         BuildOamBuffer();
 
-        if (sMiningUiState->tool == 1)
+        switch(sMiningUiState->tool)
         {
-            sMiningUiState->ShakeHitEffect = CreateSprite(&gSpriteHitEffectHammer, (sMiningUiState->cursorX * 16) + 8, (sMiningUiState->cursorY * 16) + 8, 0);
-            sMiningUiState->ShakeHitTool = CreateSprite(&gSpriteHitHammer, (sMiningUiState->cursorX * 16) + 24, sMiningUiState->cursorY * 16, 0);
+            case MINING_TOOL_HAMMER:
+                sMiningUiState->ShakeHitEffect = CreateSprite(&gSpriteHitEffectHammer, (sMiningUiState->cursorX * 16) + 8, (sMiningUiState->cursorY * 16) + 8, 0);
+                sMiningUiState->ShakeHitTool = CreateSprite(&gSpriteHitHammer, (sMiningUiState->cursorX * 16) + 24, sMiningUiState->cursorY * 16, 0);
+                sMiningUiState->shouldShake = TRUE;
 
-            if (sMiningUiState->layerMap[cursorPos] == 6 && sMiningUiState->itemMap[cursorPos] > 4)
-            {
-                m4aMPlayStop(&gMPlayInfo_SE1);
-                m4aMPlayStop(&gMPlayInfo_SE2);
-                PlayBGM(MINING_SE_HIT_DUG_UP);
-            }
-            else
-            {
-                m4aMPlayStop(&gMPlayInfo_SE1);
-                m4aMPlayStop(&gMPlayInfo_SE2);
-                PlaySE(MINING_SE_HIT_HAMMER);
-            }
-        } else
-        {
-            sMiningUiState->ShakeHitEffect = CreateSprite(&gSpriteHitEffectPickaxe, (sMiningUiState->cursorX * 16) + 8, (sMiningUiState->cursorY * 16) + 8, 0);
-            sMiningUiState->ShakeHitTool = CreateSprite(&gSpriteHitPickaxe, (sMiningUiState->cursorX * 16) + 24, sMiningUiState->cursorY * 16, 0);
-            if (sMiningUiState->layerMap[cursorPos] == 6 && sMiningUiState->itemMap[cursorPos] > 4)
-            {
-                m4aMPlayStop(&gMPlayInfo_SE1);
-                m4aMPlayStop(&gMPlayInfo_SE2);
-                PlayBGM(MINING_SE_HIT_DUG_UP);
-            }
-            else
-            {
-                m4aMPlayStop(&gMPlayInfo_SE1);
-                m4aMPlayStop(&gMPlayInfo_SE2);
-                PlaySE(MINING_SE_HIT_PICKAXE);
-            }
+                if (sMiningUiState->layerMap[cursorPos] == 6 && sMiningUiState->itemMap[cursorPos] > 4)
+                {
+                    m4aMPlayStop(&gMPlayInfo_SE1);
+                    m4aMPlayStop(&gMPlayInfo_SE2);
+                    PlayBGM(MINING_SE_HIT_DUG_UP);
+                }
+                else
+                {
+                    m4aMPlayStop(&gMPlayInfo_SE1);
+                    m4aMPlayStop(&gMPlayInfo_SE2);
+                    PlaySE(MINING_SE_HIT_HAMMER);
+                }
+            break;
+
+            case MINING_TOOL_PICKAXE:
+                sMiningUiState->ShakeHitEffect = CreateSprite(&gSpriteHitEffectPickaxe, (sMiningUiState->cursorX * 16) + 8, (sMiningUiState->cursorY * 16) + 8, 0);
+                sMiningUiState->ShakeHitTool = CreateSprite(&gSpriteHitPickaxe, (sMiningUiState->cursorX * 16) + 24, sMiningUiState->cursorY * 16, 0);
+                sMiningUiState->shouldShake = TRUE;
+                if (sMiningUiState->layerMap[cursorPos] == 6 && sMiningUiState->itemMap[cursorPos] > 4)
+                {
+                    m4aMPlayStop(&gMPlayInfo_SE1);
+                    m4aMPlayStop(&gMPlayInfo_SE2);
+                    PlayBGM(MINING_SE_HIT_DUG_UP);
+                }
+                else
+                {
+                    m4aMPlayStop(&gMPlayInfo_SE1);
+                    m4aMPlayStop(&gMPlayInfo_SE2);
+                    PlaySE(MINING_SE_HIT_PICKAXE);
+                }
+            break;
+
+            case MINING_TOOL_AIR:
+                sMiningUiState->ShakeHitEffect = CreateSprite(&gSpriteHitEffectAir, (sMiningUiState->cursorX * 16) + 8, (sMiningUiState->cursorY * 16) + 8, 0);
+                sMiningUiState->ShakeHitTool = CreateSprite(&gSpriteHitAir, (sMiningUiState->cursorX * 16) + 24, sMiningUiState->cursorY * 16, 0);
+                sMiningUiState->shouldShake = TRUE;
+                if (sMiningUiState->layerMap[cursorPos] == 6 && sMiningUiState->itemMap[cursorPos] > 4)
+                {
+                    m4aMPlayStop(&gMPlayInfo_SE1);
+                    m4aMPlayStop(&gMPlayInfo_SE2);
+                    PlayBGM(MINING_SE_HIT_DUG_UP);
+                }
+                else
+                {
+                    m4aMPlayStop(&gMPlayInfo_SE1);
+                    m4aMPlayStop(&gMPlayInfo_SE2);
+                    PlaySE(MINING_SE_HIT_AIR);
+                }
+            break;
+
+            case MINING_TOOL_DYNAMITE:
+                sMiningUiState->shouldShake = CheckBagHasItem(ITEM_MINING_DYNAMITE, 1);
+            break;
         }
-        sMiningUiState->shouldShake = TRUE;
+
         CreateTask(MiningUi_Shake, 0);
     }
-    else if (gMain.newAndRepeatedKeys & DPAD_LEFT && sMiningUiState->cursorX > 0)
+    else if (gMain.newAndRepeatedKeys & DPAD_LEFT && sMiningUiState->cursorX > 0) //Moving cursors
     {
         gSprites[sMiningUiState->cursorSpriteIndex].x -= 16;
         sMiningUiState->cursorX -= 1;
@@ -2208,19 +2296,54 @@ static void Task_MiningMainInput(u8 taskId)
         gSprites[sMiningUiState->cursorSpriteIndex].y += 16;
         sMiningUiState->cursorY += 1;
     }
-    else if (gMain.newAndRepeatedKeys & R_BUTTON)
+    else if (gMain.newAndRepeatedKeys & (R_BUTTON | L_BUTTON)) //Changing tools
     {
-        StartSpriteAnim(&gSprites[sMiningUiState->bRedSpriteIndex], 1);
-        StartSpriteAnim(&gSprites[sMiningUiState->bBlueSpriteIndex],1);
-        sMiningUiState->tool = RED_BUTTON;
+        if (gMain.newAndRepeatedKeys & R_BUTTON)
+        {
+            sMiningUiState->tool++;
+            if (sMiningUiState->tool >= MINING_TOOL_COUNT)
+                sMiningUiState->tool = 0;
+        }
+        else // L_BUTTON
+        {
+            if (sMiningUiState->tool == 0)
+                sMiningUiState->tool = MINING_TOOL_COUNT - 1;
+            else
+                sMiningUiState->tool--;
+        }
+        
         PlaySE(MINING_SE_TOOL_SWITCH);
-    } else if (gMain.newAndRepeatedKeys & L_BUTTON)
-    {
-        StartSpriteAnim(&gSprites[sMiningUiState->bRedSpriteIndex], 0);
-        StartSpriteAnim(&gSprites[sMiningUiState->bBlueSpriteIndex], 0);
-        sMiningUiState->tool = BLUE_BUTTON;
-        PlaySE(MINING_SE_TOOL_SWITCH);
+        UpdateToolVisuals();
+        UpdateToolInfoText();
     }
+    else if (gMain.newKeys & SELECT_BUTTON)
+    {
+        bool32 changed = FALSE;
+
+        if (sMiningUiState->tool == MINING_TOOL_PICKAXE)
+        {
+            // Toggle between 0 and 1 (which are the only two levels currently implemented)
+            sMiningUiState->toolLevels[MINING_TOOL_PICKAXE] ^= 1; 
+            changed = TRUE;
+        }
+        else if (sMiningUiState->tool == MINING_TOOL_HAMMER)
+        {
+            sMiningUiState->toolLevels[MINING_TOOL_HAMMER] ^= 1;
+            changed = TRUE;
+        }
+        else if (sMiningUiState->tool == MINING_TOOL_AIR)
+        {
+            sMiningUiState->toolLevels[MINING_TOOL_AIR] ^= 1;
+            changed = TRUE;
+        }
+        
+        if (changed)
+        {
+            PlaySE(SE_SELECT); // Standard menu select sound
+            UpdateToolInfoText(); // Refresh the text description
+        }
+    }
+    
 
     if (AreAllItemsFound())
         EndMining(taskId);
@@ -2353,43 +2476,62 @@ static void StressLevel_Draw_6(u8 ofs, u8 ofs2, u16* ptr)
 // This function draws the individual frames of the stress level indicator
 static void StressLevel_UpdateRelativeToFramePos(u8 offsetIn8, u8 ofs2, u16* ptr)
 {
+
+    u32 stressIncrement = 0;
+    switch(sMiningUiState->tool)
+    {
+        case MINING_TOOL_PICKAXE:
+            if (sMiningUiState->toolLevels[MINING_TOOL_PICKAXE] == 1)
+                stressIncrement = 2; // Heavy Pickaxe
+            else
+                stressIncrement = 1; // Normal Pickaxe
+            break;
+
+        case MINING_TOOL_HAMMER:
+            if (sMiningUiState->toolLevels[MINING_TOOL_HAMMER] == 1)
+                stressIncrement = 3; // Impact Hammer (5x5)
+            else
+                stressIncrement = 2; // Normal Hammer
+            break;
+
+        case MINING_TOOL_AIR:
+            if ((Random() % 100) < 50) stressIncrement = 1; //Air tool only has a 50% chance to increase stress
+            if (sMiningUiState->toolLevels[MINING_TOOL_AIR] == 1)
+                stressIncrement++;
+            break;
+
+    }
+
     switch (sMiningUiState->stressLevelCount)
     {
         case 0:
             StressLevel_Draw_0(offsetIn8, ofs2, ptr);
-            if (sMiningUiState->tool == 1)
-                sMiningUiState->stressLevelCount++;
-            sMiningUiState->stressLevelCount++;
+            sMiningUiState->stressLevelCount += stressIncrement;
             break;
         case 1:
             StressLevel_Draw_1(offsetIn8, ofs2, ptr);
-            if (sMiningUiState->tool == 1)
-                sMiningUiState->stressLevelCount++;
-            sMiningUiState->stressLevelCount++;
+            sMiningUiState->stressLevelCount += stressIncrement;
             break;
         case 2:
             StressLevel_Draw_2(offsetIn8, ofs2, ptr);
-            if (sMiningUiState->tool == 1)
-                sMiningUiState->stressLevelCount++;
-            sMiningUiState->stressLevelCount++;
+            sMiningUiState->stressLevelCount += stressIncrement;
             break;
         case 3:
             StressLevel_Draw_3(offsetIn8, ofs2, ptr);
-            if (sMiningUiState->tool == 1)
-                sMiningUiState->stressLevelCount++;
-            sMiningUiState->stressLevelCount++;
+            sMiningUiState->stressLevelCount += stressIncrement;
             break;
         case 4:
             StressLevel_Draw_4(offsetIn8, ofs2, ptr);
-            if (sMiningUiState->tool == 1)
-                sMiningUiState->stressLevelCount++;
-            sMiningUiState->stressLevelCount++;
+            sMiningUiState->stressLevelCount += stressIncrement;
             break;
         case 5:
             StressLevel_Draw_5(offsetIn8, ofs2, ptr);
-            sMiningUiState->stressLevelCount++;
+            sMiningUiState->stressLevelCount += stressIncrement;
             break;
         case 6:
+        case 7:
+        case 8:
+        case 9:
             StressLevel_Draw_6(offsetIn8, ofs2, ptr);
             if (sMiningUiState->stressLevelPos == 7)
             {
@@ -2409,6 +2551,9 @@ static void StressLevel_UpdateRelativeToFramePos(u8 offsetIn8, u8 ofs2, u16* ptr
 // This is the function that is called to easily update the stress level indicator on the top of the screen.
 static void Mining_UpdateStressLevel(void)
 {
+    if (sMiningUiState->tool == MINING_TOOL_DYNAMITE && !CheckBagHasItem(ITEM_MINING_DYNAMITE, 1)) // If the player is out of dynamite, the stress level should not increase
+        return;
+
     u16 *ptr = GetBgTilemapBuffer(2);
     switch (sMiningUiState->stressLevelPos)
     {
@@ -2955,9 +3100,16 @@ static u8 Terrain_Pickaxe_OverwriteTiles(u16* ptr)
 
         // Center hit
         Terrain_UpdateLayerTileOnScreen(ptr,0,0);
-        if (sMiningUiState->tool == BLUE_BUTTON)
+        if (sMiningUiState->tool == MINING_TOOL_PICKAXE)
         {
             Terrain_UpdateLayerTileOnScreen(ptr,0,0);
+        }
+        //Upgraded pickaxe hits the center three times, so we call it again if the tool is pickaxe
+        if (sMiningUiState->toolLevels[MINING_TOOL_PICKAXE] == 1)
+        {
+            // Hit center again (triple depth)
+            Terrain_UpdateLayerTileOnScreen(ptr, 0, 0);
+            Terrain_UpdateLayerTileOnScreen(ptr, 0, 0);
         }
         return 0;
     } else
@@ -2973,36 +3125,139 @@ static void Terrain_Hammer_OverwriteTiles(u16* ptr)
 
     if (!isItemDugUp)
     {
-        // Corners
-        // We have to add '2' to '7' and '0', because the cursor spawns at Y position 2
-        if (sMiningUiState->cursorX != 11 && sMiningUiState->cursorY != 9)
-            Terrain_UpdateLayerTileOnScreen(ptr, 1, 1);
+        if (sMiningUiState->toolLevels[MINING_TOOL_HAMMER] == 1)
+        {
+            s32 x, y;
+            // 5x5 Area excluding corners
+            for (y = -2; y <= 2; y++)
+            {
+                for (x = -2; x <= 2; x++)
+                {
+                    if (abs(x) == 2 && abs(y) == 2) continue; // Skip corners
 
-        if (sMiningUiState->cursorX != 0 && sMiningUiState->cursorY != 9)
-            Terrain_UpdateLayerTileOnScreen(ptr, -1, 1);
+                    s32 targetX = sMiningUiState->cursorX + x;
+                    s32 targetY = sMiningUiState->cursorY + y;
+                    
+                    //Bounding check - we only want to hit within the 12x8 grid, and Y is 2-9 because of the offset of the cursor spawn
+                    if (targetX >= 0 && targetX < 12 && targetY >= 2 && targetY <= 9)
+                    {
+                        Terrain_UpdateLayerTileOnScreen(ptr, x, y);
+                    }
+                }
+            }
+        }
+        else
+        {
+            // Corners
+            // We have to add '2' to '7' and '0', because the cursor spawns at Y position 2
+            if (sMiningUiState->cursorX != 11 && sMiningUiState->cursorY != 9)
+                Terrain_UpdateLayerTileOnScreen(ptr, 1, 1);
 
-        if (sMiningUiState->cursorX != 11 && sMiningUiState->cursorY != 2)
-            Terrain_UpdateLayerTileOnScreen(ptr, 1, -1);
+            if (sMiningUiState->cursorX != 0 && sMiningUiState->cursorY != 9)
+                Terrain_UpdateLayerTileOnScreen(ptr, -1, 1);
 
-        if (sMiningUiState->cursorX != 0 && sMiningUiState->cursorY != 2)
-            Terrain_UpdateLayerTileOnScreen(ptr, -1, -1);
+            if (sMiningUiState->cursorX != 11 && sMiningUiState->cursorY != 2)
+                Terrain_UpdateLayerTileOnScreen(ptr, 1, -1);
 
-        if (sMiningUiState->layerMap[pos] != 6)
-            Terrain_Pickaxe_OverwriteTiles(ptr);
+            if (sMiningUiState->cursorX != 0 && sMiningUiState->cursorY != 2)
+                Terrain_UpdateLayerTileOnScreen(ptr, -1, -1);
+
+            if (sMiningUiState->layerMap[pos] != 6)
+                Terrain_Pickaxe_OverwriteTiles(ptr);
+        }
     }
 }
 
-static void Mining_UpdateTerrain(void)
+static void Terrain_Air_OverwriteTiles(u16* ptr)
+{
+    u32 i;
+    // 1. Determine random intensity
+    u32 debrisToRemove = 3 + (Random() % 5);
+    if(sMiningUiState->toolLevels[MINING_TOOL_AIR] == 1)
+        debrisToRemove += 4;
+    
+    //No 'is item dug up' check here, because the air tool should be able to activate when clicking an item tile
+
+    for (i = 0; i < debrisToRemove; i++)
+    {
+        // 2. Pick a random spot in a 7x7 area centered on cursor
+        // Generates offsets from -3 to +3
+        s32 offsetX = (Random() % 7) - 3; 
+        s32 offsetY = (Random() % 7) - 3;
+
+        s32 targetX = sMiningUiState->cursorX + offsetX;
+        s32 targetY = sMiningUiState->cursorY + offsetY;
+
+        // 3. Boundary Checks
+        // Grid width is 0-11. 
+        // Grid height (logic) is 0-7, but cursorY is 2-9.
+        if (targetX >= 0 && targetX < 12 && targetY >= 2 && targetY <= 9)
+        {
+            // 4. Remove one layer of debris at this random spot
+            Terrain_UpdateLayerTileOnScreen(ptr, offsetX, offsetY); 
+        }
+    }
+    
+    PlaySE(SE_M_WING_ATTACK);
+}
+
+// DYNAMITE TOOL: Clears screen, requires item
+static void Terrain_Dynamite_OverwriteTiles(u8 taskId, u16* ptr)
+{
+    // Check for item presence
+    if (!CheckBagHasItem(ITEM_MINING_DYNAMITE, 1))
+    {
+        PrintMessage(sText_NoDynamite);
+        gTasks[taskId].func = Task_WaitButtonPressOpening;
+    }
+    else
+    {
+        RemoveBagItem(ITEM_MINING_DYNAMITE, 1);
+
+        // Loop through the entire 1D layerMap array
+        for (u32 i = 0; i < 96; i++)
+        {
+            // 6 is the "dug up" state in layerMap
+            sMiningUiState->layerMap[i] = 6;
+        }
+
+        // Force a full redraw of the terrain
+        // We iterate X (0-11) and Y (0-7 relative to grid, so +2 for screen pos)
+        for (u32 y = 0; y < 8; y++)
+        {
+            for (u32 x = 0; x < 12; x++)
+            {
+                // Draw the fully dug tile (Layer 6)
+                Terrain_DrawLayerTileToScreen(x, y + 2, 6, ptr);
+            }
+        }
+
+        // Trigger a massive screen shake
+        sMiningUiState->shakeDuration = 10;
+        sMiningUiState->shouldShake = TRUE;
+        CreateTask(MiningUi_Shake, 0); //
+
+        PlaySE(SE_M_EXPLOSION);
+    }
+}
+
+static void Mining_UpdateTerrain(u8 taskId)
 {
     u16 *ptr = GetBgTilemapBuffer(2);
 
     switch (sMiningUiState->tool)
     {
-        case RED_BUTTON:
+        case MINING_TOOL_HAMMER:
             Terrain_Hammer_OverwriteTiles(ptr);
             break;
-        case BLUE_BUTTON:
+        case MINING_TOOL_PICKAXE:
             Terrain_Pickaxe_OverwriteTiles(ptr);
+            break;
+        case MINING_TOOL_AIR:
+            Terrain_Air_OverwriteTiles(ptr);
+            break;
+        case MINING_TOOL_DYNAMITE:
+            Terrain_Dynamite_OverwriteTiles(taskId, ptr);
             break;
     }
 }
@@ -3032,6 +3287,58 @@ static void Mining_FreeResources(void)
     SetGpuReg(REG_OFFSET_WINOUT, 0);
 }
 
+static void UpdateToolInfoText(void)
+{
+    FillWindowPixelBuffer(WIN_TOOL_INFO, PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
+    
+    switch(sMiningUiState->tool)
+    {
+        case MINING_TOOL_PICKAXE:
+            if (sMiningUiState->toolLevels[MINING_TOOL_PICKAXE] == 0)
+                StringCopy(gStringVar1, COMPOUND_STRING("M:Normal\nS:="));
+            else
+                StringCopy(gStringVar1, COMPOUND_STRING("M:Heavy\nS:=="));
+            StringExpandPlaceholders(gStringVar2, sText_Pickaxe);
+            break;
+
+        case MINING_TOOL_HAMMER:
+            if (sMiningUiState->toolLevels[MINING_TOOL_HAMMER] == 0)
+                StringCopy(gStringVar1, COMPOUND_STRING("M:Normal\nS:=="));
+            else
+                StringCopy(gStringVar1, COMPOUND_STRING("M:Impact\nS:==="));
+            StringExpandPlaceholders(gStringVar2, sText_Hammer);
+            break;
+
+        case MINING_TOOL_AIR:
+            if (sMiningUiState->toolLevels[MINING_TOOL_AIR] == 0)
+                StringCopy(gStringVar1, COMPOUND_STRING("M:Normal\nS:-"));
+            else
+                StringCopy(gStringVar1, COMPOUND_STRING("M:Compr.\nS:=-"));
+            StringExpandPlaceholders(gStringVar2, sText_Air);
+            break;
+            
+        case MINING_TOOL_DYNAMITE:
+            ConvertIntToDecimalStringN
+            (gStringVar1, CountTotalItemQuantityInBag(ITEM_MINING_DYNAMITE), STR_CONV_MODE_LEFT_ALIGN, 2);
+            StringExpandPlaceholders(gStringVar2, sText_DynamiteNumber);
+            break;
+    }
+    
+    // Push to VRAM
+    CopyWindowToVram(WIN_TOOL_INFO, 3);
+    PutWindowTilemap(WIN_TOOL_INFO);
+
+    // Print to the new window
+    u32 letterSpacing = 0;
+    u32 lineSpacing = 5;
+    u32 x = 2;
+    u32 y = 3;
+    u8 txtColor[]= {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_GRAY, TEXT_COLOR_WHITE};
+
+    AddTextPrinterParameterized4(WIN_TOOL_INFO, FONT_SMALL_NARROWER, x, y, letterSpacing, lineSpacing, txtColor, TEXT_SKIP_DRAW, gStringVar2);
+    RunTextPrinters();
+}
+
 static void InitMiningWindows(void)
 {
     if (InitWindows(sWindowTemplates))
@@ -3049,6 +3356,10 @@ static void InitMiningWindows(void)
 #endif
         PutWindowTilemap(WIN_MSG);
         CopyWindowToVram(WIN_MSG, COPYWIN_FULL);
+
+        PutWindowTilemap(WIN_TOOL_INFO);
+        CopyWindowToVram(WIN_TOOL_INFO, COPYWIN_FULL);
+        UpdateToolInfoText();
     }
 }
 

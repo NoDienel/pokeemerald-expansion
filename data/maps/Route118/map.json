@@ -27,6 +27,11 @@
       "map": "MAP_ROUTE123",
       "offset": 1,
       "direction": "right"
+    },
+    {
+      "map": "MAP_JUNGLE_LAKE",
+      "offset": 10,
+      "direction": "up"
     }
   ],
   "object_events": [

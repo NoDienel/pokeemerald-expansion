@@ -15138,7 +15138,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_POKEFOSSIL_006] =
     {
-        .name = ITEM_NAME("Firefly (Male) Fossil"), //Volbeat
+        .name = ITEM_NAME("Firefly Fossil"), //Volbeat
         .price = 25000,
         .description = sFossilGenericDesc,
         .pocket = POCKET_FOSSILS,
@@ -15152,7 +15152,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_POKEFOSSIL_007] =
     {
-        .name = ITEM_NAME("Firefly (Female) Fossil"), //Illumise
+        .name = ITEM_NAME("Firefly Fossil"), //Illumise
         .price = 25000,
         .description = sFossilGenericDesc,
         .pocket = POCKET_FOSSILS,
@@ -15362,7 +15362,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_POKEFOSSIL_022] =
     {
-        .name = ITEM_NAME("Loiter Weasel Fossil"), //Yugoos
+        .name = ITEM_NAME("Weasel Fossil"), //Yugoos
         .price = 25000,
         .description = sFossilGenericDesc,
         .pocket = POCKET_FOSSILS,
@@ -15572,7 +15572,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_POKEFOSSIL_037] =
     {
-        .name = ITEM_NAME("Thrusting Arm Fossil"), //Makuhita
+        .name = ITEM_NAME("Strong Arm Fossil"), //Makuhita
         .price = 25000,
         .description = sFossilGenericDesc,
         .pocket = POCKET_FOSSILS,
@@ -15614,7 +15614,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_POKEFOSSIL_040] =
     {
-        .name = ITEM_NAME("Smirking Panda Fossil"), //Pancham
+        .name = ITEM_NAME("Fist Panda Fossil"), //Pancham
         .price = 25000,
         .description = sFossilGenericDesc,
         .pocket = POCKET_FOSSILS,
@@ -15684,7 +15684,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_POKEFOSSIL_045] =
     {
-        .name = ITEM_NAME("Glowing Spore Fossil"), //Morelull
+        .name = ITEM_NAME("Glow Spore Fossil"), //Morelull
         .price = 25000,
         .description = sFossilGenericDesc,
         .pocket = POCKET_FOSSILS,
@@ -16104,7 +16104,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_POKEFOSSIL_075] =
     {
-        .name = ITEM_NAME("Tiny Metal Bird Fossil"), //Rookidee
+        .name = ITEM_NAME("Metal Bird Fossil"), //Rookidee
         .price = 25000,
         .description = sFossilGenericDesc,
         .pocket = POCKET_FOSSILS,
@@ -16272,7 +16272,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_POKEFOSSIL_087] =
     {
-        .name = ITEM_NAME("Tiny Birdbrain Fossil"), //Natu
+        .name = ITEM_NAME("Birdbrain Fossil"), //Natu
         .price = 25000,
         .description = sFossilGenericDesc,
         .pocket = POCKET_FOSSILS,
@@ -16958,7 +16958,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_POKEFOSSIL_136] =
     {
-        .name = ITEM_NAME("Continent Dino Fossil"), //Groudon
+        .name = ITEM_NAME("Earth Dino Fossil"), //Groudon
         .price = 25000,
         .description = sFossilGenericDesc,
         .pocket = POCKET_FOSSILS,
@@ -16986,7 +16986,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_POKEFOSSIL_138] =
     {
-        .name = ITEM_NAME("Eon Drake (Male) Fossil"), //Latios
+        .name = ITEM_NAME("Eon Drake Fossil"), //Latios
         .price = 25000,
         .description = sFossilGenericDesc,
         .pocket = POCKET_FOSSILS,
@@ -17000,7 +17000,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_POKEFOSSIL_139] =
     {
-        .name = ITEM_NAME("Eon Drake (Female) Fossil"), //Latias
+        .name = ITEM_NAME("Eon Drake Fossil"), //Latias
         .price = 25000,
         .description = sFossilGenericDesc,
         .pocket = POCKET_FOSSILS,
@@ -17138,6 +17138,22 @@ const struct Item gItemsInfo[] =
         .iconPalette = gItemIconPalette_FossilizedBird,
     },
 
+    [ITEM_MINING_DYNAMITE] =
+    {
+        .name = ITEM_NAME("Mining Dynamite"),
+        .price = 5000,
+        .description = COMPOUND_STRING(
+            "An explosive\n"
+            "made specifically\n"
+            "for mining."),
+        .pocket = POCKET_ITEMS,
+        .sortType = ITEM_TYPE_FIELD_USE,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 120,
+        .iconPic = gItemIcon_MiningDynamite,
+        .iconPalette = gItemIconPalette_MiningDynamite,
+    },
 };
 
 #undef ITEM_NAME

@@ -14323,6 +14323,8 @@ static bool32 CanAbilityPreventStatLoss(enum Ability abilityDef)
     case ABILITY_FULL_METAL_BODY:
     case ABILITY_WHITE_SMOKE:
         return TRUE;
+    case ABILITY_LEAF_GUARD:
+        return (gBattleWeather & B_WEATHER_SUN);
     default:
         break;
     }

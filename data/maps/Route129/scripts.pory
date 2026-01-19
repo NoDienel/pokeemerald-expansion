@@ -54,13 +54,13 @@ Route129_EventScript_Clarence::
 script Route129_EventScript_Scientist
 {
     lockall
-    applymovement(5, face_player)
+    applymovement(5, moves(face_player))
     msgbox("My thesis is on Sandy Cave, specifically\n"
             "the part that sits below sea-level.")
     msgbox("Why does it not flood with ocean water?\n" 
             "Why did GROUND-types love the area?")
     msgbox("As a POKEMON PROFESSOR yourself I'm\n"
             "sure you can understand my curiosity.")
-    applymovement(5, face_right)
+    applymovement(5, moves(face_right))
     releaseall
 }

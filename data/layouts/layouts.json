@@ -4490,6 +4490,26 @@
       "secondary_tileset": "gTileset_BrendansMaysHouse",
       "border_filepath": "data/layouts/Route129_BeachHouse_2F/border.bin",
       "blockdata_filepath": "data/layouts/Route129_BeachHouse_2F/map.bin"
+    },
+    {
+      "id": "LAYOUT_DESERT_PASS",
+      "name": "DesertPass_Layout",
+      "width": 60,
+      "height": 36,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Mauville",
+      "border_filepath": "data/layouts/DesertPass/border.bin",
+      "blockdata_filepath": "data/layouts/DesertPass/map.bin"
+    },
+    {
+      "id": "LAYOUT_JUNGLE_LAKE",
+      "name": "JungleLake_Layout",
+      "width": 30,
+      "height": 30,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fortree",
+      "border_filepath": "data/layouts/JungleLake/border.bin",
+      "blockdata_filepath": "data/layouts/JungleLake/map.bin"
     }
   ]
 }

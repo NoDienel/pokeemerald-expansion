@@ -22,6 +22,16 @@
       "map": "MAP_FORTREE_CITY",
       "offset": 0,
       "direction": "right"
+    },
+    {
+      "map": "MAP_DESERT_PASS",
+      "offset": 40,
+      "direction": "left"
+    },
+    {
+      "map": "MAP_JUNGLE_LAKE",
+      "offset": 110,
+      "direction": "left"
     }
   ],
   "object_events": [
