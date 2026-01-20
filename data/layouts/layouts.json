@@ -4530,6 +4530,16 @@
       "secondary_tileset": "gTileset_Tundrilla",
       "border_filepath": "data/layouts/TundrillaTown/border.bin",
       "blockdata_filepath": "data/layouts/TundrillaTown/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE135",
+      "name": "Route135_Layout",
+      "width": 40,
+      "height": 60,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Tundrilla",
+      "border_filepath": "data/layouts/Route135/border.bin",
+      "blockdata_filepath": "data/layouts/Route135/map.bin"
     }
   ]
 }

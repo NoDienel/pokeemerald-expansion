@@ -1187,3 +1187,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/Route134New/scripts.inc"
 
 	.include "data/maps/TundrillaTown/scripts.inc"
+
+	.include "data/maps/Route135/scripts.inc"
