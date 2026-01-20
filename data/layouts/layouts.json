@@ -4510,6 +4510,26 @@
       "secondary_tileset": "gTileset_Fortree",
       "border_filepath": "data/layouts/JungleLake/border.bin",
       "blockdata_filepath": "data/layouts/JungleLake/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE134NEW",
+      "name": "Route134New_Layout",
+      "width": 50,
+      "height": 66,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Tundrilla",
+      "border_filepath": "data/layouts/Route134New/border.bin",
+      "blockdata_filepath": "data/layouts/Route134New/map.bin"
+    },
+    {
+      "id": "LAYOUT_TUNDRILLA_TOWN",
+      "name": "TundrillaTown_Layout",
+      "width": 40,
+      "height": 30,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Tundrilla",
+      "border_filepath": "data/layouts/TundrillaTown/border.bin",
+      "blockdata_filepath": "data/layouts/TundrillaTown/map.bin"
     }
   ]
 }

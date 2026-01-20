@@ -45,7 +45,7 @@ static const struct LocSysLocationData LocationData[] =
     [LOCATIONID_PETALBURGCITY_1] = // Bottom of lake
     {
         .fossils = (const struct LocSysFossilData[]) {
-            { .chance = 40, .fossilItemId = ITEM_POKEFOSSIL_091 },  // Heart (Luvdisk)
+            { .chance = 30, .fossilItemId = ITEM_POKEFOSSIL_091 },  // Heart (Luvdisk)
             { .chance = 35, .fossilItemId = ITEM_POKEFOSSIL_095 },  // River Crab (Krabby)
             { .chance = 30, .fossilItemId = ITEM_POKEFOSSIL_092 },  // Common Fish (Basculin)
             { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_100 },  // Nigiri Sushi (Tatsugiri)
@@ -275,7 +275,7 @@ static const struct LocSysLocationData LocationData[] =
         .fossils = (const struct LocSysFossilData[]) {
             { .chance = 30, .fossilItemId = ITEM_POKEFOSSIL_092 },  // Common Fish (Basculin)
             { .chance = 35, .fossilItemId = ITEM_POKEFOSSIL_093 },  // Bullet Jet (Remoraid)
-            { .chance = 15, .fossilItemId = ITEM_POKEFOSSIL_094 },  // Octopus (Clobbopus)
+            { .chance = 25, .fossilItemId = ITEM_POKEFOSSIL_094 },  // Octopus (Clobbopus)
             { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_095 },  // River Crab (Krabby)
         },
         .count = 4
@@ -286,10 +286,10 @@ static const struct LocSysLocationData LocationData[] =
         .fossils = (const struct LocSysFossilData[]) {
             { .chance = 30, .fossilItemId = ITEM_POKEFOSSIL_092 },  // Common Fish (Basculin)
             { .chance = 30, .fossilItemId = ITEM_POKEFOSSIL_096 },  // Barnacle (Binacle)
-            { .chance = 15, .fossilItemId = ITEM_POKEFOSSIL_097 },  // Sea Slug (Shellos)
-            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_091 },  // Heart (Luvdisk)
+            { .chance = 25, .fossilItemId = ITEM_POKEFOSSIL_097 },  // Sea Slug (Shellos)
+            { .chance = 15, .fossilItemId = ITEM_POKEFOSSIL_091 },  // Heart (Luvdisk)
         },
-        .count = 5
+        .count = 4
     },
     
     [LOCATIONID_ROUTE_107_0] = //Water but also is near Dewford
@@ -426,8 +426,8 @@ static const struct LocSysLocationData LocationData[] =
         .fossils = (const struct LocSysFossilData[]) {
             { .chance = 35, .fossilItemId = ITEM_POKEFOSSIL_015 },  // Bug Shroom (Paras)
             { .chance = 30, .fossilItemId = ITEM_POKEFOSSIL_016 },  // Radiator (Sizzlipede)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_047 },  // Matcha (Poltchageist)
-            { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_084 },  // Stump (Phantump)
+            { .chance = 30, .fossilItemId = ITEM_POKEFOSSIL_084 },  // Stump (Phantump)
+            { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_047 },  // Matcha (Poltchageist)
         },
         .count = 4
     },
@@ -494,11 +494,14 @@ static const struct LocSysLocationData LocationData[] =
     [LOCATIONID_ROUTE_124_0] = //Right of Lilycove, polluted waters
     {
         .fossils = (const struct LocSysFossilData[]) {
-            { .chance = 35, .fossilItemId = ITEM_POKEFOSSIL_085 },  // Skull (Duskull)
-            { .chance = 15, .fossilItemId = ITEM_POKEFOSSIL_086 },  // Vocal Cord (Misdreavus)
-            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_087 },  // Tiny Birdbrain (Natu)
+            { .chance = 35, .fossilItemId = ITEM_POKEFOSSIL_092 },  // Common Fish (Basculin)
+            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_093 },  // Bullet Jet (Remoraid)
+            { .chance = 15, .fossilItemId = ITEM_POKEFOSSIL_094 },  // Octopus (Clobbopus)
+            { .chance = 15, .fossilItemId = ITEM_POKEFOSSIL_095 },  // River Crab (Krabby)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_035 },  // Toxic Mouth (Croagunk)
+            { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_101 },  // Kelp (Skrelp)
         },
-        .count = 4
+        .count = 6
     },
     
     [LOCATIONID_ROUTE_125_0] = //North of Mossdeep, cold waters
@@ -552,13 +555,14 @@ static const struct LocSysLocationData LocationData[] =
     [LOCATIONID_ROUTE_129_0] = //Ocean waters south of desert
     {
         .fossils = (const struct LocSysFossilData[]) {
-            { .chance = 35, .fossilItemId = ITEM_POKEFOSSIL_102 },  // Electric Eel (Tynamo)
-            { .chance = 30, .fossilItemId = ITEM_POKEFOSSIL_103 },  // Fire Anteater (Heatmor)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_104 },  // Armored Ant (Durant)
-            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_105 },  // Desert Snek (Silicobra)
-            { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_106 },  // Living Canvas (Smeargle)
+            { .chance = 30, .fossilItemId = ITEM_POKEFOSSIL_092 },  // Common Fish (Basculin)
+            { .chance = 25, .fossilItemId = ITEM_POKEFOSSIL_093 },  // Bullet Jet (Remoraid)
+            { .chance = 25, .fossilItemId = ITEM_POKEFOSSIL_094 },  // Octopus (Clobbopus)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_095 },  // River Crab (Krabby)
+            { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_102 },  // Electric Eel (Tynamo)
+            { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_106 },  // Painter (Smeargle)
         },
-        .count = 5
+        .count = 6
     },
     
     [LOCATIONID_ROUTE_130_0] = //Ocean route that contains mirage island
@@ -604,7 +608,7 @@ static const struct LocSysLocationData LocationData[] =
             { .chance = 30, .fossilItemId = ITEM_POKEFOSSIL_123 },  // Frost (Snorunt)
             { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_124 },  // Swine (Swinub)
             { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_125 },  // Frost Acrobat (Sneasel)
-            { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_126 },  // Dolphin (Cetoddle)
+            { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_126 },  // Tundra Whale (Cetoddle)
         },
         .count = 5
     },
@@ -615,13 +619,13 @@ static const struct LocSysLocationData LocationData[] =
             { .chance = 40, .fossilItemId = ITEM_POKEFOSSIL_127 },  // Frost (Bergmite)
             { .chance = 30, .fossilItemId = ITEM_POKEFOSSIL_128 },  // Ice Dragon (Frigibax)
             { .chance = 15, .fossilItemId = ITEM_POKEFOSSIL_129 },  // Screeching (Noibat)
-            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_130 },  // Axe (Axew)
-            { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_131 },  // Sonic (Jangmo-o)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_130 },  // Tusk (Axew)
+            { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_131 },  // Scaly (Jangmo-o)
         },
         .count = 5
     },
     
-    [LOCATIONID_METEORFALLS_0] = 
+    [LOCATIONID_METEORFALLS_0] = //A cavern with waterfalls. Highly associated with space.
     {
         .fossils = (const struct LocSysFossilData[]) {
             { .chance = 30, .fossilItemId = ITEM_POKEFOSSIL_059 },  // Hard Head (Cranidos)
@@ -633,7 +637,7 @@ static const struct LocSysLocationData LocationData[] =
         .count = 5
     },
     
-    [LOCATIONID_RUSTURFTUNNEL_0] = 
+    [LOCATIONID_RUSTURFTUNNEL_0] = //Old abandoned connector tunnel that went unused after a better road was made
     {
         .fossils = (const struct LocSysFossilData[]) {
             { .chance = 40, .fossilItemId = ITEM_POKEFOSSIL_054 },  // Shellfish (Kabuto)
@@ -659,18 +663,15 @@ static const struct LocSysLocationData LocationData[] =
     [LOCATIONID_PETALBURGWOODS_0] = //Grass and bug baby
     {
         .fossils = (const struct LocSysFossilData[]) {
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_009 },  // String Ball (Tarountula)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_050 },  // Acorn (Seedot)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_010 },  // Grasshopper (Nymble)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_041 },  // Hearty Spore (Shroomish)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_045 },  // Glowing Spore (Morelull)
+            { .chance = 15, .fossilItemId = ITEM_POKEFOSSIL_009 },  // String Ball (Tarountula)
+            { .chance = 15, .fossilItemId = ITEM_POKEFOSSIL_050 },  // Acorn (Seedot)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_010 },  // Grasshopper (Nymble)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_041 },  // Hearty Spore (Shroomish)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_045 },  // Glowing Spore (Morelull)
             { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_011 },  // Bagworm (Burmy)
-            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_012 },  // Tiny Bee (Combee)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_048 },  // Olive (Smolive)
             { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_004 },  // Ladybug (Ledyba)
-            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_005 },  // Bee Fly (Cutiefly)
             { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_013 },  // Larva (Blipbug)
-            { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_084 },  // Stump (Phantump)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_084 },  // Stump (Phantump)
         },
         .count = 9
     },
@@ -678,18 +679,15 @@ static const struct LocSysLocationData LocationData[] =
     [LOCATIONID_PETALBURGWOODS_1] = 
     {
         .fossils = (const struct LocSysFossilData[]) {
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_009 },  // String Ball (Tarountula)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_050 },  // Acorn (Seedot)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_010 },  // Grasshopper (Nymble)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_041 },  // Hearty Spore (Shroomish)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_045 },  // Glowing Spore (Morelull)
+            { .chance = 15, .fossilItemId = ITEM_POKEFOSSIL_009 },  // String Ball (Tarountula)
+            { .chance = 15, .fossilItemId = ITEM_POKEFOSSIL_050 },  // Acorn (Seedot)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_010 },  // Grasshopper (Nymble)
             { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_011 },  // Bagworm (Burmy)
             { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_012 },  // Tiny Bee (Combee)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_048 },  // Olive (Smolive)
             { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_004 },  // Ladybug (Ledyba)
             { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_005 },  // Bee Fly (Cutiefly)
             { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_013 },  // Larva (Blipbug)
-            { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_084 },  // Stump (Phantump)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_084 },  // Stump (Phantump)
         },
         .count = 9
     },
@@ -699,18 +697,14 @@ static const struct LocSysLocationData LocationData[] =
         .fossils = (const struct LocSysFossilData[]) {
             { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_009 },  // String Ball (Tarountula)
             { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_050 },  // Acorn (Seedot)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_010 },  // Grasshopper (Nymble)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_041 },  // Hearty Spore (Shroomish)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_045 },  // Glowing Spore (Morelull)
-            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_011 },  // Bagworm (Burmy)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_041 },  // Hearty Spore (Shroomish)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_045 },  // Glowing Spore (Morelull)
             { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_012 },  // Tiny Bee (Combee)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_048 },  // Olive (Smolive)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_048 },  // Olive (Smolive)
             { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_004 },  // Ladybug (Ledyba)
-            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_005 },  // Bee Fly (Cutiefly)
-            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_013 },  // Larva (Blipbug)
-            { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_084 },  // Stump (Phantump)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_084 },  // Stump (Phantump)
         },
-        .count = 9
+        .count = 8
     },
     
     [LOCATIONID_MTCHIMNEY_0] = //Lava pool mountaintop where Maxie did the thing
@@ -810,7 +804,7 @@ static const struct LocSysLocationData LocationData[] =
             { .chance = 4, .fossilItemId = ITEM_POKEFOSSIL_068 },  // Penguin (Piplup)
             { .chance = 4, .fossilItemId = ITEM_POKEFOSSIL_066 },  // Big Leaf (Chikorita)
         },
-        .count = 7
+        .count = 8
     },
     
     [LOCATIONID_SHOALCAVE_0] = //Ice caves
@@ -853,12 +847,14 @@ static const struct LocSysLocationData LocationData[] =
     {
         .fossils = (const struct LocSysFossilData[]) {
             { .chance = 35, .fossilItemId = ITEM_POKEFOSSIL_112 },  // Mud Trap (Stunfisk)
-            { .chance = 30, .fossilItemId = ITEM_POKEFOSSIL_113 },  // Rolling (Rellor)
-            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_105 },  // Sand Snake (Silicobra)
+            { .chance = 20, .fossilItemId = ITEM_POKEFOSSIL_113 },  // Rolling (Rellor)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_105 },  // Sand Snake (Silicobra)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_103 },  // Fire Anteater (Heatmor)
+            { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_104 },  // Armored Ant (Durant)
             { .chance = 10, .fossilItemId = ITEM_POKEFOSSIL_049 },  // Cactus (Cacnea)
             { .chance = 5, .fossilItemId = ITEM_POKEFOSSIL_043 },  // Floating Grass (Hoppip)
         },
-        .count = 5
+        .count = 7
     },
     
     [LOCATIONID_NEWMAUVILLE_0] = //Electric generater zone

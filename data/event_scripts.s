@@ -1183,3 +1183,7 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/DesertPass/scripts.inc"
 
 	.include "data/maps/JungleLake/scripts.inc"
+
+	.include "data/maps/Route134New/scripts.inc"
+
+	.include "data/maps/TundrillaTown/scripts.inc"

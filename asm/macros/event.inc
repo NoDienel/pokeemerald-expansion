@@ -1,3 +1,4 @@
+	#include "constants/mining_minigame.h"
 	.set ALLOCATE_SCRIPT_CMD_TABLE, 0
 	.include "data/script_cmd_table.inc"
 
