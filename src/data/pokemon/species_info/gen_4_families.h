@@ -5628,7 +5628,7 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
 #endif //P_FAMILY_SNOVER
 
 #if P_FAMILY_ROTOM
-    [SPECIES_ROTOM] =
+    [SPECIES_ROTOM_NORMAL] =
     {
         .baseHP        = 50,
         .baseAttack    = 50,

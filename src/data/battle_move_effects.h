@@ -2237,4 +2237,38 @@ const struct BattleMoveEffect gBattleMoveEffects[NUM_BATTLE_MOVE_EFFECTS] =
         .battleScript = BattleScript_EffectHit,
         .battleTvScore = 0, // TODO: Assign points
     },
-};
+
+    [EFFECT_MONKEY_AROUND] =
+    {
+        .battleScript = BattleScript_EffectMonkeyAround,
+        .battleTvScore = 5,
+        .encourageEncore = TRUE,
+    },
+
+    [EFFECT_MONKEY_FIST] =
+    {
+        .battleScript = BattleScript_EffectMonkeyFist,
+        .battleTvScore = 5,
+        .encourageEncore = TRUE,
+    },
+
+    [EFFECT_MELLOW_MONKEY] =
+    {
+        .battleScript = BattleScript_EffectMellowMonkey,
+        .battleTvScore = 3,
+        .encourageEncore = TRUE,
+    },
+
+    [EFFECT_MONKEY_BUSINESS] =
+    {
+        .battleScript = BattleScript_EffectMonkeyBusiness,
+        .battleTvScore = 4,
+        .encourageEncore = TRUE,
+    },
+
+    [EFFECT_MONKEY_MASSACRE] =
+    {
+        .battleScript = BattleScript_EffectMonkeyMassacre,
+        .battleTvScore = 9,
+        .encourageEncore = TRUE,
+    },

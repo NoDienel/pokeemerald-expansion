@@ -4792,6 +4792,10 @@ s32 GetBattleMovePriority(u32 battler, enum Ability ability, u32 move)
     {
         priority += 3;
     }
+    else if (ability == ABILITY_MONKEY_KING && (move == MOVE_MONKEY_AROUND || move == MOVE_MONKEY_BUSINESS))
+    {
+        priority--;
+    }
 
     return priority;
 }

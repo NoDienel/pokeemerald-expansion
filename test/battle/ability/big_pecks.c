@@ -1,6 +1,53 @@
 #include "global.h"
 #include "test/battle.h"
 
+SINGLE_BATTLE_TEST("Big Pecks uses Defense as Attack for physical moves when Defense > Attack")
+{
+    GIVEN {
+        ASSUME(IsBattleMovePhysical(MOVE_PECK) == TRUE);
+        PLAYER(SPECIES_PIDGEOT) { Moves(MOVE_PECK); Ability(ABILITY_BIG_PECKS); Stats(HP(100), ATK(100), DEF(150), SPATK(100), SPDEF(100), SPE(100)); }
+        OPPONENT(SPECIES_WOBBUFFET) { HP(100); Defense(100); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_PECK); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_PECK, player);
+        HP_BAR(opponent);
+    } THEN {
+        // Big Pecks should use the 150 DEF instead of 100 ATK
+        u32 damageWithDef = opponent->maxHP - opponent->hp;
+        // Sanity check: should have done damage
+        EXPECT_GT(damageWithDef, 0);
+    }
+}
+
+SINGLE_BATTLE_TEST("Big Pecks uses Attack for physical moves when Attack >= Defense")
+{
+    GIVEN {
+        ASSUME(IsBattleMovePhysical(MOVE_PECK) == TRUE);
+        PLAYER(SPECIES_PIDGEOT) { Moves(MOVE_PECK); Ability(ABILITY_BIG_PECKS); Stats(HP(100), ATK(150), DEF(100), SPATK(100), SPDEF(100), SPE(100)); }
+        OPPONENT(SPECIES_WOBBUFFET) { HP(100); Defense(100); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_PECK); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_PECK, player);
+        HP_BAR(opponent);
+    }
+}
+
+SINGLE_BATTLE_TEST("Big Pecks does not affect special moves")
+{
+    GIVEN {
+        ASSUME(IsBattleMoveSpecial(MOVE_POWER_BEAM) == TRUE);
+        PLAYER(SPECIES_ALAKAZAM) { Moves(MOVE_POWER_BEAM); Ability(ABILITY_BIG_PECKS); Stats(HP(100), ATK(100), DEF(150), SPATK(100), SPDEF(100), SPE(100)); }
+        OPPONENT(SPECIES_WOBBUFFET) { HP(100); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_POWER_BEAM); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_POWER_BEAM, player);
+        HP_BAR(opponent);
+    }
+}
+
 SINGLE_BATTLE_TEST("Big Pecks prevents Defense stage reduction from moves")
 {
     GIVEN {

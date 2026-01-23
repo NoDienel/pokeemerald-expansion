@@ -477,6 +477,10 @@ static void Cmd_jumpifuproarwakes(void);
 static void Cmd_stockpile(void);
 static void Cmd_stockpiletobasedamage(void);
 static void Cmd_stockpiletohpheal(void);
+static void Cmd_monkeyMindsetAdd(void);
+static void Cmd_monkeyMindsetRemove(void);
+static void Cmd_monkeyMindsetToBaseDamage(void);
+static void Cmd_monkeyMindsetToHPHeal(void);
 static void Cmd_unused_0x88(void);
 static void Cmd_statbuffchange(void);
 static void Cmd_normalisebuffs(void);
@@ -759,8 +763,8 @@ void (*const gBattleScriptingCommandsTable[])(void) =
     Cmd_setsubstitute,                           //0x9C
     Cmd_mimicattackcopy,                         //0x9D
     Cmd_setcalledmove,                           //0x9E
-    Cmd_unused_0x9f,                             //0x9F
-    Cmd_unused_0xA0,                             //0xA0
+    Cmd_monkeyMindsetAdd,                        //0x9F
+    Cmd_monkeyMindsetRemove,                     //0xA0
     Cmd_counterdamagecalculator,                 //0xA1
     Cmd_mirrorcoatdamagecalculator,              //0xA2
     Cmd_disablelastusedattack,                   //0xA3
@@ -769,9 +773,9 @@ void (*const gBattleScriptingCommandsTable[])(void) =
     Cmd_settypetorandomresistance,               //0xA6
     Cmd_setalwayshitflag,                        //0xA7
     Cmd_copymovepermanently,                     //0xA8
-    Cmd_unused_0xA9,                             //0xA9
+    Cmd_monkeyMindsetToBaseDamage,               //0xA9
     Cmd_unused_AA,                               //0xAA
-    Cmd_unused_0xab,                             //0xAB
+    Cmd_monkeyMindsetToHPHeal,                   //0xAB
     Cmd_settailwind,                             //0xAC
     Cmd_tryspiteppreduce,                        //0xAD
     Cmd_healpartystatus,                         //0xAE
@@ -3077,6 +3081,37 @@ void SetMoveEffect(u32 battler, u32 effectBattler, enum MoveEffect moveEffect, c
             enum Type bt1 = GetBattlerType(gEffectBattler, 1, FALSE);
             if (bt0 != TYPE_GRASS && bt1 != TYPE_GRASS)
                 gBattleMons[gEffectBattler].volatiles.escapePrevention = TRUE;
+            
+            // Petal Skating: boost Speed by 2 stages when Blooming starts
+            enum Ability ability = GetBattlerAbility(gEffectBattler);
+            if (ability == ABILITY_PETAL_SKATING)
+            {
+                s8 speedStage = gBattleMons[gEffectBattler].statStages[STAT_SPEED];
+                if (speedStage < MAX_STAT_STAGE - 1)
+                    gBattleMons[gEffectBattler].statStages[STAT_SPEED] += 2;
+                else if (speedStage < MAX_STAT_STAGE)
+                    gBattleMons[gEffectBattler].statStages[STAT_SPEED] = MAX_STAT_STAGE;
+            }
+            
+            // Bloom Spores: spread Blooming to all other Pokemon on field
+            if (ability == ABILITY_BLOOM_SPORES)
+            {
+                u32 i;
+                for (i = 0; i < NUM_BATTLE_SIDES; i++)
+                {
+                    if (i != gEffectBattler && gBattleMons[i].hp > 0)
+                    {
+                        gBattleMons[i].volatiles.blooming = TRUE;
+                        gDisableStructs[i].bloomingTurns = RandomUniform(RNG_WRAP, 3, 5);
+                        /* Apply escape prevention to non-Grass types */
+                        enum Type bt0_other = GetBattlerType(i, 0, FALSE);
+                        enum Type bt1_other = GetBattlerType(i, 1, FALSE);
+                        if (bt0_other != TYPE_GRASS && bt1_other != TYPE_GRASS)
+                            gBattleMons[i].volatiles.escapePrevention = TRUE;
+                    }
+                }
+            }
+            
             BattleScriptPush(battleScript);
             gBattlescriptCurrInstr = BattleScript_MoveEffectWrap; /* reuse wrap script for message */
         }
@@ -6139,19 +6174,9 @@ static void Cmd_moveend(void)
                     s32 healAmount = (gBattleStruct->moveDamage[gBattlerTarget] * GetMoveAbsorbPercentage(gCurrentMove) / 100);
                     healAmount = GetDrainedBigRootHp(gBattlerAttacker, healAmount);
                     effect = TRUE;
-                    if ((moveEffect == EFFECT_DREAM_EATER && GetConfig(CONFIG_DREAM_EATER_LIQUID_OOZE) < GEN_5)
-                        || GetBattlerAbility(gBattlerTarget) != ABILITY_LIQUID_OOZE)
-                    {
-                        SetHealAmount(gBattlerAttacker, healAmount);
-                        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_ABSORB;
-                        BattleScriptCall(BattleScript_EffectAbsorb);
-                    }
-                    else // Liquid Ooze damage
-                    {
-                        SetPassiveDamageAmount(gBattlerAttacker, healAmount);
-                        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_ABSORB_OOZE;
-                        BattleScriptCall(BattleScript_EffectAbsorbLiquidOoze);
-                    }
+                    SetHealAmount(gBattlerAttacker, healAmount);
+                    gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_ABSORB;
+                    BattleScriptCall(BattleScript_EffectAbsorb);
                 }
                 break;
             case EFFECT_FINAL_GAMBIT:
@@ -9731,6 +9756,58 @@ void BS_RemoveStockpileCounters(void)
     }
 }
 
+static void Cmd_monkeyMindsetAdd(void)
+{
+    CMD_ARGS(u8 amount);
+
+    u8 newValue = gDisableStructs[gBattlerAttacker].monkeyMindset + cmd->amount;
+    if (newValue > 3)
+        newValue = 3;
+    gDisableStructs[gBattlerAttacker].monkeyMindset = newValue;
+
+    gBattlescriptCurrInstr = cmd->nextInstr;
+}
+
+static void Cmd_monkeyMindsetRemove(void)
+{
+    CMD_ARGS(u8 amount);
+
+    if (gDisableStructs[gBattlerAttacker].monkeyMindset > 0)
+        gDisableStructs[gBattlerAttacker].monkeyMindset--;
+
+    gBattlescriptCurrInstr = cmd->nextInstr;
+}
+
+static void Cmd_monkeyMindsetToBaseDamage(void)
+{
+    CMD_ARGS();
+
+    if (gBattleCommunication[MISS_TYPE] != B_MSG_PROTECTED)
+        gBattleScripting.animTurn = gDisableStructs[gBattlerAttacker].monkeyMindset;
+
+    gBattlescriptCurrInstr = cmd->nextInstr;
+}
+
+static void Cmd_monkeyMindsetToHPHeal(void)
+{
+    CMD_ARGS(const u8 *failInstr);
+
+    const u8 *failInstr = cmd->failInstr;
+
+    if (gDisableStructs[gBattlerAttacker].monkeyMindset == 0)
+    {
+        gBattlescriptCurrInstr = failInstr;
+        gBattlerTarget = gBattlerAttacker;
+    }
+    else
+    {
+        SetHealAmount(gBattlerAttacker, (GetNonDynamaxMaxHP(gBattlerAttacker) * 25 * gDisableStructs[gBattlerAttacker].monkeyMindset) / 100);
+        gBattleScripting.animTurn = gDisableStructs[gBattlerAttacker].monkeyMindset;
+        gBattlescriptCurrInstr = cmd->nextInstr;
+        gBattlerTarget = gBattlerAttacker;
+    }
+}
+
 static void Cmd_unused_0x88(void)
 {
 }
@@ -10001,7 +10078,8 @@ static u32 ChangeStatBuffs(u32 battler, s8 statValue, enum Stat statId, union St
                 && (((battlerAbility == ABILITY_KEEN_EYE || battlerAbility == ABILITY_MINDS_EYE) && statId == STAT_ACC)
                 || (GetConfig(CONFIG_ILLUMINATE_EFFECT) >= GEN_9 && battlerAbility == ABILITY_ILLUMINATE && statId == STAT_ACC)
                 || (battlerAbility == ABILITY_HYPER_CUTTER && statId == STAT_ATK)
-                || (battlerAbility == ABILITY_BIG_PECKS && statId == STAT_DEF)))
+                || (battlerAbility == ABILITY_BIG_PECKS && statId == STAT_DEF)
+                || (battlerAbility == ABILITY_FLOWER_POWER && statId == STAT_SPATK && gBattleMons[battler].volatiles.blooming)))
         {
             if (flags.allowPtr)
             {
@@ -14322,6 +14400,7 @@ static bool32 CanAbilityPreventStatLoss(enum Ability abilityDef)
     case ABILITY_CLEAR_BODY:
     case ABILITY_FULL_METAL_BODY:
     case ABILITY_WHITE_SMOKE:
+    case ABILITY_BIG_PECKS:
         return TRUE;
     case ABILITY_LEAF_GUARD:
         return (gBattleWeather & B_WEATHER_SUN);

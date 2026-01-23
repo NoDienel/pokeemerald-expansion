@@ -489,14 +489,7 @@ static bool32 HandleEndTurnLeechSeed(u32 battler)
         gBattleScripting.animArg2 = gBattlerAttacker;
         s32 drainAmount = GetNonDynamaxMaxHP(gBattlerAttacker) / 8;
         s32 healAmount = GetDrainedBigRootHp(gBattlerTarget, drainAmount);
-        if (GetBattlerAbility(battler) == ABILITY_LIQUID_OOZE)
-        {
-            SetPassiveDamageAmount(gBattlerAttacker, drainAmount);
-            SetPassiveDamageAmount(gBattlerTarget, healAmount);
-            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_LEECH_SEED_OOZE;
-            BattleScriptExecute(BattleScript_LeechSeedTurnDrainLiquidOoze);
-        }
-        else if (gBattleMons[gBattlerTarget].volatiles.healBlock)
+        if (gBattleMons[gBattlerTarget].volatiles.healBlock)
         {
             BattleScriptExecute(BattleScript_LeechSeedTurnDrainHealBlock);
         }

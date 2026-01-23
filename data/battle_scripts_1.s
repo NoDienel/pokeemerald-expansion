@@ -1050,24 +1050,15 @@ BattleScript_StrengthSapAnimation:
 	waitmessage B_WAIT_TIME_LONG
 @ Drain HP without lowering a stat
 BattleScript_StrengthSapHp:
-	jumpifability BS_TARGET, ABILITY_LIQUID_OOZE, BattleScript_StrengthSapManipulateDmg
 	jumpifvolatile BS_ATTACKER, VOLATILE_HEAL_BLOCK, BattleScript_MoveEnd
 	jumpiffullhp BS_ATTACKER, BattleScript_MoveEnd
 BattleScript_StrengthSapManipulateDmg:
 	manipulatedamage DMG_BIG_ROOT
-	jumpifability BS_TARGET, ABILITY_LIQUID_OOZE, BattleScript_StrengthSapLiquidOoze
 	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
 	printstring STRINGID_PKMNENERGYDRAINED
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
-BattleScript_StrengthSapLiquidOoze:
-	call BattleScript_AbilityPopUpTarget
-	manipulatedamage DMG_CHANGE_SIGN
-	setbyte cMULTISTRING_CHOOSER, B_MSG_ABSORB_OOZE
-	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
-	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
-	printfromtable gAbsorbDrainStringIds
 	waitmessage B_WAIT_TIME_LONG
 	tryfaintmon BS_ATTACKER
 	goto BattleScript_MoveEnd
@@ -3838,6 +3829,161 @@ BattleScript_EffectSwallow::
 	printstring STRINGID_PKMNREGAINEDHEALTH
 	waitmessage B_WAIT_TIME_LONG
 	removestockpilecounters
+	goto BattleScript_MoveEnd
+
+BattleScript_EffectMonkeyAround::
+	attackcanceler
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNUSEDMONKEYAROUND
+	waitmessage B_WAIT_TIME_LONG
+	monkeyMindsetAdd 2
+	setstatchanger STAT_ATK, 2, FALSE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectMonkeyAroundSpeed, BIT_SPEED
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_EffectMonkeyAroundSpeed::
+	setstatchanger STAT_SPEED, 2, FALSE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectMonkeyAroundDefDown, BIT_DEF
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_EffectMonkeyAroundDefDown
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_EffectMonkeyAroundDefDown::
+	setstatchanger STAT_DEF, 4, TRUE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectMonkeyAroundSpDefDown, BIT_SPDEF
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_EffectMonkeyAroundSpDefDown::
+	setstatchanger STAT_SPDEF, 4, TRUE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectMonkeyAroundEnd
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_EffectMonkeyAroundEnd:
+	goto BattleScript_MoveEnd
+
+BattleScript_EffectMonkeyFist::
+	attackcanceler
+	jumpifbyte CMP_EQUAL, cMISS_TYPE, B_MSG_PROTECTED, BattleScript_MonkeyFistFailProtect
+	accuracycheck BattleScript_MoveMissedPause, ACC_CURR_MOVE
+	damagecalc
+	adjustdamage
+	monkeyMindsetToBaseDamage
+	call BattleScript_Hit_RetFromAtkAnimation
+	tryfaintmon BS_TARGET
+	monkeyMindsetRemove
+	setstatchanger STAT_ATK, 1, TRUE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_MonkeyFistRemoveSpeed, BIT_SPEED
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_MonkeyFistRemoveSpeed::
+	setstatchanger STAT_SPEED, 1, TRUE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_MonkeyFistRemoveDef, BIT_DEF
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_MonkeyFistRemoveDef::
+	setstatchanger STAT_DEF, 2, FALSE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_MonkeyFistRemoveSpDef, BIT_SPDEF
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_MonkeyFistRemoveSpDef::
+	setstatchanger STAT_SPDEF, 2, FALSE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectMonkeyFistEnd
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_EffectMonkeyFistEnd:
+	goto BattleScript_MoveEnd
+
+BattleScript_MonkeyFistFailProtect::
+	pause B_WAIT_TIME_LONG
+	monkeyMindsetToBaseDamage
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
+BattleScript_EffectMellowMonkey::
+	attackcanceler
+	monkeyMindsetToHPHeal BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	healthbarupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	datahpupdate BS_ATTACKER, PASSIVE_HP_UPDATE
+	printstring STRINGID_PKMNREGAINEDHEALTH
+	waitmessage B_WAIT_TIME_LONG
+	monkeyMindsetRemove
+	setstatchanger STAT_ATK, 1, TRUE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_MellowMonkeyRemoveSpeed, BIT_SPEED
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_MellowMonkeyRemoveSpeed::
+	setstatchanger STAT_SPEED, 1, TRUE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_MellowMonkeyRemoveDef, BIT_DEF
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_MellowMonkeyRemoveDef::
+	setstatchanger STAT_DEF, 2, FALSE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_MellowMonkeyRemoveSpDef, BIT_SPDEF
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_MellowMonkeyRemoveSpDef::
+	setstatchanger STAT_SPDEF, 2, FALSE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectMellowMonkeyEnd
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_EffectMellowMonkeyEnd:
+	goto BattleScript_MoveEndBattleScript_EffectMonkeyBusiness::
+	attackcanceler
+	jumpifbyte CMP_EQUAL, cMISS_TYPE, B_MSG_PROTECTED, BattleScript_MonkeyBusinessFailProtect
+	accuracycheck BattleScript_MoveMissedPause, ACC_CURR_MOVE
+	damagecalc
+	adjustdamage
+	call BattleScript_Hit_RetFromAtkAnimation
+	tryfaintmon BS_TARGET
+	jumpifmovehadnoeffect BattleScript_EffectMonkeyBusinessEnd
+	monkeyMindsetAdd 1
+	setstatchanger STAT_ATK, 1, FALSE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectMonkeyBusinessSpeed, BIT_SPEED
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_EffectMonkeyBusinessSpeed
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_EffectMonkeyBusinessSpeed::
+	setstatchanger STAT_SPEED, 1, FALSE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectMonkeyBusinessDefDown, BIT_DEF
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_CHANGE, BattleScript_EffectMonkeyBusinessDefDown
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_EffectMonkeyBusinessDefDown::
+	setstatchanger STAT_DEF, 2, TRUE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectMonkeyBusinessSpDefDown, BIT_SPDEF
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_EffectMonkeyBusinessSpDefDown::
+	setstatchanger STAT_SPDEF, 2, TRUE
+	statbuffchange BS_ATTACKER, STAT_CHANGE_ALLOW_PTR, BattleScript_EffectMonkeyBusinessEnd
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_EffectMonkeyBusinessEnd:
+	goto BattleScript_MoveEnd
+
+BattleScript_MonkeyBusinessFailProtect::
+	pause B_WAIT_TIME_LONG
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
+BattleScript_EffectMonkeyMassacre::
+	attackcanceler
+	jumpifbyte CMP_EQUAL, cMISS_TYPE, B_MSG_PROTECTED, BattleScript_MonkeyMassacreFailProtect
+	accuracycheck BattleScript_MoveMissedPause, ACC_CURR_MOVE
+	call BattleScript_Hit_RetFromAtkAnimation
+	setatkhptozero
+	tryfaintmon BS_TARGET
+	monkeyMindsetRemove
+	goto BattleScript_MoveEnd
+
+BattleScript_MonkeyMassacreFailProtect::
+	pause B_WAIT_TIME_LONG
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectHail::
@@ -7114,6 +7260,12 @@ BattleScript_MummyActivates::
 	tryrevertweatherform
 	flushtextbox
 	tryendneutralizinggas
+	return
+
+BattleScript_CorruptedActivates::
+	call BattleScript_AbilityPopUpAttacker
+	printstring STRINGID_PKMNSABILITYCORRUPTEDTYPEOF
+	waitmessage B_WAIT_TIME_LONG
 	return
 
 BattleScript_WanderingSpiritActivates::

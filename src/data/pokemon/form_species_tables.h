@@ -1154,7 +1154,7 @@ static const u16 sAbomasnowFormSpeciesIdTable[] = {
 
 #if P_FAMILY_ROTOM
 static const u16 sRotomFormSpeciesIdTable[] = {
-    SPECIES_ROTOM,
+    SPECIES_ROTOM_NORMAL,
     SPECIES_ROTOM_HEAT,
     SPECIES_ROTOM_WASH,
     SPECIES_ROTOM_FROST,

@@ -2226,6 +2226,20 @@ static enum MoveCanceler CancelerTruant(struct BattleContext *ctx)
     return MOVE_STEP_SUCCESS;
 }
 
+static enum MoveCanceler CancelerSiesta(struct BattleContext *ctx)
+{
+    if (gBattleMons[ctx->battlerAtk].volatiles.siesta)
+    {
+        CancelMultiTurnMoves(ctx->battlerAtk, SKY_DROP_ATTACKCANCELER_CHECK);
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_LOAFING;
+        gBattleStruct->moveResultFlags[ctx->battlerDef] |= MOVE_RESULT_MISSED;
+        // Clear the siesta volatile after blocking the move
+        gBattleMons[ctx->battlerAtk].volatiles.siesta = 0;
+        return MOVE_STEP_FAILURE;
+    }
+    return MOVE_STEP_SUCCESS;
+}
+
 static enum MoveCanceler CancelerFocus(struct BattleContext *ctx)
 {
     u32 focusPunchFailureConfig = GetConfig(CONFIG_FOCUS_PUNCH_FAILURE);
@@ -2799,6 +2813,18 @@ static enum MoveCanceler CancelerMoveFailure(struct BattleContext *ctx)
         if (gDisableStructs[ctx->battlerAtk].stockpileCounter == 0 && !gBattleStruct->snatchedMoveIsUsed)
             battleScript = BattleScript_ButItFailed;
         break;
+    case EFFECT_MONKEY_FIST:
+        if (gDisableStructs[ctx->battlerAtk].monkeyMindset == 0)
+            battleScript = BattleScript_ButItFailed;
+        break;
+    case EFFECT_MELLOW_MONKEY:
+        if (gDisableStructs[ctx->battlerAtk].monkeyMindset == 0)
+            battleScript = BattleScript_ButItFailed;
+        break;
+    case EFFECT_MONKEY_MASSACRE:
+        if (gDisableStructs[ctx->battlerAtk].monkeyMindset != 3)
+            battleScript = BattleScript_ButItFailed;
+        break;
     case EFFECT_TELEPORT:
         // TODO: follow up: Can't make sense of teleport logic
         break;
@@ -3047,6 +3073,7 @@ static enum MoveCanceler (*const sMoveSuccessOrderCancelers[])(struct BattleCont
     [CANCELER_OBEDIENCE] = CancelerObedience,
     [CANCELER_POWER_POINTS] = CancelerPowerPoints,
     [CANCELER_TRUANT] = CancelerTruant,
+    [CANCELER_SIESTA] = CancelerSiesta,
     [CANCELER_FOCUS] = CancelerFocus,
     [CANCELER_FLINCH] = CancelerFlinch,
     [CANCELER_DISABLED] = CancelerDisabled,
@@ -3628,6 +3655,12 @@ bool32 CanAbilityAbsorbMove(u32 battlerAtk, u32 battlerDef, enum Ability ability
     case ABILITY_FLASH_FIRE:
         if (moveType == TYPE_FIRE && (B_FLASH_FIRE_FROZEN >= GEN_5 || !(gBattleMons[battlerDef].status1 & STATUS1_FREEZE)))
             effect = MOVE_ABSORBED_BY_BOOST_FLASH_FIRE;
+        break;
+    case ABILITY_LIQUID_OOZE:
+        if (moveType == TYPE_POISON)
+        {
+            effect = MOVE_ABSORBED_BY_DRAIN_HP_ABILITY;
+        }
         break;
     }
 
@@ -4848,6 +4881,18 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             case ABILITY_TRUANT:
                 gDisableStructs[gBattlerAttacker].truantCounter ^= 1;
                 break;
+            case ABILITY_SILLY_RASCAL:
+                // 10% chance to apply siesta to all battlers on the next turn
+                if (Random() % 10 == 0)
+                {
+                    u32 i;
+                    for (i = 0; i < gBattlersCount; i++)
+                    {
+                        gBattleMons[i].volatiles.siesta = 1;
+                    }
+                    effect++;
+                }
+                break;
             case ABILITY_SLOW_START:
                 if (gDisableStructs[battler].slowStartTimer > 0 && --gDisableStructs[battler].slowStartTimer == 0)
                 {
@@ -5117,6 +5162,47 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 BattleScriptCall(BattleScript_WanderingSpiritActivates);
                 effect++;
                 break;
+            }
+            break;
+        case ABILITY_CORRUPTED:
+            if (IsBattlerAlive(gBattlerAttacker)
+             && IsBattlerTurnDamaged(gBattlerTarget)
+             && !CanBattlerAvoidContactEffects(gBattlerAttacker, gBattlerTarget, GetBattlerAbility(gBattlerAttacker), GetBattlerHoldEffect(gBattlerAttacker), move)
+             && !(gBattleStruct->battlerState[gBattlerTarget].corruptedType1 || gBattleStruct->battlerState[gBattlerTarget].corruptedType2)
+             && RandomPercentage(RNG_CORRUPTED, 50))
+            {
+                u32 type1 = gBattleMons[gBattlerTarget].types[0];
+                u32 type2 = gBattleMons[gBattlerTarget].types[1];
+                
+                // Rule 1: If one type is Psychic and other isn't Normal, change the non-Psychic to Normal
+                if (type1 == TYPE_PSYCHIC && type2 != TYPE_NORMAL && type2 != TYPE_MYSTERY)
+                    gBattleStruct->battlerState[gBattlerTarget].corruptedType2 = TRUE;
+                else if (type2 == TYPE_PSYCHIC && type1 != TYPE_NORMAL && type1 != TYPE_MYSTERY)
+                    gBattleStruct->battlerState[gBattlerTarget].corruptedType1 = TRUE;
+                // Rule 2: If one type is Psychic and other IS Normal, make pure Normal
+                else if ((type1 == TYPE_PSYCHIC && type2 == TYPE_NORMAL) || (type2 == TYPE_PSYCHIC && type1 == TYPE_NORMAL))
+                {
+                    gBattleStruct->battlerState[gBattlerTarget].corruptedType1 = TRUE;
+                    gBattleStruct->battlerState[gBattlerTarget].corruptedType2 = TRUE;
+                }
+                // Rule 3: If one type is Normal and other isn't, make pure Normal
+                else if ((type1 == TYPE_NORMAL && type2 != TYPE_NORMAL && type2 != TYPE_MYSTERY) || (type2 == TYPE_NORMAL && type1 != TYPE_NORMAL && type1 != TYPE_MYSTERY))
+                {
+                    gBattleStruct->battlerState[gBattlerTarget].corruptedType1 = TRUE;
+                    gBattleStruct->battlerState[gBattlerTarget].corruptedType2 = TRUE;
+                }
+                // Rule 4: Neither type is Normal or Psychic, 50% chance for each type
+                else if (type1 != TYPE_NORMAL && type1 != TYPE_PSYCHIC && type1 != TYPE_MYSTERY && type2 != TYPE_NORMAL && type2 != TYPE_PSYCHIC && type2 != TYPE_MYSTERY)
+                {
+                    if (Random() % 2 == 0)
+                        gBattleStruct->battlerState[gBattlerTarget].corruptedType1 = TRUE;
+                    else
+                        gBattleStruct->battlerState[gBattlerTarget].corruptedType2 = TRUE;
+                }
+                
+                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
+                BattleScriptCall(BattleScript_CorruptedActivates);
+                effect++;
             }
             break;
         case ABILITY_ANGER_POINT:
@@ -5574,6 +5660,26 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 // Make sure that the target isn't an ally - if it is, target the original user
                 if (IsBattlerAlly(gBattlerTarget, gBattlerAttacker))
                     gBattlerTarget = (gBattleScripting.savedBattler & 0xF0) >> 4;
+                BattleScriptExecute(BattleScript_DancerActivates);
+                effect++;
+            }
+            break;
+        case ABILITY_QUEENS_ORDERS:
+            if (IsBattlerAlive(battler)
+             && (move == MOVE_ATTACK_ORDER || move == MOVE_DEFEND_ORDER || move == MOVE_HEAL_ORDER)
+             && gBattlerAttacker != battler
+             && IsBattlerAlly(gBattlerAttacker, battler))
+            {
+                gBattlerAttacker = gBattlerAbility = battler;
+                gCalledMove = move;
+
+                // For Attack Order, use the same target as the original move
+                if (move == MOVE_ATTACK_ORDER)
+                    gBattlerTarget = gBattleScripting.savedBattler & 0x3;
+                else
+                    // For Defend Order and Heal Order, target the user (ally)
+                    gBattlerTarget = battler;
+
                 BattleScriptExecute(BattleScript_DancerActivates);
                 effect++;
             }
@@ -7332,6 +7438,22 @@ static inline u32 CalcMoveBasePower(struct BattleContext *ctx)
     case EFFECT_SPIT_UP:
         basePower = 100 * gDisableStructs[battlerAtk].stockpileCounter;
         break;
+    case EFFECT_MONKEY_FIST:
+    {
+        // Damage multiplier: (1 + ((X - 1) / 2)) where X is monkeyMindset
+        // For MONKEY_KING ability, treat monkeyMindset as one higher
+        u8 monkeyMultiplier = gDisableStructs[battlerAtk].monkeyMindset;
+        if (ctx->abilityAtk == ABILITY_MONKEY_KING)
+            monkeyMultiplier++;
+        if (monkeyMultiplier > 0)
+        {
+            // basePower * (1 + ((monkeyMultiplier - 1) / 2))
+            // To avoid floating point: basePower * (2 + monkeyMultiplier - 1) / 2
+            // = basePower * (1 + monkeyMultiplier) / 2
+            basePower = (basePower * (1 + monkeyMultiplier)) / 2;
+        }
+        break;
+    }
     case EFFECT_REVENGE:
         if (gProtectStructs[battlerAtk].revengeDoubled & 1u << battlerDef)
             basePower *= 2;
@@ -7958,8 +8080,19 @@ static inline u32 CalcAttackStat(struct BattleContext *ctx)
     {
         if (IsBattleMovePhysical(move))
         {
-            atkStat = gBattleMons[battlerAtk].attack;
-            atkStage = gBattleMons[battlerAtk].statStages[STAT_ATK];
+            // Big Pecks: use Defense instead of Attack if Defense is higher
+            u32 attack = gBattleMons[battlerAtk].attack;
+            u32 defense = gBattleMons[battlerAtk].defense;
+            if (ctx->abilityAtk == ABILITY_BIG_PECKS && defense > attack)
+            {
+                atkStat = defense;
+                atkStage = gBattleMons[battlerAtk].statStages[STAT_DEF];
+            }
+            else
+            {
+                atkStat = attack;
+                atkStage = gBattleMons[battlerAtk].statStages[STAT_ATK];
+            }
         }
         else
         {
@@ -8043,6 +8176,14 @@ static inline u32 CalcAttackStat(struct BattleContext *ctx)
     case ABILITY_FLOWER_GIFT:
         if (gBattleMons[battlerAtk].species == SPECIES_CHERRIM_SUNSHINE && IsBattlerWeatherAffected(battlerAtk, B_WEATHER_SUN) && IsBattleMovePhysical(move))
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
+        break;
+    case ABILITY_FLOWER_POWER:
+        if (gBattleMons[battlerAtk].volatiles.blooming && IsBattleMoveSpecial(move))
+            modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.3));
+        break;
+    case ABILITY_BUDDING:
+        if (gBattleMons[battlerAtk].volatiles.blooming && moveType == TYPE_GRASS)
+            modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.2));
         break;
     /* ABILITY_HUSTLE: moved to modify attack stat directly in GetStatValueWithStages (1.3x ATK) */
     case ABILITY_STAKEOUT:
@@ -9364,12 +9505,17 @@ uq4_12_t CalcTypeEffectivenessMultiplier(struct BattleContext *ctx)
 
     if (ctx->move != MOVE_STRUGGLE && ctx->moveType != TYPE_MYSTERY)
     {
-        modifier = CalcTypeEffectivenessMultiplierInternal(ctx, modifier);
+        uq4_12_t modifierUpdate = CalcTypeEffectivenessMultiplierInternal(ctx, modifier);
+
         if (GetMoveEffect(ctx->move) == EFFECT_TWO_TYPED_MOVE && !ctx->isAnticipation)
         {
+            //Recalc instead of reapplying (this means it just selects the more effective rather than being dual-type)
             ctx->moveType = GetMoveArgType(ctx->move);
-            modifier = CalcTypeEffectivenessMultiplierInternal(ctx, modifier);
+            uq4_12_t secondTypeMod = CalcTypeEffectivenessMultiplierInternal(ctx, modifier);
+            modifierUpdate = modifierUpdate > secondTypeMod ? modifierUpdate : secondTypeMod;
         }
+
+        modifier = modifierUpdate;
     }
 
     if (ctx->updateFlags)
@@ -10814,6 +10960,22 @@ void GetBattlerTypes(u32 battler, bool32 ignoreTera, enum Type types[static 3])
     types[0] = gBattleMons[battler].types[0];
     types[1] = gBattleMons[battler].types[1];
     types[2] = gBattleMons[battler].types[2];
+
+    // Corrupted: Applies stored type corruptions (persists for entire battle)
+    if (!isTera && (gBattleStruct->battlerState[battler].corruptedType1 || gBattleStruct->battlerState[battler].corruptedType2))
+    {
+        if (gBattleStruct->battlerState[battler].corruptedType1)
+            types[0] = TYPE_NORMAL;
+        if (gBattleStruct->battlerState[battler].corruptedType2)
+            types[1] = TYPE_NORMAL;
+    }
+
+    // Budding: Becomes pure Grass type while Blooming
+    if (!isTera && gBattleMons[battler].volatiles.blooming && GetBattlerAbility(battler) == ABILITY_BUDDING)
+    {
+        types[0] = types[1] = types[2] = TYPE_GRASS;
+        return;
+    }
 
     // Roost.
     if (!isTera && gDisableStructs[battler].roostActive)

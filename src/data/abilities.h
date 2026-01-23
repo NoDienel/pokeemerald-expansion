@@ -1088,8 +1088,8 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
     [ABILITY_BIG_PECKS] =
     {
         .name = _("Big Pecks"),
-        .description = COMPOUND_STRING("Prevents Defense loss."),
-        .aiRating = 1,
+        .description = COMPOUND_STRING("Uses Defense as Attack if higher. Defense cannot be lowered."),
+        .aiRating = 5,
         .breakable = TRUE,
     },
 
@@ -2512,28 +2512,35 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
     [ABILITY_CORRUPTED] =
     {
         .name = _("Corrupted"),
-        .description = COMPOUND_STRING("Spreads corruption on contact."),
+        .description = COMPOUND_STRING("Contact may change foe's type to NORMAL."),
         .aiRating = 8,
     },
 
     [ABILITY_BLOOM_SPORES] =
     {
         .name = _("Bloom Spores"),
-        .description = COMPOUND_STRING("BLOOMING spreads."),
+        .description = COMPOUND_STRING("Spreads BLOOMING when it starts."),
         .aiRating = 5,
     },
     
     [ABILITY_PETAL_SKATING] =
     {
         .name = _("Petal Skating"),
-        .description = COMPOUND_STRING("Speeds up when BLOOMING."),
+        .description = COMPOUND_STRING("Speed rises by 2 when BLOOMING."),
         .aiRating = 5,
     },
 
     [ABILITY_FLOWER_POWER] =
     {
         .name = _("Flower Power"),
-        .description = COMPOUND_STRING("Powers up when BLOOMING."),
+        .description = COMPOUND_STRING("Sp. Atk x1.3 while BLOOMING. Sp. Atk can't be lowered."),
+        .aiRating = 5,
+    },
+
+    [ABILITY_BUDDING] =
+    {
+        .name = _("Budding"),
+        .description = COMPOUND_STRING("Type becomes GRASS and Grass moves x1.2 while BLOOMING."),
         .aiRating = 5,
     },
 
@@ -2570,5 +2577,12 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .name = _("Arsenal"),
         .description = COMPOUND_STRING("Powers up ballistic moves."),
         .aiRating = 5,
+    },
+
+    [ABILITY_SILLY_RASCAL] =
+    {
+        .name = _("Silly Rascal"),
+        .description = COMPOUND_STRING("Randomly calls a siesta."),
+        .aiRating = 3,
     },
 };

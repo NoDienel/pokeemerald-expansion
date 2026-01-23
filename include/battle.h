@@ -89,6 +89,8 @@ struct DisableStruct
     s8 stockpileSpDef;
     s8 stockpileBeforeDef;
     s8 stockpileBeforeSpDef;
+    u8 monkeyMindset:2; // 0-3, increases from Monkey Around/Monkey Business, resets on switch
+    u8 padding1:6;
     u8 substituteHP;
     u8 encoredMovePos;
     u16 disableTimer;
@@ -127,7 +129,7 @@ struct DisableStruct
     u8 usedProteanLibero:1;
     u8 flashFireBoosted:1;
     u8 boosterEnergyActivated:1;
-    u8 padding1:1;
+    u8 padding2:1;
     u16 overwrittenAbility;   // abilities overwritten during battle (keep separate from battle history in case of switching)
     u8 roostActive:1;
     u8 unburdenActive:1;
@@ -592,6 +594,8 @@ struct BattlerState
     u32 commanderSpecies:11;
     u32 selectionScriptFinished:1;
     u32 lastMoveTarget:3; // The last target on which each mon used a move, for the sake of Instruct
+    u32 corruptedType1:1; // Type 1 corrupted to normal
+    u32 corruptedType2:1; // Type 2 corrupted to normal
     // End of Word
     u16 hpOnSwitchout;
     u16 switchIn:1;

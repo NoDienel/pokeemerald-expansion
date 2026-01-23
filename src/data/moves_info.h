@@ -22992,4 +22992,203 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .contestComboMoves = {0},
         .battleAnimScript = gBattleAnimMove_DrainingKiss,
     },
-};
+
+    [MOVE_MONKEY_AROUND] =
+    {
+        .name = COMPOUND_STRING("Monkey Around"),
+        .description = COMPOUND_STRING(
+            "User enters a fighting\n"
+            "stance and gains stats."),
+        .effect = EFFECT_MONKEY_AROUND,
+        .power = 0,
+        .type = TYPE_FIGHTING,
+        .accuracy = 0,
+        .pp = 20,
+        .target = MOVE_TARGET_USER,
+        .priority = 1,
+        .category = DAMAGE_CATEGORY_STATUS,
+        .ignoresProtect = TRUE,
+        .mirrorMoveBanned = TRUE,
+        .snatchAffected = TRUE,
+        .contestEffect = CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS,
+        .contestCategory = CONTEST_CATEGORY_TOUGH,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+    },
+
+    [MOVE_MONKEY_FIST] =
+    {
+        .name = COMPOUND_STRING("Monkey Fist"),
+        .description = COMPOUND_STRING(
+            "A punch fueled by the\n"
+            "monkey mindset."),
+        .effect = EFFECT_MONKEY_FIST,
+        .power = 70,
+        .type = TYPE_FIGHTING,
+        .accuracy = 100,
+        .pp = 10,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .makesContact = TRUE,
+        .punchingMove = TRUE,
+        .contestEffect = CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_TOUGH,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+    },
+
+    [MOVE_MELLOW_MONKEY] =
+    {
+        .name = COMPOUND_STRING("Mellow Monkey"),
+        .description = COMPOUND_STRING(
+            "User calms down and heals\n"
+            "using mindset energy."),
+        .effect = EFFECT_MELLOW_MONKEY,
+        .power = 0,
+        .type = TYPE_PSYCHIC,
+        .accuracy = 0,
+        .pp = 5,
+        .target = MOVE_TARGET_USER,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_STATUS,
+        .healingMove = B_HEAL_BLOCKING >= GEN_6,
+        .ignoresProtect = TRUE,
+        .mirrorMoveBanned = TRUE,
+        .snatchAffected = TRUE,
+        .contestEffect = CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS,
+        .contestCategory = CONTEST_CATEGORY_COOL,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+    },
+
+    [MOVE_MONKEY_BUSINESS] =
+    {
+        .name = COMPOUND_STRING("Monkey Business"),
+        .description = COMPOUND_STRING(
+            "User gets to business,\n"
+            "attacking and gaining edge."),
+        .effect = EFFECT_MONKEY_BUSINESS,
+        .power = 20,
+        .type = TYPE_FIGHTING,
+        .accuracy = 100,
+        .pp = 15,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .makesContact = TRUE,
+        .contestEffect = CONTEST_EFFECT_BETTER_WITH_GOOD_CONDITION,
+        .contestCategory = CONTEST_CATEGORY_TOUGH,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+    },
+
+    [MOVE_MONKEY_MASSACRE] =
+    {
+        .name = COMPOUND_STRING("Monkey Massacre"),
+        .description = COMPOUND_STRING(
+            "One-hit KO using full\n"
+            "monkey mindset power."),
+        .effect = EFFECT_MONKEY_MASSACRE,
+        .power = 0,
+        .type = TYPE_FIGHTING,
+        .accuracy = 100,
+        .pp = 5,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .makesContact = TRUE,
+        .contestEffect = CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_TOUGH,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+    },
+
+    [MOVE_SEARING_MONKEY_FIST] =
+    {
+        .name = COMPOUND_STRING("Searing Monkey Fist"),
+        .description = COMPOUND_STRING(
+            "A flaming punch fueled by\n"
+            "the monkey mindset."),
+        .effect = EFFECT_MONKEY_FIST,
+        .power = 70,
+        .type = TYPE_FIRE,
+        .accuracy = 100,
+        .pp = 10,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .makesContact = TRUE,
+        .punchingMove = TRUE,
+        .contestEffect = CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_COOL,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+    },
+
+    [MOVE_POURING_MONKEY_FIST] =
+    {
+        .name = COMPOUND_STRING("Pouring Monkey Fist"),
+        .description = COMPOUND_STRING(
+            "A watery punch fueled by\n"
+            "the monkey mindset."),
+        .effect = EFFECT_MONKEY_FIST,
+        .power = 70,
+        .type = TYPE_WATER,
+        .accuracy = 100,
+        .pp = 10,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .makesContact = TRUE,
+        .punchingMove = TRUE,
+        .contestEffect = CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_BEAUTY,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+    },
+
+    [MOVE_SAGELY_MONKEY_FIST] =
+    {
+        .name = COMPOUND_STRING("Sagely Monkey Fist"),
+        .description = COMPOUND_STRING(
+            "A verdant punch fueled by\n"
+            "the monkey mindset."),
+        .effect = EFFECT_MONKEY_FIST,
+        .power = 70,
+        .type = TYPE_GRASS,
+        .accuracy = 100,
+        .pp = 10,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .makesContact = TRUE,
+        .punchingMove = TRUE,
+        .contestEffect = CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_CUTE,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+    },
+
+    [MOVE_CHITIN_FIST] =
+    {
+        .name = COMPOUND_STRING("Chitin Fist"),
+        .description = COMPOUND_STRING(
+            "A chitinous punch made\n"
+            "with an iron-hard carapice."),
+        .effect = EFFECT_TWO_TYPED_MOVE,
+        .argument = { .type = TYPE_BUG },
+        .power = 80,
+        .type = TYPE_BUG,
+        .accuracy = 100,
+        .pp = 10,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .makesContact = TRUE,
+        .punchingMove = TRUE,
+        .contestEffect = CONTEST_EFFECT_HIGHLY_APPEALING,
+        .contestCategory = CONTEST_CATEGORY_CUTE,
+        .contestComboStarterId = 0,
+        .contestComboMoves = {0},
+    },

@@ -222,7 +222,8 @@ enum VolatileFlags
     F(VOLATILE_TABLETS_OF_RUIN,             tabletsOfRuin,                 (u32, 1)) \
     F(VOLATILE_BEADS_OF_RUIN,               beadsOfRuin,                   (u32, 1)) \
     F(VOLATILE_TOGGLE_MODE,                  toggleMode,                    (u32, 1)) \
-    F(VOLATILE_COCOONED,                      cocooned,                      (u32, 1))
+    F(VOLATILE_COCOONED,                      cocooned,                      (u32, 1)) \
+    F(VOLATILE_SIESTA,                        siesta,                        (u32, 1))
 
 
 /* Use within a macro to get the maximum allowed value for a volatile. Requires _typeMaxValue as input. */

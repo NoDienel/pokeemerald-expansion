@@ -493,7 +493,7 @@
 #define SPECIES_PROBOPASS                               476
 #define SPECIES_DUSKNOIR                                477
 #define SPECIES_FROSLASS                                478
-#define SPECIES_ROTOM                                   479
+#define SPECIES_ROTOM_NORMAL                            479
 #define SPECIES_UXIE                                    480
 #define SPECIES_MESPRIT                                 481
 #define SPECIES_AZELF                                   482
