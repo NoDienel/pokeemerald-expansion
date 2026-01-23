@@ -77,10 +77,14 @@ script TestMapConnection_EventScript_PinchHitter_Pokeball
 script TestMapConnection_EventScript_Weedle_Pokeball
 {
     lockall
-    msgbox("A tiny partner appears!\nThis gives a level 5 Weedle for partner-effect tests.")
+    msgbox("A tiny partner appears!\nThis gives 2 Pitheook.")
     waitmessage
-    showmonpic(SPECIES_WEEDLE, 10, 3)
-    givemon(SPECIES_WEEDLE, 5, ITEM_NONE, ITEM_POKE_BALL, NATURE_DOCILE, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MOVE_POISON_STING)
+    showmonpic(SPECIES_PITHEOOK, 10, 3)
+    givemon(SPECIES_PITHEOOK, 15, ITEM_NONE, ITEM_POKE_BALL)
+    givemon(SPECIES_PITHEOOK, 15, ITEM_NONE, ITEM_POKE_BALL)
+    giveitem(ITEM_FIRE_STONE)
+    giveitem(ITEM_WATER_STONE)
+    giveitem(ITEM_LEAF_STONE)
     setflag(FLAG_SYS_POKEMON_GET)
     hidemonpic()
     releaseall

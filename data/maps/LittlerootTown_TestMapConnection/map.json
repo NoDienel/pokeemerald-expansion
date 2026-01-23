@@ -63,7 +63,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "TestMapConnection_EventScript_PinchHitter_Pokeball",
+      "script": "TestMapConnection_EventScript_Weedle_Pokeball",
       "flag": "FLAG_UNUSED_0x020"
     }
   ],

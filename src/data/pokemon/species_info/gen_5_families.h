@@ -1430,7 +1430,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         SHADOW(0, 3, SHADOW_SIZE_S)
         FOOTPRINT(Pitheook)
         OVERWORLD(
-            sPicTable_Pitheook,
+            sPicTable_Pansage,
             SIZE_32x32,
             SHADOW_SIZE_M,
             TRACKS_FOOT,
