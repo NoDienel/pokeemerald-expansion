@@ -14793,7 +14793,28 @@ static const u16 sLiepardTeachableLearnset[] = {
 };
 #endif //P_FAMILY_PURRLOIN
 
-#if P_FAMILY_PANSAGE
+#if P_FAMILY_PITHEOOK
+static const u16 sPitheookTeachableLearnset[] = {
+    MOVE_ATTRACT,
+    MOVE_BRICK_BREAK,
+    MOVE_CUT,
+    MOVE_DIG,
+    MOVE_DOUBLE_TEAM,
+    MOVE_FACADE,
+    MOVE_FLASH,
+    MOVE_FOCUS_PUNCH,
+    MOVE_IRON_TAIL,
+    MOVE_PROTECT,
+    MOVE_REST,
+    MOVE_ROCK_SMASH,
+    MOVE_ROCK_TOMB,
+    MOVE_TAUNT,
+    MOVE_THIEF,
+    MOVE_TORMENT,
+    MOVE_TOXIC,
+    MOVE_UNAVAILABLE,
+};
+
 static const u16 sPansageTeachableLearnset[] = {
     MOVE_ATTRACT,
     MOVE_BRICK_BREAK,
@@ -14844,9 +14865,7 @@ static const u16 sSimisageTeachableLearnset[] = {
     MOVE_TOXIC,
     MOVE_UNAVAILABLE,
 };
-#endif //P_FAMILY_PANSAGE
 
-#if P_FAMILY_PANSEAR
 static const u16 sPansearTeachableLearnset[] = {
     MOVE_ATTRACT,
     MOVE_BRICK_BREAK,
@@ -14897,9 +14916,7 @@ static const u16 sSimisearTeachableLearnset[] = {
     MOVE_TOXIC,
     MOVE_UNAVAILABLE,
 };
-#endif //P_FAMILY_PANSEAR
 
-#if P_FAMILY_PANPOUR
 static const u16 sPanpourTeachableLearnset[] = {
     MOVE_ATTRACT,
     MOVE_BLIZZARD,
@@ -14956,7 +14973,7 @@ static const u16 sSimipourTeachableLearnset[] = {
     MOVE_WATER_PULSE,
     MOVE_UNAVAILABLE,
 };
-#endif //P_FAMILY_PANPOUR
+#endif //P_FAMILY_PITHEOOK
 
 #if P_FAMILY_MUNNA
 static const u16 sMunnaTeachableLearnset[] = {

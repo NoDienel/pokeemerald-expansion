@@ -11830,7 +11830,23 @@ static const struct LevelUpMove sLiepardLevelUpLearnset[] = {
 };
 #endif //P_FAMILY_PURRLOIN
 
-#if P_FAMILY_PANSAGE
+#if P_FAMILY_PITHEOOK
+static const struct LevelUpMove sPitheookLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_SCRATCH),
+    LEVEL_UP_MOVE( 1, MOVE_PLAY_NICE),
+    LEVEL_UP_MOVE( 4, MOVE_LEER),
+    LEVEL_UP_MOVE( 7, MOVE_LICK),
+    LEVEL_UP_MOVE(13, MOVE_FURY_SWIPES),
+    LEVEL_UP_MOVE(19, MOVE_BITE),
+    LEVEL_UP_MOVE(25, MOVE_TORMENT),
+    LEVEL_UP_MOVE(28, MOVE_FLING),
+    LEVEL_UP_MOVE(31, MOVE_ACROBATICS),
+    LEVEL_UP_MOVE(37, MOVE_RECYCLE),
+    LEVEL_UP_MOVE(40, MOVE_NATURAL_GIFT),
+    LEVEL_UP_MOVE(43, MOVE_CRUNCH),
+    LEVEL_UP_END
+};
+
 static const struct LevelUpMove sPansageLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_SCRATCH),
     LEVEL_UP_MOVE( 1, MOVE_PLAY_NICE),
@@ -11858,9 +11874,7 @@ static const struct LevelUpMove sSimisageLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_SEED_BOMB),
     LEVEL_UP_END
 };
-#endif //P_FAMILY_PANSAGE
 
-#if P_FAMILY_PANSEAR
 static const struct LevelUpMove sPansearLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_SCRATCH),
     LEVEL_UP_MOVE( 1, MOVE_PLAY_NICE),
@@ -11888,9 +11902,7 @@ static const struct LevelUpMove sSimisearLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_FLAME_BURST),
     LEVEL_UP_END
 };
-#endif //P_FAMILY_PANSEAR
 
-#if P_FAMILY_PANPOUR
 static const struct LevelUpMove sPanpourLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_SCRATCH),
     LEVEL_UP_MOVE( 1, MOVE_PLAY_NICE),
@@ -11918,7 +11930,7 @@ static const struct LevelUpMove sSimipourLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_SCALD),
     LEVEL_UP_END
 };
-#endif //P_FAMILY_PANPOUR
+#endif //P_FAMILY_PITHEOOK
 
 #if P_FAMILY_MUNNA
 static const struct LevelUpMove sMunnaLevelUpLearnset[] = {

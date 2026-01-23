@@ -4004,8 +4004,8 @@ static const u16 sPurrloinEggMoveLearnset[] = {
 };
 #endif //P_FAMILY_PURRLOIN
 
-#if P_FAMILY_PANSAGE
-static const u16 sPansageEggMoveLearnset[] = {
+#if P_FAMILY_PITHEOOK
+static const u16 sPitheookEggMoveLearnset[] = {
     MOVE_COVET,
     MOVE_LOW_KICK,
     MOVE_TICKLE,
@@ -4018,45 +4018,19 @@ static const u16 sPansageEggMoveLearnset[] = {
     MOVE_LEAF_STORM,
     MOVE_DISARMING_VOICE,
     MOVE_SPIKY_SHIELD,
-    MOVE_UNAVAILABLE,
-};
-#endif //P_FAMILY_PANSAGE
-
-#if P_FAMILY_PANSEAR
-static const u16 sPansearEggMoveLearnset[] = {
-    MOVE_COVET,
-    MOVE_LOW_KICK,
-    MOVE_TICKLE,
-    MOVE_NASTY_PLOT,
-    MOVE_ROLE_PLAY,
-    MOVE_ASTONISH,
-    MOVE_SLEEP_TALK,
-    MOVE_FIRE_SPIN,
-    MOVE_FIRE_PUNCH,
-    MOVE_HEAT_WAVE,
-    MOVE_DISARMING_VOICE,
-    MOVE_BELCH,
-    MOVE_FLARE_BLITZ,
-    MOVE_UNAVAILABLE,
-};
-#endif //P_FAMILY_PANSEAR
-
-#if P_FAMILY_PANPOUR
-static const u16 sPanpourEggMoveLearnset[] = {
-    MOVE_COVET,
-    MOVE_LOW_KICK,
-    MOVE_TICKLE,
-    MOVE_NASTY_PLOT,
-    MOVE_ROLE_PLAY,
-    MOVE_ASTONISH,
     MOVE_AQUA_RING,
     MOVE_AQUA_TAIL,
     MOVE_MUD_SPORT,
     MOVE_HYDRO_PUMP,
-    MOVE_DISARMING_VOICE,
+    MOVE_SLEEP_TALK,
+    MOVE_FIRE_SPIN,
+    MOVE_FIRE_PUNCH,
+    MOVE_HEAT_WAVE,
+    MOVE_BELCH,
+    MOVE_FLARE_BLITZ,
     MOVE_UNAVAILABLE,
 };
-#endif //P_FAMILY_PANPOUR
+#endif //P_FAMILY_PITHEOOK
 
 #if P_FAMILY_MUNNA
 static const u16 sMunnaEggMoveLearnset[] = {

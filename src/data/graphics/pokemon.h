@@ -16243,7 +16243,23 @@ const u16 gMonShinyPalette_LedianToku[] = INCBIN_U16("graphics/pokemon/ledianTok
 #endif //OW_POKEMON_OBJECT_EVENTS
 #endif //P_FAMILY_PURRLOIN
 
-#if P_FAMILY_PANSAGE
+#if P_FAMILY_PITHEOOK
+    const u32 gMonFrontPic_Pitheook[] = INCBIN_U32("graphics/pokemon/pitheook/anim_front.4bpp.smol");
+    const u16 gMonPalette_Pitheook[] = INCBIN_U16("graphics/pokemon/pitheook/normal.gbapal");
+    const u32 gMonBackPic_Pitheook[] = INCBIN_U32("graphics/pokemon/pitheook/back.4bpp.smol");
+    const u16 gMonShinyPalette_Pitheook[] = INCBIN_U16("graphics/pokemon/pitheook/shiny.gbapal");
+    const u8 gMonIcon_Pitheook[] = INCBIN_U8("graphics/pokemon/pitheook/icon.4bpp");
+#if P_FOOTPRINTS
+    const u8 gMonFootprint_Pitheook[] = INCBIN_U8("graphics/pokemon/pitheook/footprint.1bpp");
+#endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+    const u32 gObjectEventPic_Pitheook[] = INCBIN_COMP("graphics/pokemon/pitheook/overworld.4bpp");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+    const u16 gOverworldPalette_Pitheook[] = INCBIN_U16("graphics/pokemon/pitheook/overworld_normal.gbapal");
+    const u16 gShinyOverworldPalette_Pitheook[] = INCBIN_U16("graphics/pokemon/pitheook/overworld_shiny.gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+#endif //OW_POKEMON_OBJECT_EVENTS
+
     const u32 gMonFrontPic_Pansage[] = INCBIN_U32("graphics/pokemon/pansage/anim_front.4bpp.smol");
     const u16 gMonPalette_Pansage[] = INCBIN_U16("graphics/pokemon/pansage/normal.gbapal");
     const u32 gMonBackPic_Pansage[] = INCBIN_U32("graphics/pokemon/pansage/back.4bpp.smol");
@@ -16275,9 +16291,7 @@ const u16 gMonShinyPalette_LedianToku[] = INCBIN_U16("graphics/pokemon/ledianTok
     const u16 gShinyOverworldPalette_Simisage[] = INCBIN_U16("graphics/pokemon/simisage/overworld_shiny.gbapal");
 #endif //OW_PKMN_OBJECTS_SHARE_PALETTES
 #endif //OW_POKEMON_OBJECT_EVENTS
-#endif //P_FAMILY_PANSAGE
 
-#if P_FAMILY_PANSEAR
     const u32 gMonFrontPic_Pansear[] = INCBIN_U32("graphics/pokemon/pansear/anim_front.4bpp.smol");
     const u16 gMonPalette_Pansear[] = INCBIN_U16("graphics/pokemon/pansear/normal.gbapal");
     const u32 gMonBackPic_Pansear[] = INCBIN_U32("graphics/pokemon/pansear/back.4bpp.smol");
@@ -16309,9 +16323,7 @@ const u16 gMonShinyPalette_LedianToku[] = INCBIN_U16("graphics/pokemon/ledianTok
     const u16 gShinyOverworldPalette_Simisear[] = INCBIN_U16("graphics/pokemon/simisear/overworld_shiny.gbapal");
 #endif //OW_PKMN_OBJECTS_SHARE_PALETTES
 #endif //OW_POKEMON_OBJECT_EVENTS
-#endif //P_FAMILY_PANSEAR
 
-#if P_FAMILY_PANPOUR
     const u32 gMonFrontPic_Panpour[] = INCBIN_U32("graphics/pokemon/panpour/anim_front.4bpp.smol");
     const u16 gMonPalette_Panpour[] = INCBIN_U16("graphics/pokemon/panpour/normal.gbapal");
     const u32 gMonBackPic_Panpour[] = INCBIN_U32("graphics/pokemon/panpour/back.4bpp.smol");
@@ -16343,7 +16355,7 @@ const u16 gMonShinyPalette_LedianToku[] = INCBIN_U16("graphics/pokemon/ledianTok
     const u16 gShinyOverworldPalette_Simipour[] = INCBIN_U16("graphics/pokemon/simipour/overworld_shiny.gbapal");
 #endif //OW_PKMN_OBJECTS_SHARE_PALETTES
 #endif //OW_POKEMON_OBJECT_EVENTS
-#endif //P_FAMILY_PANPOUR
+#endif //P_FAMILY_PITHEOOK
 
 #if P_FAMILY_MUNNA
     const u32 gMonFrontPic_Munna[] = INCBIN_U32("graphics/pokemon/munna/anim_front.4bpp.smol");

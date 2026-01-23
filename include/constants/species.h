@@ -1667,8 +1667,11 @@
 
 // Extra forms / custom species
 #define SPECIES_TOKU_LEDIAN                             1550
+#define SPECIES_PITHEOOK                                1551
+//#define SPECIES_WALOVBEES                               1552
+//#define SPECIES_FALINK                                  1553
 
-#define SPECIES_EGG                                     (SPECIES_TOKU_LEDIAN + 1)
+#define SPECIES_EGG                                     (SPECIES_PITHEOOK + 1)
 
 #define NUM_SPECIES SPECIES_EGG
 

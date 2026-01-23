@@ -1372,7 +1372,80 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
     },
 #endif //P_FAMILY_PURRLOIN
 
-#if P_FAMILY_PANSAGE
+#if P_FAMILY_PITHEOOK
+    [SPECIES_PITHEOOK] =
+    {
+        .baseHP        = 40,
+        .baseAttack    = 40,
+        .baseDefense   = 30,
+        .baseSpeed     = 64,
+        .baseSpAttack  = 40,
+        .baseSpDefense = 30,
+        .types = MON_TYPES(TYPE_NORMAL),
+        .catchRate = 190,
+        .expYield = 43,
+        .evYield_Speed = 1,
+        .genderRatio = PERCENT_FEMALE(12.5),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
+        .abilities = { ABILITY_RUN_AWAY, ABILITY_GLUTTONY, ABILITY_SILLY_RASCAL },
+        .bodyColor = BODY_COLOR_GRAY,
+        .speciesName = _("Pitheook"),
+        .cryId = CRY_PANSAGE,
+        .natDexNum = NATIONAL_DEX_PITHEOOK,
+        .categoryName = _("Tiny Monkey"),
+        .height = 5,
+        .weight = 79,
+        .description = COMPOUND_STRING(
+            "This tiny monkey Pokémon is abundant.\n"
+            "It loves berries but relies on others\n"
+            "to gather and prepare them. It is\n"
+            "skittish but friendly."),
+        .pokemonScale = 522,
+        .pokemonOffset = 12,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Pitheook,
+        .frontPicSize = MON_COORDS_SIZE(40, 48),
+        .frontPicYOffset = 11,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(1, 8),
+            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(1, 13),
+            ANIMCMD_FRAME(0, 7),
+        ),
+        .frontAnimId = ANIM_CIRCULAR_STRETCH_TWICE,
+        .backPic = gMonBackPic_Pitheook,
+        .backPicSize = MON_COORDS_SIZE(48, 48),
+        .backPicYOffset = 9,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Pitheook,
+        .shinyPalette = gMonShinyPalette_Pitheook,
+        .iconSprite = gMonIcon_Pitheook,
+        .iconPalIndex = 1,
+        .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
+        SHADOW(0, 3, SHADOW_SIZE_S)
+        FOOTPRINT(Pitheook)
+        OVERWORLD(
+            sPicTable_Pitheook,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Pitheook,
+            gShinyOverworldPalette_Pitheook
+        )
+        .levelUpLearnset = sPitheookLevelUpLearnset,
+        .teachableLearnset = sPitheookTeachableLearnset,
+        .eggMoveLearnset = sPitheookEggMoveLearnset,
+        .evolutions = EVOLUTION({EVO_ITEM, ITEM_LEAF_STONE, SPECIES_PANSAGE},
+                                {EVO_ITEM, ITEM_FIRE_STONE, SPECIES_PANSEAR},
+                                {EVO_ITEM, ITEM_WATER_STONE, SPECIES_PANPOUR}),
+    },
+
     [SPECIES_PANSAGE] =
     {
         .baseHP        = 50,
@@ -1440,8 +1513,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         )
         .levelUpLearnset = sPansageLevelUpLearnset,
         .teachableLearnset = sPansageTeachableLearnset,
-        .eggMoveLearnset = sPansageEggMoveLearnset,
-        .evolutions = EVOLUTION({EVO_ITEM, ITEM_LEAF_STONE, SPECIES_SIMISAGE}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 24, SPECIES_SIMISAGE}),
     },
 
     [SPECIES_SIMISAGE] =
@@ -1510,9 +1582,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .levelUpLearnset = sSimisageLevelUpLearnset,
         .teachableLearnset = sSimisageTeachableLearnset,
     },
-#endif //P_FAMILY_PANSAGE
 
-#if P_FAMILY_PANSEAR
     [SPECIES_PANSEAR] =
     {
         .baseHP        = 50,
@@ -1578,8 +1648,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         )
         .levelUpLearnset = sPansearLevelUpLearnset,
         .teachableLearnset = sPansearTeachableLearnset,
-        .eggMoveLearnset = sPansearEggMoveLearnset,
-        .evolutions = EVOLUTION({EVO_ITEM, ITEM_FIRE_STONE, SPECIES_SIMISEAR}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 24, SPECIES_SIMISEAR}),
     },
 
     [SPECIES_SIMISEAR] =
@@ -1651,9 +1720,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .levelUpLearnset = sSimisearLevelUpLearnset,
         .teachableLearnset = sSimisearTeachableLearnset,
     },
-#endif //P_FAMILY_PANSEAR
 
-#if P_FAMILY_PANPOUR
     [SPECIES_PANPOUR] =
     {
         .baseHP        = 50,
@@ -1719,8 +1786,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         )
         .levelUpLearnset = sPanpourLevelUpLearnset,
         .teachableLearnset = sPanpourTeachableLearnset,
-        .eggMoveLearnset = sPanpourEggMoveLearnset,
-        .evolutions = EVOLUTION({EVO_ITEM, ITEM_WATER_STONE, SPECIES_SIMIPOUR}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 24, SPECIES_SIMIPOUR}),
     },
 
     [SPECIES_SIMIPOUR] =
@@ -1788,7 +1854,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .levelUpLearnset = sSimipourLevelUpLearnset,
         .teachableLearnset = sSimipourTeachableLearnset,
     },
-#endif //P_FAMILY_PANPOUR
+#endif //P_FAMILY_PITHEOOK
 
 #if P_FAMILY_MUNNA
     [SPECIES_MUNNA] =
