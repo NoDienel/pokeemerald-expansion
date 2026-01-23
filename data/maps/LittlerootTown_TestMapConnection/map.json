@@ -54,6 +54,7 @@
       "flag": "FLAG_UNUSED_0x020"
     },
     {
+      "local_id": "LOCALID_POKEBALL2",
       "graphics_id": "OBJ_EVENT_GFX_POKE_BALL",
       "x": 3,
       "y": 17,
@@ -64,7 +65,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "TestMapConnection_EventScript_Weedle_Pokeball",
-      "flag": "FLAG_UNUSED_0x020"
+      "flag": "FLAG_UNUSED_0x021"
     }
   ],
   "warp_events": [

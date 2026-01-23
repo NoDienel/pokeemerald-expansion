@@ -36,6 +36,13 @@
       "elevation": 0,
       "dest_map": "MAP_ROUTE114",
       "dest_warp_id": "1"
+    },
+    {
+      "x": 77,
+      "y": 21,
+      "elevation": 0,
+      "dest_map": "MAP_FIERY_PATH",
+      "dest_warp_id": "2"
     }
   ],
   "coord_events": [],

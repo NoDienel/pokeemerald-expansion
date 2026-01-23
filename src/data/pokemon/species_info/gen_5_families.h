@@ -1425,7 +1425,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .palette = gMonPalette_Pitheook,
         .shinyPalette = gMonShinyPalette_Pitheook,
         .iconSprite = gMonIcon_Pitheook,
-        .iconPalIndex = 1,
+        .iconPalIndex = 2,
         .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
         SHADOW(0, 3, SHADOW_SIZE_S)
         FOOTPRINT(Pitheook)
