@@ -19272,7 +19272,25 @@ static const struct LevelUpMove sAlcremieLevelUpLearnset[] = {
 };
 #endif //P_FAMILY_MILCERY
 
-#if P_FAMILY_FALINKS
+#if P_FAMILY_FALINK
+static const struct LevelUpMove sFalinkLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_TACKLE),
+    LEVEL_UP_MOVE( 1, MOVE_PROTECT),
+    LEVEL_UP_MOVE( 5, MOVE_ROCK_SMASH),
+    LEVEL_UP_MOVE(10, MOVE_FOCUS_ENERGY),
+    LEVEL_UP_MOVE(15, MOVE_HEADBUTT),
+    LEVEL_UP_MOVE(18, MOVE_BULK_UP),
+    LEVEL_UP_MOVE(23, MOVE_ENDURE),
+    LEVEL_UP_MOVE(28, MOVE_REVERSAL),
+    LEVEL_UP_MOVE(33, MOVE_FIRST_IMPRESSION),
+    LEVEL_UP_MOVE(38, MOVE_NO_RETREAT),
+    LEVEL_UP_MOVE(41, MOVE_IRON_DEFENSE),
+    LEVEL_UP_MOVE(45, MOVE_CLOSE_COMBAT),
+    LEVEL_UP_MOVE(48, MOVE_MEGAHORN),
+    LEVEL_UP_MOVE(50, MOVE_COUNTER),
+    LEVEL_UP_END
+};
+
 static const struct LevelUpMove sFalinksLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_TACKLE),
     LEVEL_UP_MOVE( 1, MOVE_PROTECT),
@@ -19290,7 +19308,7 @@ static const struct LevelUpMove sFalinksLevelUpLearnset[] = {
     LEVEL_UP_MOVE(60, MOVE_COUNTER),
     LEVEL_UP_END
 };
-#endif //P_FAMILY_FALINKS
+#endif //P_FAMILY_FALINK
 
 #if P_FAMILY_PINCURCHIN
 static const struct LevelUpMove sPincurchinLevelUpLearnset[] = {

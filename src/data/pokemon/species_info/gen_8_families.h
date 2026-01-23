@@ -5180,8 +5180,8 @@ const struct SpeciesInfo gSpeciesInfoGen8[] =
 #endif //P_GIGANTAMAX_FORMS
 #endif //P_FAMILY_MILCERY
 
-#if P_FAMILY_FALINKS
-    [SPECIES_FALINKS] =
+#if P_FAMILY_FALINK
+    [SPECIES_FALINK] =
     {
         .baseHP        = 65,
         .baseAttack    = 100,
@@ -5190,6 +5190,67 @@ const struct SpeciesInfo gSpeciesInfoGen8[] =
         .baseSpAttack  = 70,
         .baseSpDefense = 60,
         .types = MON_TYPES(TYPE_FIGHTING),
+        .catchRate = 45,
+        .expYield = 65,
+        .evYield_Attack = 1,
+        .genderRatio = MON_GENDERLESS,
+        .eggCycles = 25,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FAIRY, EGG_GROUP_MINERAL),
+        .abilities = { ABILITY_BATTLE_ARMOR, ABILITY_NONE, ABILITY_DEFIANT },
+        .bodyColor = BODY_COLOR_YELLOW,
+        .speciesName = _("Falink"),
+        .cryId = CRY_FALINKS,
+        .natDexNum = NATIONAL_DEX_FALINK,
+        .categoryName = _("Formation"),
+        .height = 30,
+        .weight = 155,
+        .description = COMPOUND_STRING(
+            "A lone warrior waiting to join up with\n"
+            "more of its kind. It seeks guidance."),
+        .pokemonScale = 275,
+        .pokemonOffset = 7,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Falink,
+        .frontPicSize = MON_COORDS_SIZE(56, 48),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = sAnims_SingleFramePlaceHolder,
+        //.frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Falink,
+        .backPicSize = MON_COORDS_SIZE(64, 40),
+        .backPicYOffset = 15,
+        //.backAnimId = BACK_ANIM_NONE,
+        .palette = gMonPalette_Falink,
+        .shinyPalette = gMonShinyPalette_Falink,
+        .iconSprite = gMonIcon_Falink,
+        .iconPalIndex = 0,
+        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+        SHADOW(-7, 5, SHADOW_SIZE_S)
+        FOOTPRINT(Falinks)
+        OVERWORLD(
+            sPicTable_Falinks,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Falinks,
+            gShinyOverworldPalette_Falinks
+        )
+        .levelUpLearnset = sFalinkLevelUpLearnset,
+        .teachableLearnset = sFalinkTeachableLearnset
+    },
+
+    [SPECIES_FALINKS] =
+    {
+        .baseHP        = 65,
+        .baseAttack    = 100,
+        .baseDefense   = 100,
+        .baseSpeed     = 75,
+        .baseSpAttack  = 70,
+        .baseSpDefense = 60,
+        .types = MON_TYPES(TYPE_FIGHTING, TYPE_ROCK),
         .catchRate = 45,
         .expYield = 165,
         .evYield_Attack = 2,
@@ -5319,7 +5380,7 @@ const struct SpeciesInfo gSpeciesInfoGen8[] =
         .formChangeTable = sFalinksFormChangeTable,
     },
 #endif //P_GEN_9_MEGA_EVOLUTIONS
-#endif //P_FAMILY_FALINKS
+#endif //P_FAMILY_FALINK
 
 #if P_FAMILY_PINCURCHIN
     [SPECIES_PINCURCHIN] =

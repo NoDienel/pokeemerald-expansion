@@ -23954,7 +23954,23 @@ const u16 gMonShinyPalette_LedianToku[] = INCBIN_U16("graphics/pokemon/ledianTok
 #endif //P_GIGANTAMAX_FORMS
 #endif //P_FAMILY_MILCERY
 
-#if P_FAMILY_FALINKS
+#if P_FAMILY_FALINK
+    const u32 gMonFrontPic_Falink[] = INCBIN_U32("graphics/pokemon/falink/front.4bpp.smol");
+    const u16 gMonPalette_Falink[] = INCBIN_U16("graphics/pokemon/falink/normal.gbapal");
+    const u32 gMonBackPic_Falink[] = INCBIN_U32("graphics/pokemon/falink/back.4bpp.smol");
+    const u16 gMonShinyPalette_Falink[] = INCBIN_U16("graphics/pokemon/falink/shiny.gbapal");
+    const u8 gMonIcon_Falink[] = INCBIN_U8("graphics/pokemon/falink/icon.4bpp");
+#if P_FOOTPRINTS
+    const u8 gMonFootprint_Falink[] = INCBIN_U8("graphics/pokemon/falink/footprint.1bpp");
+#endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+    const u32 gObjectEventPic_Falink[] = INCBIN_COMP("graphics/pokemon/falink/overworld.4bpp");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+    const u16 gOverworldPalette_Falink[] = INCBIN_U16("graphics/pokemon/falink/overworld_normal.gbapal");
+    const u16 gShinyOverworldPalette_Falink[] = INCBIN_U16("graphics/pokemon/falink/overworld_shiny.gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+#endif //OW_POKEMON_OBJECT_EVENTS
+
     const u32 gMonFrontPic_Falinks[] = INCBIN_U32("graphics/pokemon/falinks/front.4bpp.smol");
     const u16 gMonPalette_Falinks[] = INCBIN_U16("graphics/pokemon/falinks/normal.gbapal");
     const u32 gMonBackPic_Falinks[] = INCBIN_U32("graphics/pokemon/falinks/back.4bpp.smol");

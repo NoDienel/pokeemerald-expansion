@@ -605,5 +605,6 @@
 #define P_FAMILY_PECHARUNT               P_GEN_9_POKEMON
 
 #define P_FAMILY_PITHEOOK                P_FAKE_POKEMON
+#define P_FAMILY_FALINK                 P_FAKE_POKEMON
 
 #endif // GUARD_CONFIG_SPECIES_ENABLED_H

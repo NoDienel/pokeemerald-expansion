@@ -22990,7 +22990,21 @@ static const u16 sAlcremieTeachableLearnset[] = {
 };
 #endif //P_FAMILY_MILCERY
 
-#if P_FAMILY_FALINKS
+#if P_FAMILY_FALINK
+static const u16 sFalinkTeachableLearnset[] = {
+    MOVE_BRICK_BREAK,
+    MOVE_BULK_UP,
+    MOVE_FACADE,
+    MOVE_HYPER_BEAM,
+    MOVE_PROTECT,
+    MOVE_RAIN_DANCE,
+    MOVE_REST,
+    MOVE_ROCK_SMASH,
+    MOVE_ROCK_TOMB,
+    MOVE_SUNNY_DAY,
+    MOVE_UNAVAILABLE,
+};
+
 static const u16 sFalinksTeachableLearnset[] = {
     MOVE_BRICK_BREAK,
     MOVE_BULK_UP,
@@ -23004,7 +23018,7 @@ static const u16 sFalinksTeachableLearnset[] = {
     MOVE_SUNNY_DAY,
     MOVE_UNAVAILABLE,
 };
-#endif //P_FAMILY_FALINKS
+#endif //P_FAMILY_FALINK
 
 #if P_FAMILY_PINCURCHIN
 static const u16 sPincurchinTeachableLearnset[] = {
