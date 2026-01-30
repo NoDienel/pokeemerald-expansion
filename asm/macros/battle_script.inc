@@ -883,12 +883,14 @@
 	.byte 0x9e
 	.endm
 
-	.macro unused_0x9f
+	.macro monkeymindsetadd amount:req
 	.byte 0x9f
+	.2byte \amount
 	.endm
 
-	.macro unused_0xA0
+	.macro monkeymindsetremove amount:req
 	.byte 0xa0
+	.2byte \amount
 	.endm
 
 	.macro counterdamagecalculator failInstr:req
@@ -930,9 +932,8 @@
 	.4byte \failInstr
 	.endm
 
-	.macro trychoosesleeptalkmove failInstr:req
+	.macro monkeymindsettobasedamage
 	.byte 0xa9
-	.4byte \failInstr
 	.endm
 
 	.macro trysetdestinybond failInstr:req
@@ -940,8 +941,9 @@
 	.4byte \failInstr
 	.endm
 
-	.macro unused_0xab
+	.macro monkeymindsettohpheal failInstr:req
 	.byte 0xab
+	.4byte \failInstr
 	.endm
 
 	.macro settailwind failInstr:req

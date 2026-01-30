@@ -5194,7 +5194,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 // Rule 4: Neither type is Normal or Psychic, 50% chance for each type
                 else if (type1 != TYPE_NORMAL && type1 != TYPE_PSYCHIC && type1 != TYPE_MYSTERY && type2 != TYPE_NORMAL && type2 != TYPE_PSYCHIC && type2 != TYPE_MYSTERY)
                 {
-                    if (Random() % 2 == 0)
+                    if (Random() % 2 == 0) //Not RandomPercentage bc this is just selecting between two arbitrary options with a 50/50 shot
                         gBattleStruct->battlerState[gBattlerTarget].corruptedType1 = TRUE;
                     else
                         gBattleStruct->battlerState[gBattlerTarget].corruptedType2 = TRUE;
@@ -5666,10 +5666,14 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
             break;
         case ABILITY_QUEENS_ORDERS:
             if (IsBattlerAlive(battler)
-             && (move == MOVE_ATTACK_ORDER || move == MOVE_DEFEND_ORDER || move == MOVE_HEAL_ORDER)
+             && IsOrderMove(move)
              && gBattlerAttacker != battler
              && IsBattlerAlly(gBattlerAttacker, battler))
             {
+                DebugPrintf("QUEENS ORDERS activated!");
+                // Set bit and save Queen's Orders user's target (reusing dancer cuz its just storing info)
+                gSpecialStatuses[battler].orderMoveUsed = TRUE;
+                gSpecialStatuses[battler].dancerOriginalTarget = gBattleStruct->moveTarget[battler] | 0x4;
                 gBattlerAttacker = gBattlerAbility = battler;
                 gCalledMove = move;
 
@@ -5677,9 +5681,11 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, u32 battler, enum Ability ab
                 if (move == MOVE_ATTACK_ORDER)
                     gBattlerTarget = gBattleScripting.savedBattler & 0x3;
                 else
-                    // For Defend Order and Heal Order, target the user (ally)
-                    gBattlerTarget = battler;
+                    gBattlerTarget = battler; // For Defend Order and Heal Order, target the user (ally)
 
+                // Make sure that the target isn't an ally - if it is, target the original user
+                if (IsBattlerAlly(gBattlerTarget, gBattlerAttacker))
+                    gBattlerTarget = (gBattleScripting.savedBattler & 0xF0) >> 4;
                 BattleScriptExecute(BattleScript_DancerActivates);
                 effect++;
             }

@@ -2578,11 +2578,5 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .description = COMPOUND_STRING("Powers up ballistic moves."),
         .aiRating = 5,
     },
-
-    [ABILITY_SILLY_RASCAL] =
-    {
-        .name = _("Silly Rascal"),
-        .description = COMPOUND_STRING("Randomly calls a siesta."),
-        .aiRating = 3,
-    },
+    
 };

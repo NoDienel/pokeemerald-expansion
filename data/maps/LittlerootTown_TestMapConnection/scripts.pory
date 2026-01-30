@@ -77,12 +77,12 @@ script TestMapConnection_EventScript_PinchHitter_Pokeball
 script TestMapConnection_EventScript_Weedle_Pokeball
 {
     lockall
-    msgbox("A tiny partner appears!\nThis gives 2 Pitheook.")
+    playfanfare(MUS_OBTAIN_ITEM)
     removeobject(LOCALID_POKEBALL2)
-    showmonpic(SPECIES_PITHEOOK, 10, 3)
-    givemon(SPECIES_PITHEOOK, 15, ITEM_NONE, ITEM_POKE_BALL)
-    givemon(SPECIES_PITHEOOK, 15, ITEM_NONE, ITEM_POKE_BALL)
-    giveitem(ITEM_LEAF_STONE)
+    showmonpic(SPECIES_SIMISAGE, 10, 3)
+    msgbox("Return to monke.")
+    givemon(SPECIES_SIMISAGE, 50, ITEM_NONE, ITEM_POKE_BALL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MOVE_MONKEY_BUSINESS, MOVE_SAGELY_MONKEY_FIST, MOVE_MELLOW_MONKEY, MOVE_MONKEY_MASSACRE)
+    givemon(SPECIES_SIMISEAR, 50, ITEM_NONE, ITEM_POKE_BALL)
     setflag(FLAG_BADGE01_GET)
     setflag(FLAG_BADGE02_GET)
     setflag(FLAG_BADGE03_GET)

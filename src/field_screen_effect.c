@@ -1422,7 +1422,7 @@ static void Task_RushInjuredPokemonToCenter(u8 taskId)
         PutWindowTilemap(windowId);
         CopyWindowToVram(windowId, COPYWIN_FULL);
 
-        gTasks[taskId].tIsPlayerHouse = IsLastHealLocationPlayerHouse();
+        gTasks[taskId].tIsPlayerHouse = FALSE;
         gTasks[taskId].tState = WHITEOUT_CUTSCENE_PRINT_MSG;
         break;
     case WHITEOUT_CUTSCENE_PRINT_MSG:

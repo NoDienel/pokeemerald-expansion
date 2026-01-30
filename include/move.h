@@ -348,6 +348,11 @@ static inline bool32 IsDanceMove(u32 moveId)
     return gMovesInfo[SanitizeMoveId(moveId)].danceMove;
 }
 
+static inline bool32 IsOrderMove(u32 moveID)
+{
+    return moveID == MOVE_ATTACK_ORDER || moveID == MOVE_DEFEND_ORDER || moveID == MOVE_HEAL_ORDER; //I never claimed to be perfect
+}
+
 static inline bool32 IsWindMove(u32 moveId)
 {
     return gMovesInfo[SanitizeMoveId(moveId)].windMove;

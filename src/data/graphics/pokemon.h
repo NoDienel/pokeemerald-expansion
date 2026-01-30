@@ -14645,6 +14645,30 @@ const u16 gMonShinyPalette_LedianToku[] = INCBIN_U16("graphics/pokemon/ledianTok
     const u16 gShinyOverworldPalette_Vespiquen[] = INCBIN_U16("graphics/pokemon/vespiquen/overworld_shiny.gbapal");
 #endif //OW_PKMN_OBJECTS_SHARE_PALETTES
 #endif //OW_POKEMON_OBJECT_EVENTS
+
+    const u32 gMonFrontPic_Walovbees[] = INCBIN_U32("graphics/pokemon/walovbees/anim_front.4bpp.smol");
+    const u16 gMonPalette_Walovbees[] = INCBIN_U16("graphics/pokemon/walovbees/normal.gbapal");
+    const u32 gMonBackPic_Walovbees[] = INCBIN_U32("graphics/pokemon/walovbees/back.4bpp.smol");
+    const u16 gMonShinyPalette_Walovbees[] = INCBIN_U16("graphics/pokemon/walovbees/shiny.gbapal");
+    const u8 gMonIcon_Walovbees[] = INCBIN_U8("graphics/pokemon/walovbees/icon.4bpp");
+#if P_FOOTPRINTS
+    const u8 gMonFootprint_Walovbees[] = INCBIN_U8("graphics/pokemon/walovbees/footprint.1bpp");
+#endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+    const u32 gObjectEventPic_Walovbees[] = INCBIN_COMP("graphics/pokemon/walovbees/overworld.4bpp");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+    const u16 gOverworldPalette_Walovbees[] = INCBIN_U16("graphics/pokemon/walovbees/overworld_normal.gbapal");
+    const u16 gShinyOverworldPalette_Walovbees[] = INCBIN_U16("graphics/pokemon/walovbees/overworld_shiny.gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+#endif //OW_POKEMON_OBJECT_EVENTS
+
+#if P_GENDER_DIFFERENCES
+    const u16 gMonPalette_WalovbeesF[] = INCBIN_U16("graphics/pokemon/walovbees/normalf.gbapal");
+    const u16 gMonShinyPalette_WalovbeesF[] = INCBIN_U16("graphics/pokemon/walovbees/shinyf.gbapal");
+#if OW_POKEMON_OBJECT_EVENTS
+    const u32 gObjectEventPic_WalovbeesF[] = INCBIN_COMP("graphics/pokemon/walovbees/overworldf.4bpp");
+#endif //OW_POKEMON_OBJECT_EVENTS
+#endif //P_GENDER_DIFFERENCES
 #endif //P_FAMILY_COMBEE
 
 #if P_FAMILY_PACHIRISU

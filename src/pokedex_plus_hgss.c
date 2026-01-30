@@ -6828,6 +6828,13 @@ static void PrintEvolutionTargetSpeciesAndMethod(u8 taskId, u16 species, u8 dept
                     StringAppend(gStringVar4, gStringVar2);
                     StringAppend(gStringVar4, COMPOUND_STRING(" in bag"));
                     break;
+                case IF_BATTLED_WITH_X:
+                    StringAppend(gStringVar4, COMPOUND_STRING("battle with "));
+                    StringAppend(gStringVar4, GetSpeciesName(evolutions[i].params[j].arg1));
+                    ConvertIntToDecimalStringN(gStringVar2, evolutions[i].params[j].arg2, STR_CONV_MODE_LEFT_ALIGN, 3);
+                    StringAppend(gStringVar4, gStringVar2);
+                    StringAppend(gStringVar4, COMPOUND_STRING(" times"));
+                    break;
                 case CONDITIONS_END:
                     break;
                 }

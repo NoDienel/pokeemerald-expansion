@@ -477,10 +477,10 @@ static void Cmd_jumpifuproarwakes(void);
 static void Cmd_stockpile(void);
 static void Cmd_stockpiletobasedamage(void);
 static void Cmd_stockpiletohpheal(void);
-static void Cmd_monkeyMindsetAdd(void);
-static void Cmd_monkeyMindsetRemove(void);
-static void Cmd_monkeyMindsetToBaseDamage(void);
-static void Cmd_monkeyMindsetToHPHeal(void);
+static void Cmd_monkeymindsetadd(void);
+static void Cmd_monkeymindsetremove(void);
+static void Cmd_monkeymindsettobasedamage(void);
+static void Cmd_monkeymindsettohpheal(void);
 static void Cmd_unused_0x88(void);
 static void Cmd_statbuffchange(void);
 static void Cmd_normalisebuffs(void);
@@ -504,8 +504,6 @@ static void Cmd_transformdataexecution(void);
 static void Cmd_setsubstitute(void);
 static void Cmd_mimicattackcopy(void);
 static void Cmd_setcalledmove(void);
-static void Cmd_unused_0x9f(void);
-static void Cmd_unused_0xA0(void);
 static void Cmd_counterdamagecalculator(void);
 static void Cmd_mirrorcoatdamagecalculator(void);
 static void Cmd_disablelastusedattack(void);
@@ -514,9 +512,7 @@ static void Cmd_painsplitdmgcalc(void);
 static void Cmd_settypetorandomresistance(void);
 static void Cmd_setalwayshitflag(void);
 static void Cmd_copymovepermanently(void);
-static void Cmd_unused_0xA9(void);
 static void Cmd_unused_AA(void);
-static void Cmd_unused_0xab(void);
 static void Cmd_settailwind(void);
 static void Cmd_tryspiteppreduce(void);
 static void Cmd_healpartystatus(void);
@@ -763,8 +759,8 @@ void (*const gBattleScriptingCommandsTable[])(void) =
     Cmd_setsubstitute,                           //0x9C
     Cmd_mimicattackcopy,                         //0x9D
     Cmd_setcalledmove,                           //0x9E
-    Cmd_monkeyMindsetAdd,                        //0x9F
-    Cmd_monkeyMindsetRemove,                     //0xA0
+    Cmd_monkeymindsetadd,                        //0x9F
+    Cmd_monkeymindsetremove,                     //0xA0
     Cmd_counterdamagecalculator,                 //0xA1
     Cmd_mirrorcoatdamagecalculator,              //0xA2
     Cmd_disablelastusedattack,                   //0xA3
@@ -773,9 +769,9 @@ void (*const gBattleScriptingCommandsTable[])(void) =
     Cmd_settypetorandomresistance,               //0xA6
     Cmd_setalwayshitflag,                        //0xA7
     Cmd_copymovepermanently,                     //0xA8
-    Cmd_monkeyMindsetToBaseDamage,               //0xA9
+    Cmd_monkeymindsettobasedamage,               //0xA9
     Cmd_unused_AA,                               //0xAA
-    Cmd_monkeyMindsetToHPHeal,                   //0xAB
+    Cmd_monkeymindsettohpheal,                   //0xAB
     Cmd_settailwind,                             //0xAC
     Cmd_tryspiteppreduce,                        //0xAD
     Cmd_healpartystatus,                         //0xAE
@@ -4848,6 +4844,21 @@ bool32 NoAliveMonsForEitherParty(void)
     return (NoAliveMonsForPlayer() || NoAliveMonsForOpponent());
 }
 
+bool32 CheckForSpeciesOnField(u32 speciesId)
+{
+    u32 i;
+    bool32 targetMonPresent = FALSE;
+    for (i = 0; i < gBattlersCount; i++)
+    {
+        if (gBattleMons[i].species == speciesId)
+        {
+            //DebugPrintf("Found species!");
+            targetMonPresent = TRUE;
+        }
+    }
+    return targetMonPresent;
+}
+
 // For battles that aren't BATTLE_TYPE_LINK or BATTLE_TYPE_RECORDED_LINK or trainer battles, the only thing this
 // command does is check whether the player has won/lost by totaling each team's HP. It then
 // sets gBattleOutcome accordingly, if necessary.
@@ -4863,6 +4874,51 @@ static void Cmd_checkteamslost(void)
     if (NoAliveMonsForOpponent())
         gBattleOutcome |= B_OUTCOME_WON;
 
+    
+    if(gBattleOutcome != 0) //The battle has ended
+    {
+        u32 i, j;
+        u8 battler;
+        for (battler = 0; battler < gBattlersCount; battler++)
+        {
+            if (IsOnPlayerSide(battler))
+            {
+                struct Pokemon *mon = GetBattlerMon(battler);
+                if (mon == NULL)
+                    continue;
+                
+                u16 species = GetMonData(mon, MON_DATA_SPECIES, 0);
+                const struct Evolution *evolutions = GetSpeciesEvolutions(species);
+                if (evolutions == NULL)
+                    continue;
+                
+                for (i = 0; evolutions[i].method != EVOLUTIONS_END; i++)
+                {
+                    if (SanitizeSpeciesId(evolutions[i].targetSpecies) == SPECIES_NONE)
+                        continue;
+                    if (evolutions[i].params == NULL)
+                        continue;
+                    
+                    for (j = 0; evolutions[i].params[j].condition != CONDITIONS_END; j++)
+                    {
+                        if (evolutions[i].params[j].condition == IF_BATTLED_WITH_X)
+                        {
+                            // DebugPrintf("Searching for species!");
+                            // If the required species was anywhere in the battle
+                            if (CheckForSpeciesOnField(evolutions[i].params[j].arg1))
+                            {
+                                u16 val = GetMonData(mon, MON_DATA_EVOLUTION_TRACKER) + 1;
+                                SetMonData(mon, MON_DATA_EVOLUTION_TRACKER, &val);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
     // Fair switching - everyone has to switch in most at the same time, without knowing which pokemon the other trainer selected.
     // In vanilla Emerald this was only used for link battles, in expansion it's also used for regular trainer battles.
     // For battles that haven't ended, count number of empty battler spots
@@ -6378,7 +6434,7 @@ static void Cmd_moveend(void)
                 SWAP(gBattlerAttacker, gBattlerTarget, temp);
             }
 
-            if (!gSpecialStatuses[gBattlerAttacker].dancerUsedMove)
+            if (!gSpecialStatuses[gBattlerAttacker].dancerUsedMove || !gSpecialStatuses[gBattlerAttacker].orderMoveUsed)
             {
                 gDisableStructs[gBattlerAttacker].usedMoves |= 1u << gCurrMovePos;
                 gBattleStruct->battlerState[gBattlerAttacker].lastMoveTarget = gBattlerTarget;
@@ -6390,7 +6446,7 @@ static void Cmd_moveend(void)
             {
                 if (!gBattleStruct->unableToUseMove)
                 {
-                    if (!gSpecialStatuses[gBattlerAttacker].dancerUsedMove)
+                    if (!gSpecialStatuses[gBattlerAttacker].dancerUsedMove || !gSpecialStatuses[gBattlerAttacker].orderMoveUsed)
                     {
                         gLastMoves[gBattlerAttacker] = gChosenMove;
                         RecordKnownMove(gBattlerAttacker, gChosenMove);
@@ -6418,7 +6474,7 @@ static void Cmd_moveend(void)
                     {
                         gLastLandedMoves[gBattlerTarget] = gCurrentMove;
                         gLastHitByType[gBattlerTarget] = GetBattleMoveType(gCurrentMove);
-                        if (!gSpecialStatuses[gBattlerAttacker].dancerUsedMove)
+                        if (!gSpecialStatuses[gBattlerAttacker].dancerUsedMove || !gSpecialStatuses[gBattlerAttacker].orderMoveUsed)
                         {
                             gLastUsedMove = gCurrentMove;
                             if (IsMaxMove(gCurrentMove))
@@ -7111,6 +7167,47 @@ static void Cmd_moveend(void)
                         }
                     }
                     if (nextDancer && AbilityBattleEffects(ABILITYEFFECT_MOVE_END_OTHER, nextDancer & 0x3, 0, gCurrentMove, TRUE))
+                        effect = TRUE;
+                }
+            }
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_ORDER:
+            if (IsOrderMove(gCurrentMove) && !gBattleStruct->snatchedMoveIsUsed)
+            {
+                u32 battler, nextOrder = 0;
+                bool32 hasOrderTriggered = FALSE;
+
+                for (battler = 0; battler < gBattlersCount; battler++)
+                {
+                    if (gSpecialStatuses[battler].orderMoveUsed)
+                    {
+                        // in case a battler fails to act on an order-called move
+                        hasOrderTriggered = TRUE;
+                        break;
+                    }
+                }
+
+                if (!(!IsAnyTargetAffected()
+                 || (gBattleStruct->unableToUseMove && !hasOrderTriggered)
+                 || (!gSpecialStatuses[gBattlerAttacker].orderMoveUsed && gBattleStruct->bouncedMoveIsUsed)))
+                {   // Order move succeeds
+                    // Set target for other order mons; set bit so that mon cannot activate order off of its own move
+                    if (!gSpecialStatuses[gBattlerAttacker].orderMoveUsed)
+                    {
+                        gBattleScripting.savedBattler = gBattlerTarget | 0x4;
+                        gBattleScripting.savedBattler |= (gBattlerAttacker << 4);
+                        gSpecialStatuses[gBattlerAttacker].orderMoveUsed = TRUE;
+                    }
+                    for (battler = 0; battler < gBattlersCount; battler++)
+                    {
+                        if (GetBattlerAbility(battler) == ABILITY_QUEENS_ORDERS && !gSpecialStatuses[battler].orderMoveUsed)
+                        {
+                            if (!nextOrder || (gBattleMons[battler].speed < gBattleMons[nextOrder & 0x3].speed))
+                                nextOrder = battler | 0x4;
+                        }
+                    }
+                    if (nextOrder && AbilityBattleEffects(ABILITYEFFECT_MOVE_END_OTHER, nextOrder & 0x3, 0, gCurrentMove, TRUE))
                         effect = TRUE;
                 }
             }
@@ -9756,7 +9853,7 @@ void BS_RemoveStockpileCounters(void)
     }
 }
 
-static void Cmd_monkeyMindsetAdd(void)
+static void Cmd_monkeymindsetadd(void)
 {
     CMD_ARGS(u8 amount);
 
@@ -9764,31 +9861,41 @@ static void Cmd_monkeyMindsetAdd(void)
     if (newValue > 3)
         newValue = 3;
     gDisableStructs[gBattlerAttacker].monkeyMindset = newValue;
+    gBattleScripting.animTurn = newValue;
+    PREPARE_BYTE_NUMBER_BUFFER(gBattleTextBuff1, 1, newValue);
 
     gBattlescriptCurrInstr = cmd->nextInstr;
+    gBattlerTarget = gBattlerAttacker;
 }
 
-static void Cmd_monkeyMindsetRemove(void)
+static void Cmd_monkeymindsetremove(void)
 {
     CMD_ARGS(u8 amount);
 
     if (gDisableStructs[gBattlerAttacker].monkeyMindset > 0)
-        gDisableStructs[gBattlerAttacker].monkeyMindset--;
-
+        gDisableStructs[gBattlerAttacker].monkeyMindset -= cmd->amount;
+    
+    gBattleScripting.animTurn = gDisableStructs[gBattlerAttacker].monkeyMindset;
+    PREPARE_BYTE_NUMBER_BUFFER(gBattleTextBuff1, 1, gDisableStructs[gBattlerAttacker].monkeyMindset);
     gBattlescriptCurrInstr = cmd->nextInstr;
+    gBattlerTarget = gBattlerAttacker;
 }
 
-static void Cmd_monkeyMindsetToBaseDamage(void)
+static void Cmd_monkeymindsettobasedamage(void)
 {
     CMD_ARGS();
 
     if (gBattleCommunication[MISS_TYPE] != B_MSG_PROTECTED)
+    {
         gBattleScripting.animTurn = gDisableStructs[gBattlerAttacker].monkeyMindset;
+        PREPARE_BYTE_NUMBER_BUFFER(gBattleTextBuff1, 1, gDisableStructs[gBattlerAttacker].monkeyMindset);
+    }
 
     gBattlescriptCurrInstr = cmd->nextInstr;
+    gBattlerTarget = gBattlerAttacker;
 }
 
-static void Cmd_monkeyMindsetToHPHeal(void)
+static void Cmd_monkeymindsettohpheal(void)
 {
     CMD_ARGS(const u8 *failInstr);
 
@@ -9803,6 +9910,7 @@ static void Cmd_monkeyMindsetToHPHeal(void)
     {
         SetHealAmount(gBattlerAttacker, (GetNonDynamaxMaxHP(gBattlerAttacker) * 25 * gDisableStructs[gBattlerAttacker].monkeyMindset) / 100);
         gBattleScripting.animTurn = gDisableStructs[gBattlerAttacker].monkeyMindset;
+        PREPARE_BYTE_NUMBER_BUFFER(gBattleTextBuff1, 1, gDisableStructs[gBattlerAttacker].monkeyMindset);
         gBattlescriptCurrInstr = cmd->nextInstr;
         gBattlerTarget = gBattlerAttacker;
     }
@@ -11080,14 +11188,6 @@ static void Cmd_setcalledmove(void)
     gBattlescriptCurrInstr = cmd->nextInstr;
 }
 
-static void Cmd_unused_0x9f(void)
-{
-}
-
-static void Cmd_unused_0xA0(void)
-{
-}
-
 static void Cmd_counterdamagecalculator(void)
 {
     CMD_ARGS(const u8 *failInstr);
@@ -11428,10 +11528,6 @@ static void Cmd_copymovepermanently(void)
     }
 }
 
-static void Cmd_unused_0xA9(void)
-{
-}
-
 static inline bool32 IsDanamaxMonPresent(void)
 {
     for (u32 battler = 0; battler < gBattlersCount; battler++)
@@ -11447,10 +11543,6 @@ static inline bool32 IsDanamaxMonPresent(void)
 }
 
 static void Cmd_unused_AA(void)
-{
-}
-
-static void Cmd_unused_0xab(void)
 {
 }
 

@@ -692,6 +692,7 @@ TEST("Battle strings fit on the battle message window")
         break;
     // Buffer "9" to B_BUFF1
     case STRINGID_PKMNSTOCKPILED:
+    case STRINGID_PKMNMONKEYMINDSETINCREASED:
     case STRINGID_PKMNPERISHCOUNTFELL:
         PREPARE_WORD_NUMBER_BUFFER(gBattleTextBuff1, 1, 9);
         break;

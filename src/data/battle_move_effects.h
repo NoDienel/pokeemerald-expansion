@@ -2249,7 +2249,6 @@ const struct BattleMoveEffect gBattleMoveEffects[NUM_BATTLE_MOVE_EFFECTS] =
     {
         .battleScript = BattleScript_EffectMonkeyFist,
         .battleTvScore = 5,
-        .encourageEncore = TRUE,
     },
 
     [EFFECT_MELLOW_MONKEY] =
@@ -2269,6 +2268,7 @@ const struct BattleMoveEffect gBattleMoveEffects[NUM_BATTLE_MOVE_EFFECTS] =
     [EFFECT_MONKEY_MASSACRE] =
     {
         .battleScript = BattleScript_EffectMonkeyMassacre,
-        .battleTvScore = 9,
+        .battleTvScore = 7,
         .encourageEncore = TRUE,
     },
+};

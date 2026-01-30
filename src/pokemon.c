@@ -4502,11 +4502,13 @@ bool32 DoesMonMeetAdditionalConditions(struct Pokemon *mon, const struct Evoluti
         partnerHoldEffect = HOLD_EFFECT_NONE;
     }
 
+    //DebugPrintf("Primary method passed: checking evolution additional conditions");
     // Check for additional conditions (only if the primary method passes). Skips if there's no additional conditions.
     for (i = 0; params != NULL && params[i].condition != CONDITIONS_END; i++)
     {
         enum EvolutionConditions condition = params[i].condition;
         bool32 currentCondition = FALSE;
+        //DebugPrintf("Checking a condition %d", condition);
 
         switch(condition)
         {
@@ -4766,6 +4768,12 @@ bool32 DoesMonMeetAdditionalConditions(struct Pokemon *mon, const struct Evoluti
             if (GetCurrentRegion() != params[i].arg1)
                 currentCondition = TRUE;
             break;
+        // Custom Conditions
+        case IF_BATTLED_WITH_X:
+            //DebugPrintf("IF_BATTLED_WITH_X");
+            if (evolutionTracker >= params[i].arg2)
+                currentCondition = TRUE;
+            break;
         case CONDITIONS_END:
             break;
         }
@@ -4784,9 +4792,13 @@ bool32 DoesMonMeetAdditionalConditions(struct Pokemon *mon, const struct Evoluti
         }
 
         if (currentCondition == FALSE)
+        {
+            //DebugPrintf("Doesnt meet condition %d", condition);
             return FALSE;
+        }
     }
-
+    
+    //DebugPrintf("Mon meets all additional conditions to level up!");
     return TRUE;
 }
 
@@ -4841,8 +4853,10 @@ u32 GetEvolutionTargetSpecies(struct Pokemon *mon, enum EvolutionMode mode, u16 
                 break;
             }
 
+            //DebugPrintf("Checking normal condition for pokemon ID %d", species);
             if (conditionsMet && DoesMonMeetAdditionalConditions(mon, evolutions[i].params, NULL, PARTY_SIZE, canStopEvo, evoState))
             {
+                //DebugPrintf("Condition succeeded!");
                 // All checks passed, so stop checking the rest of the evolutions.
                 // This is different from vanilla where the loop continues.
                 // If you have overlapping evolutions, put the ones you want to happen first on top of the list.
@@ -4865,6 +4879,7 @@ u32 GetEvolutionTargetSpecies(struct Pokemon *mon, enum EvolutionMode mode, u16 
                 break;
             }
 
+            //DebugPrintf("Checking trade condition for pokemon ID %d", species);
             if (conditionsMet && DoesMonMeetAdditionalConditions(mon, evolutions[i].params, tradePartner, PARTY_SIZE, canStopEvo, evoState))
             {
                 // All checks passed, so stop checking the rest of the evolutions.
@@ -4891,6 +4906,7 @@ u32 GetEvolutionTargetSpecies(struct Pokemon *mon, enum EvolutionMode mode, u16 
                 break;
             }
 
+            //DebugPrintf("Checking item condition for pokemon ID %d", species);
             if (conditionsMet && DoesMonMeetAdditionalConditions(mon, evolutions[i].params, NULL, PARTY_SIZE, canStopEvo, evoState))
             {
                 // All checks passed, so stop checking the rest of the evolutions.
@@ -4918,6 +4934,7 @@ u32 GetEvolutionTargetSpecies(struct Pokemon *mon, enum EvolutionMode mode, u16 
                 break;
             }
 
+            //DebugPrintf("Checking battle special condition for pokemon ID %d", species);
             if (conditionsMet && DoesMonMeetAdditionalConditions(mon, evolutions[i].params, NULL, evolutionItem, canStopEvo, evoState))
             {
                 // All checks passed, so stop checking the rest of the evolutions.
@@ -4944,6 +4961,7 @@ u32 GetEvolutionTargetSpecies(struct Pokemon *mon, enum EvolutionMode mode, u16 
                 break;
             }
 
+            //DebugPrintf("Checking overworld special condition for pokemon ID %d", species);
             if (conditionsMet && DoesMonMeetAdditionalConditions(mon, evolutions[i].params, NULL, PARTY_SIZE, canStopEvo, evoState))
             {
                 // All checks passed, so stop checking the rest of the evolutions.
@@ -4961,6 +4979,7 @@ u32 GetEvolutionTargetSpecies(struct Pokemon *mon, enum EvolutionMode mode, u16 
                 continue;
             if (evolutions[i].method != EVO_SCRIPT_TRIGGER)
                 continue;
+            //DebugPrintf("Checking trigger condition for pokemon ID %d", species);
             if (DoesMonMeetAdditionalConditions(mon, evolutions[i].params, NULL, PARTY_SIZE, canStopEvo, evoState))
             {
                 // All checks passed, so stop checking the rest of the evolutions.

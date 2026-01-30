@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `apply_fossilized_hoenn_changes.py` script reads Pokémon data changes from a CSV file and applies them to the game data. **Moveset processing is now a core feature** that is automatically applied whenever move changes are detected in the CSV.
+The `apply_fossilized_hoenn_changes.py` script reads Pokémon data changes from a CSV file and applies them to the game data.that is automatically applied whenever move changes are detected in the CSV.
 
 ## Core Features
 

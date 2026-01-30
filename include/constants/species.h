@@ -1671,7 +1671,7 @@
 #define SPECIES_WALOVBEES                               1552
 #define SPECIES_FALINK                                  1553
 
-#define SPECIES_EGG                                     (SPECIES_PITHEOOK + 1)
+#define SPECIES_EGG                                     (SPECIES_FALINK + 1)
 
 #define NUM_SPECIES SPECIES_EGG
 

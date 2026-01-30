@@ -5666,6 +5666,7 @@ static void TryEvolvePokemon(void)
 
             if (species != SPECIES_NONE)
             {
+                DebugPrintf("Should evolve up!");
                 FreeAllWindowBuffers();
                 gBattleMainFunc = WaitForEvoSceneToFinish;
                 GetEvolutionTargetSpecies(&gPlayerParty[i], mode, evolutionItemArg, NULL, &canStopEvo, DO_EVO);
@@ -5674,6 +5675,7 @@ static void TryEvolvePokemon(void)
             }
         }
     }
+    DebugPrintf("No evolution");
     sTriedEvolving = 0;
     gLeveledUpInBattle = 0;
     gBattleMainFunc = ReturnFromBattleToOverworld;

@@ -551,6 +551,7 @@ static void CreateShedinja(u32 preEvoSpecies, u32 postEvoSpecies, struct Pokemon
     if (evolutions == NULL)
         return;
 
+    DebugPrintf("Shedinja check");
     for (u32 i = 0; evolutions[i].method != EVOLUTIONS_END; i++)
     {
         if (evolutions[i].method == EVO_SPLIT_FROM_EVO

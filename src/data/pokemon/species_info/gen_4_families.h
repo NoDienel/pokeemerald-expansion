@@ -2363,7 +2363,8 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
         .tmIlliterate = TRUE,
         .levelUpLearnset = sCombeeLevelUpLearnset,
         .teachableLearnset = sCombeeTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 21, SPECIES_VESPIQUEN, CONDITIONS({IF_GENDER, MON_FEMALE})}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 21, SPECIES_VESPIQUEN, CONDITIONS({IF_GENDER, MON_FEMALE})},
+                                {EVO_BATTLE_END, 0, SPECIES_WALOVBEES, CONDITIONS({IF_BATTLED_WITH_X, SPECIES_VESPIQUEN, 1})}),
     },
 
     [SPECIES_VESPIQUEN] =
@@ -2440,6 +2441,90 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
         )
         .levelUpLearnset = sVespiquenLevelUpLearnset,
         .teachableLearnset = sVespiquenTeachableLearnset,
+    },
+
+    [SPECIES_WALOVBEES] =
+    {
+        .baseHP        = 30,
+        .baseAttack    = 30,
+        .baseDefense   = 42,
+        .baseSpeed     = 70,
+        .baseSpAttack  = 30,
+        .baseSpDefense = 42,
+        .types = MON_TYPES(TYPE_BUG),
+        .catchRate = 120,
+        .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 49 : 63,
+        .evYield_Speed = 1,
+        .itemRare = ITEM_HONEY,
+        .genderRatio = PERCENT_FEMALE(12.5),
+        .eggCycles = 15,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_BUG),
+        .abilities = { ABILITY_QUEENS_ORDERS, ABILITY_NONE, ABILITY_QUEENS_ORDERS },
+        .bodyColor = BODY_COLOR_YELLOW,
+        .speciesName = _("Walovbees"),
+        .cryId = CRY_COMBEE,
+        .natDexNum = NATIONAL_DEX_WALOVBEES,
+        .categoryName = _("Honeycomb"),
+        .height = 5,
+        .weight = 220,
+        .description = COMPOUND_STRING(
+            "A Pokémon formed by a cluster of\n"
+            "Combee.  It has specialized to\n"
+            "defend Vespiquen. It copies orders\n"
+            "from other Pokémon flawlessly."),
+        .pokemonScale = 256,
+        .pokemonOffset = 13,
+        .trainerScale = 530,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Walovbees,
+        .frontPicSize = MON_COORDS_SIZE(64, 40),
+        .frontPicYOffset = 16,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 20),
+            ANIMCMD_FRAME(1, 20),
+            ANIMCMD_FRAME(0, 20),
+            ANIMCMD_FRAME(1, 20),
+            ANIMCMD_FRAME(0, 1),
+        ),
+        .frontAnimId = ANIM_V_SLIDE_WOBBLE,
+        .enemyMonElevation = 15,
+        .backPic = gMonBackPic_Walovbees,
+        .backPicSize = MON_COORDS_SIZE(64, 48),
+        .backPicYOffset = 22,
+        .backAnimId = BACK_ANIM_TRIANGLE_DOWN,
+        .palette = gMonPalette_Walovbees,
+        .shinyPalette = gMonShinyPalette_Walovbees,
+        .iconSprite = gMonIcon_Walovbees,
+        .iconPalIndex = 0,
+#if P_GENDER_DIFFERENCES
+        .paletteFemale = gMonPalette_WalovbeesF,
+        .shinyPaletteFemale = gMonShinyPalette_WalovbeesF,
+#endif //P_GENDER_DIFFERENCES
+        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+        SHADOW(-4, 10, SHADOW_SIZE_M)
+        FOOTPRINT(Walovbees)
+        OVERWORLD(
+            sPicTable_Combee,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Combee,
+            gShinyOverworldPalette_Combee
+        )
+        OVERWORLD_FEMALE(
+            sPicTable_CombeeF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following
+        )
+        .levelUpLearnset = sWalovbeesLevelUpLearnset,
+        .teachableLearnset = sWalovbeesTeachableLearnset
     },
 #endif //P_FAMILY_COMBEE
 

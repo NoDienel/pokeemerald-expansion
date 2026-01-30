@@ -1189,3 +1189,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/TundrillaTown/scripts.inc"
 
 	.include "data/maps/Route135/scripts.inc"
+
+	.include "data/maps/LittlerootTown_PokemonCenter_1F/scripts.inc"

@@ -121,6 +121,7 @@ TEST("No species has two evolutions that use the evolution tracker")
         {
             if (evolutions[i].params[j].condition == IF_USED_MOVE_X_TIMES
              || evolutions[i].params[j].condition == IF_DEFEAT_X_WITH_ITEMS
+             || evolutions[i].params[j].condition == IF_BATTLED_WITH_X
             )
                 evolutionTrackerEvolutions++;
 
